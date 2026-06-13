@@ -2,8 +2,9 @@
 
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { CTA } from "@/components/CTA";
 import { motion } from "framer-motion";
-import { ArrowRight, TrendingUp, Sparkles } from "lucide-react";
+import { TrendingUp } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { useCasesData } from "@/data/usecases";
@@ -141,38 +142,7 @@ export default function UseCasesPage() {
           </div>
         </section>
 
-        {/* --- CTA --- */}
-        <section className="py-24 px-6 relative">
-          <div className="max-w-[800px] mx-auto text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="relative bg-card border border-[var(--border)] rounded-[2rem] p-12 md:p-16 overflow-hidden shadow-[0_2px_20px_rgba(0,0,0,0.04)] dark:shadow-[0_2px_24px_rgba(0,0,0,0.2)]"
-            >
-              <div className="absolute inset-0 bg-primary-red/3 pointer-events-none" />
-              <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-primary-red/8 blur-[120px] rounded-full pointer-events-none" />
-              
-              <div className="relative z-10">
-                <Sparkles className="mx-auto mb-6 text-primary-red" size={32} />
-                <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-                  Ready to see similar results?
-                </h2>
-                <p className="text-foreground/60 mb-8 max-w-lg mx-auto">
-                  Join leading brands that trust Echo to transform their customer engagement and drive measurable growth.
-                </p>
-                <a
-                  href="/contact"
-                  className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-primary-red text-white font-bold text-lg hover:scale-105 transition-transform shadow-[0_0_30px_rgba(229,72,59,0.3)]"
-                >
-                  Book a Demo <ArrowRight size={20} />
-                </a>
-              </div>
-            </motion.div>
-          </div>
-        </section>
-
+        <CTA />
       </main>
       <Footer />
     </>

@@ -15,6 +15,8 @@ const brands = [
     logoClass: "w-[220px] md:w-[280px] lg:w-[310px] h-auto scale-[1.2] origin-center",
   },
   { name: "BenQ", logo: "/benq_logo.png", logoDark: "/benq_logo_dark.png" },
+  { name: "Grand", logo: "/grand_logo.png", logoDark: "/grand_logo_dark.png" },
+  { name: "Kenz", logo: "/kenz_logo.png", logoDark: "/kenz_logo_dark.png" },
 ];
 
 const defaultLogoClass = "h-14 md:h-16 lg:h-[84px] w-auto";

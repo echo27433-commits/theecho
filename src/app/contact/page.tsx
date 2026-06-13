@@ -2,17 +2,12 @@
 
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { CTA } from "@/components/CTA";
+import { FootprintGlobe } from "@/components/FootprintGlobe";
+import { footprintCountries } from "@/data/footprint";
 import { Mail, MapPin, Phone, Globe } from "lucide-react";
 import { useState } from "react";
 import { motion } from "framer-motion";
-
-const footprintCountries = [
-  { name: "United Arab Emirates", short: "UAE", code: "AE", label: "Headquarters" },
-  { name: "Saudi Arabia", short: "Saudi Arabia", code: "SA" },
-  { name: "Bahrain", short: "Bahrain", code: "BH" },
-  { name: "Qatar", short: "Qatar", code: "QA" },
-  { name: "India", short: "India", code: "IN" },
-];
 
 const LinkedinIcon = ({ size = 24 }: { size?: number }) => (
   <svg
@@ -243,108 +238,86 @@ export default function Contact() {
         {/* Our Footprint */}
         <section className="relative overflow-hidden border-t border-[var(--border)] py-20 lg:py-28">
           <div className="pointer-events-none absolute inset-0 dot-grid-light opacity-40 dark:dot-grid" />
-          <div className="pointer-events-none absolute right-0 top-1/2 h-[400px] w-[500px] -translate-y-1/2 rounded-full bg-primary-red/6 blur-[120px]" />
+          <div className="pointer-events-none absolute left-1/2 top-1/2 h-[500px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary-red/6 blur-[140px]" />
 
           <div className="relative z-10 mx-auto max-w-[1280px] px-6">
-            <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-20">
-              {/* Left — intro */}
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              >
-                <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-primary-red/20 bg-primary-red/10 px-4 py-1.5 text-xs font-semibold text-primary-red">
-                  <Globe size={14} />
-                  Global Presence
-                </div>
-                <h2 className="mb-5 text-3xl font-extrabold tracking-tight text-foreground md:text-4xl lg:text-5xl">
-                  Our <span className="gradient-text-red">Footprint</span>
-                </h2>
-                <p className="max-w-lg text-base leading-relaxed text-foreground/60 md:text-lg">
-                  Echo supports businesses across key markets in the Middle East and India — delivering
-                  localized engagement at enterprise scale.
-                </p>
+            <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16 xl:gap-20">
+              {/* Left — intro + country list */}
+              <div>
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                >
+                  <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-primary-red/20 bg-primary-red/10 px-4 py-1.5 text-xs font-semibold text-primary-red">
+                    <Globe size={14} />
+                    Global Presence
+                  </div>
+                  <h2 className="mb-5 text-3xl font-extrabold tracking-tight text-foreground md:text-4xl lg:text-5xl">
+                    Our <span className="gradient-text-red">Footprint</span>
+                  </h2>
+                  <p className="max-w-lg text-base leading-relaxed text-foreground/60 md:text-lg">
+                    Echo supports businesses across key markets in the Middle East and India — delivering
+                    localized engagement at enterprise scale.
+                  </p>
 
-                <div className="mt-10 flex items-baseline gap-3 border-l-2 border-primary-red pl-4">
-                  <span className="text-4xl font-extrabold tracking-tight text-primary-red md:text-5xl">5</span>
-                  <span className="text-sm leading-snug text-foreground/55 md:text-base">
-                    Active markets across<br className="hidden sm:block" /> GCC & South Asia
-                  </span>
-                </div>
-              </motion.div>
+                  <div className="mt-8 flex items-baseline gap-3 border-l-2 border-primary-red pl-4">
+                    <span className="text-4xl font-extrabold tracking-tight text-primary-red md:text-5xl">5</span>
+                    <span className="text-sm leading-snug text-foreground/55 md:text-base">
+                      Active markets across GCC & South Asia
+                    </span>
+                  </div>
+                </motion.div>
 
-              {/* Right — country list */}
-              <motion.div
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-                className="relative"
-              >
-                <div className="absolute bottom-8 left-5 top-8 hidden w-px bg-gradient-to-b from-transparent via-primary-red/30 to-transparent sm:block" />
-
-                <ul className="divide-y divide-[var(--border)]">
+                <ul className="mt-10 divide-y divide-[var(--border)]">
                   {footprintCountries.map((country, i) => (
                     <motion.li
                       key={country.code}
-                      initial={{ opacity: 0, x: 12 }}
+                      initial={{ opacity: 0, x: -12 }}
                       whileInView={{ opacity: 1, x: 0 }}
                       viewport={{ once: true }}
-                      transition={{ delay: i * 0.07 }}
-                      className="group flex items-center gap-4 py-5 first:pt-0 last:pb-0 md:gap-5 md:py-6"
+                      transition={{ delay: i * 0.06 }}
+                      className="flex items-center gap-4 py-4 first:pt-0 last:pb-0"
                     >
-                      <span className="hidden w-6 shrink-0 text-center text-xs font-semibold text-foreground/25 sm:block">
-                        {String(i + 1).padStart(2, "0")}
-                      </span>
-
-                      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-[var(--border)] bg-background text-[11px] font-bold tracking-wider text-primary-red transition-colors group-hover:border-primary-red/30 group-hover:bg-primary-red/5 md:h-12 md:w-12 md:text-xs">
+                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-[var(--border)] bg-background text-[10px] font-bold tracking-wider text-primary-red">
                         {country.code}
                       </div>
-
                       <div className="min-w-0 flex-1">
                         <div className="flex flex-wrap items-center gap-2">
-                          <h3 className="text-base font-bold text-foreground md:text-lg">{country.short}</h3>
+                          <h3 className="text-sm font-bold text-foreground md:text-base">{country.short}</h3>
                           {country.label && (
-                            <span className="rounded-full bg-primary-red/10 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-primary-red">
+                            <span className="rounded-full bg-primary-red/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-primary-red">
                               {country.label}
                             </span>
                           )}
                         </div>
-                        <p className="mt-0.5 text-sm text-foreground/45">{country.name}</p>
+                        <p className="text-xs text-foreground/45">{country.name}</p>
                       </div>
-
-                      <MapPin
-                        size={18}
-                        className="shrink-0 text-foreground/20 transition-colors group-hover:text-primary-red"
-                      />
+                      <MapPin size={16} className="shrink-0 text-primary-red/40" />
                     </motion.li>
                   ))}
                 </ul>
+              </div>
+
+              {/* Right — COBE globe */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.96 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                className="relative flex items-center justify-center"
+              >
+                <FootprintGlobe />
+                <p className="pointer-events-none absolute bottom-2 left-1/2 -translate-x-1/2 text-center text-[11px] text-foreground/40">
+                  Drag to explore · HQ in UAE
+                </p>
               </motion.div>
             </div>
-
-            {/* Mobile-friendly country strip */}
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-              className="mt-12 flex flex-wrap items-center justify-center gap-2 border-t border-[var(--border)] pt-10 lg:hidden"
-            >
-              {footprintCountries.map((country) => (
-                <span
-                  key={`pill-${country.code}`}
-                  className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-card px-4 py-2 text-sm font-medium text-foreground/70"
-                >
-                  <span className="text-[10px] font-bold text-primary-red">{country.code}</span>
-                  {country.short}
-                </span>
-              ))}
-            </motion.div>
           </div>
         </section>
       </main>
+      <CTA />
       <Footer />
     </>
   );

@@ -47,21 +47,33 @@ const SHORT_HINTS: Record<string, string> = {
   "ai-platform": "For AI conversations",
 };
 
+const MOBILE_HINTS: Record<string, string> = {
+  loyalty: "Loyalty & rewards",
+  omnichannel: "WhatsApp messages",
+  "ai-platform": "AI conversations",
+};
+
+type HandPlacement = "left" | "right";
+
 /* ── Animated hand cursor with Click label ── */
 function HandCursor({
   x,
   y,
   color,
   hint,
+  placement,
 }: {
   x: number;
   y: number;
   color: string;
   hint: string;
+  placement: HandPlacement;
 }) {
+  const flip = placement === "left";
+
   return (
     <motion.div
-      className="pointer-events-none absolute z-50 flex items-start gap-1.5"
+      className={`pointer-events-none absolute z-50 flex max-w-[calc(100%-8px)] items-start gap-1.5 ${flip ? "flex-row-reverse" : ""}`}
       animate={{ left: x, top: y }}
       transition={{ type: "spring", stiffness: 60, damping: 22 }}
     >
@@ -74,11 +86,11 @@ function HandCursor({
           y: { duration: 1.4, repeat: Infinity, ease: "easeInOut" },
           scale: { duration: 1.4, repeat: Infinity, ease: "easeInOut" },
         }}
-        className="-rotate-[25deg]"
+        className={flip ? "rotate-[25deg]" : "-rotate-[25deg]"}
       >
         <PointingHandIcon color={color} />
       </motion.div>
-      <div className="mt-1 flex flex-col items-start gap-1">
+      <div className={`mt-1 flex min-w-0 flex-col gap-1 ${flip ? "items-end" : "items-start"}`}>
         <motion.span
           key={`click-${color}`}
           initial={{ opacity: 0.6 }}
@@ -87,7 +99,7 @@ function HandCursor({
             opacity: { duration: 1.4, repeat: Infinity, ease: "easeInOut" },
             scale: { duration: 1.4, repeat: Infinity, ease: "easeInOut" },
           }}
-          className="rounded-full px-2.5 py-1 text-[11px] font-bold uppercase tracking-wide text-white"
+          className="shrink-0 rounded-full px-2.5 py-1 text-[11px] font-bold uppercase tracking-wide text-white"
           style={{
             backgroundColor: color,
             boxShadow: `0 4px 16px ${hexToRgba(color, 0.5)}`,
@@ -100,7 +112,7 @@ function HandCursor({
           initial={{ opacity: 0, y: -4 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-          className="max-w-[130px] rounded-2xl rounded-tl-sm px-2.5 py-1.5 text-[10px] leading-snug font-medium text-foreground/85"
+          className={`max-w-[110px] rounded-2xl px-2.5 py-1.5 text-[10px] leading-snug font-medium text-foreground/85 md:max-w-[130px] ${flip ? "rounded-tr-sm" : "rounded-tl-sm"}`}
           style={{
             backgroundColor: hexToRgba(color, 0.14),
             border: `1px solid ${hexToRgba(color, 0.28)}`,
@@ -113,8 +125,15 @@ function HandCursor({
   );
 }
 
+const MOBILE_LABELS: Record<string, string> = {
+  loyalty: "Loyalty",
+  omnichannel: "Omnichannel",
+  "ai-platform": "AI Platform",
+};
+
 /* ── Floating channel node ── */
 function ChannelNode({
+  id,
   icon: Icon,
   label,
   color,
@@ -124,6 +143,7 @@ function ChannelNode({
   nodeRef,
   onClick,
 }: {
+  id: string;
   icon: React.ElementType;
   label: string;
   color: string;
@@ -133,8 +153,14 @@ function ChannelNode({
   nodeRef?: (el: HTMLDivElement | null) => void;
   onClick?: () => void;
 }) {
+  const mobileLabel = MOBILE_LABELS[id] ?? label;
+
   return (
-    <div ref={nodeRef} className="absolute z-30" style={style}>
+    <div
+      ref={nodeRef}
+      className={`hero-orb-node hero-orb-node--${id} absolute z-30 max-w-[46%] md:max-w-none`}
+      style={style}
+    >
       <motion.button
         onClick={onClick}
         initial={{ opacity: 0, scale: 0.5 }}
@@ -156,13 +182,14 @@ function ChannelNode({
         }}
         whileHover={{ scale: 1.06, y: -2 }}
         whileTap={{ scale: 0.96 }}
-        className="group relative inline-flex w-full cursor-pointer items-center gap-2 rounded-full py-1.5 pl-3 pr-1.5 text-xs font-semibold text-white btn-shine overflow-hidden md:gap-2.5 md:py-2 md:pl-4 md:text-sm"
+        className="group relative inline-flex w-fit max-w-full cursor-pointer items-center gap-1.5 overflow-hidden rounded-full py-1.5 pl-2.5 pr-1 text-[11px] font-semibold text-white btn-shine md:gap-2.5 md:py-2 md:pl-4 md:pr-1.5 md:text-sm"
         style={{ backgroundColor: color }}
       >
-        <Icon className="h-4 w-4 shrink-0 opacity-90" />
-        <span className="whitespace-nowrap">{label}</span>
-        <span className="ml-auto flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white/20 transition-all duration-300 group-hover:bg-white/30 group-hover:translate-x-0.5 md:h-8 md:w-8">
-          <ArrowRight className="h-3.5 w-3.5 md:h-4 md:w-4" />
+        <Icon className="h-3.5 w-3.5 shrink-0 opacity-90 md:h-4 md:w-4" />
+        <span className="whitespace-nowrap md:hidden">{mobileLabel}</span>
+        <span className="hidden whitespace-nowrap md:inline">{label}</span>
+        <span className="ml-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-white/20 transition-all duration-300 group-hover:translate-x-0.5 group-hover:bg-white/30 md:ml-auto md:h-8 md:w-8">
+          <ArrowRight className="h-3 w-3 md:h-4 md:w-4" />
         </span>
       </motion.button>
     </div>
@@ -224,6 +251,8 @@ function OrbitalLines() {
 function DarkOrb({ onSelectProduct }: { onSelectProduct: (productId: string) => void }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [handPos, setHandPos] = useState({ x: 0, y: 0 });
+  const [handPlacement, setHandPlacement] = useState<HandPlacement>("right");
+  const [handHint, setHandHint] = useState("");
   const [handReady, setHandReady] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const nodeRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -231,15 +260,37 @@ function DarkOrb({ onSelectProduct }: { onSelectProduct: (productId: string) => 
   const updateHandPosition = (index: number) => {
     const node = nodeRefs.current[index];
     const container = containerRef.current;
-    if (!node || !container) return;
+    const product = productsData[index];
+    if (!node || !container || !product) return;
 
     const nodeRect = node.getBoundingClientRect();
     const containerRect = container.getBoundingClientRect();
+    const isMobile = window.innerWidth < 768;
+    const containerWidth = containerRect.width;
+    const handOffset = isMobile ? 92 : 118;
 
-    setHandPos({
-      x: nodeRect.right - containerRect.left - 4,
-      y: nodeRect.top - containerRect.top + nodeRect.height / 2 - 16,
-    });
+    const nodeCenterX = nodeRect.left + nodeRect.width / 2 - containerRect.left;
+    const placeLeft =
+      product.id === "omnichannel" || (isMobile && nodeCenterX > containerWidth * 0.52);
+
+    let x: number;
+    let placement: HandPlacement = "right";
+
+    if (placeLeft) {
+      placement = "left";
+      x = nodeRect.left - containerRect.left - handOffset;
+      x = Math.max(4, x);
+    } else {
+      x = nodeRect.right - containerRect.left - 4;
+      x = Math.min(x, containerWidth - (isMobile ? 88 : 128));
+    }
+
+    let y = nodeRect.top - containerRect.top + nodeRect.height / 2 - 16;
+    y = Math.max(4, Math.min(y, containerRect.height - 72));
+
+    setHandPos({ x, y });
+    setHandPlacement(placement);
+    setHandHint(isMobile ? MOBILE_HINTS[product.id] : SHORT_HINTS[product.id]);
     setHandReady(true);
   };
 
@@ -266,25 +317,55 @@ function DarkOrb({ onSelectProduct }: { onSelectProduct: (productId: string) => 
   return (
     <div
       ref={containerRef}
-      className="relative w-full max-w-[500px] mx-auto aspect-square flex items-center justify-center"
+      className="relative mx-auto w-full max-w-[580px] px-2 max-md:max-w-[340px] max-md:overflow-hidden md:overflow-visible md:px-8"
     >
-      {/* Background ambient glow */}
-      <div className="absolute inset-0 rounded-full bg-primary-red/5 blur-3xl animate-pulse" />
+      <div className="relative mx-auto aspect-square w-full max-w-[500px]">
+        {/* Background ambient glow */}
+        <div className="absolute inset-0 rounded-full bg-primary-red/5 blur-3xl animate-pulse" />
 
-      {/* Outer orbital ring */}
-      <div className="absolute inset-4 rounded-full border border-dashed border-foreground/10 animate-[spin_24s_linear_infinite]" />
+        {/* Outer orbital ring */}
+        <div className="absolute inset-4 rounded-full border border-dashed border-foreground/10 animate-[spin_24s_linear_infinite]" />
 
-      {/* Middle ring */}
-      <div
-        className="absolute inset-[60px] rounded-full border border-primary-red/10 animate-[spin_16s_linear_infinite_reverse]"
-        style={{ borderStyle: "dotted" }}
-      />
+        {/* Middle ring */}
+        <div
+          className="absolute inset-[60px] rounded-full border border-primary-red/10 animate-[spin_16s_linear_infinite_reverse]"
+          style={{ borderStyle: "dotted" }}
+        />
 
-      {/* Inner ring with glow */}
-      <div className="absolute inset-[100px] rounded-full border border-primary-red/20 animate-[spin_10s_linear_infinite]" />
+        {/* Inner ring with glow */}
+        <div className="absolute inset-[100px] rounded-full border border-primary-red/20 animate-[spin_10s_linear_infinite]" />
 
-      {/* Connection lines SVG */}
-      <OrbitalLines />
+        {/* Connection lines SVG */}
+        <OrbitalLines />
+
+        {/* Center hub */}
+        <motion.div
+          animate={{
+            opacity: [1, 0.85, 1],
+            boxShadow: [
+              "0 0 40px rgba(242,13,20,0.3)",
+              "0 0 70px rgba(242,13,20,0.55)",
+              "0 0 40px rgba(242,13,20,0.3)",
+            ],
+          }}
+          transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute left-1/2 top-1/2 z-10 flex h-[90px] w-[90px] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-primary-red/30"
+          style={{
+            background: "radial-gradient(circle, rgba(229,72,59,0.15) 0%, transparent 70%)",
+          }}
+        >
+          <div
+            className="flex h-[62px] w-[62px] items-center justify-center rounded-full"
+            style={{
+              background: "linear-gradient(135deg, #f20d14, #C0392B)",
+              boxShadow: "0 0 30px rgba(229,72,59,0.5)",
+            }}
+          >
+            <Bot className="text-white" size={28} />
+          </div>
+          <span className="absolute inset-0 rounded-full border border-primary-red/40 animate-[pulse-ring_2s_ease-out_infinite]" />
+        </motion.div>
+      </div>
 
       {/* Animated hand cursor */}
       {handReady && (
@@ -292,42 +373,16 @@ function DarkOrb({ onSelectProduct }: { onSelectProduct: (productId: string) => 
           x={handPos.x}
           y={handPos.y}
           color={productsData[activeIndex].color}
-          hint={SHORT_HINTS[productsData[activeIndex].id]}
+          hint={handHint}
+          placement={handPlacement}
         />
       )}
-
-      {/* Center hub */}
-      <motion.div
-        animate={{
-          opacity: [1, 0.85, 1],
-          boxShadow: [
-            "0 0 40px rgba(242,13,20,0.3)",
-            "0 0 70px rgba(242,13,20,0.55)",
-            "0 0 40px rgba(242,13,20,0.3)",
-          ],
-        }}
-        transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-        className="relative z-10 w-[90px] h-[90px] rounded-full border border-primary-red/30 flex items-center justify-center"
-        style={{
-          background: "radial-gradient(circle, rgba(229,72,59,0.15) 0%, transparent 70%)",
-        }}
-      >
-        <div
-          className="w-[62px] h-[62px] rounded-full flex items-center justify-center"
-          style={{
-            background: "linear-gradient(135deg, #f20d14, #C0392B)",
-            boxShadow: "0 0 30px rgba(229,72,59,0.5)",
-          }}
-        >
-          <Bot className="text-white" size={28} />
-        </div>
-        <span className="absolute inset-0 rounded-full border border-primary-red/40 animate-[pulse-ring_2s_ease-out_infinite]" />
-      </motion.div>
 
       {/* Channel nodes / Product Widgets */}
       {productsData.map((prod, i) => (
         <ChannelNode
           key={prod.id}
+          id={prod.id}
           icon={prod.icon}
           label={prod.title}
           color={prod.color}
@@ -423,7 +478,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.85, ease: [0.16, 1, 0.3, 1] }}
-              className="flex flex-col sm:flex-row gap-4"
+              className="flex flex-col items-start gap-4 sm:flex-row"
             >
               <BookCallButton onClick={openCalendly} size="lg" />
             </motion.div>
@@ -435,7 +490,7 @@ export function Hero() {
               initial={{ opacity: 0, x: 40 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-              className="relative flex items-center justify-center"
+              className="relative flex items-center justify-center overflow-visible"
             >
               <div className="flex w-full items-center justify-center">
                 <DarkOrb onSelectProduct={openModal} />

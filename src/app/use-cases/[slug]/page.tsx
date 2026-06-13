@@ -2,6 +2,7 @@
 
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { CTA } from "@/components/CTA";
 import { ClientLogoBand } from "@/components/ClientLogoBand";
 import { CaseStudyButton } from "@/components/CaseStudyButton";
 import { motion, useInView } from "framer-motion";
@@ -887,36 +888,7 @@ export default function UseCaseDetail() {
           </div>
         </section>
 
-        {/* CTA */}
-        <section className="border-t border-[var(--border)] px-6 py-20">
-          <div className="mx-auto max-w-[800px] text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="relative overflow-hidden rounded-[2rem] border border-[var(--border)] bg-card p-12 shadow-[0_2px_20px_rgba(0,0,0,0.04)] md:p-16 dark:shadow-[0_2px_24px_rgba(0,0,0,0.2)]"
-            >
-              <div className="pointer-events-none absolute inset-0 bg-primary-red/3" />
-              <div className="pointer-events-none absolute top-0 right-0 h-[400px] w-[400px] rounded-full bg-primary-red/8 blur-[120px]" />
-
-              <div className="relative z-10">
-                <Sparkles className="mx-auto mb-6 text-primary-red" size={32} />
-                <h2 className="mb-4 text-3xl font-bold text-foreground md:text-4xl">
-                  Want results like {uc.client}?
-                </h2>
-                <p className="mx-auto mb-8 max-w-lg text-foreground/60">
-                  Let us show you how Echo can transform your customer engagement and drive measurable growth.
-                </p>
-                <Link
-                  href="/contact"
-                  className="inline-flex items-center gap-2 rounded-full bg-primary-red px-8 py-4 text-lg font-bold text-white shadow-[0_4px_24px_rgba(242,13,20,0.45)] transition-transform hover:scale-105"
-                >
-                  Book a Demo <ArrowRight size={20} />
-                </Link>
-              </div>
-            </motion.div>
-          </div>
-        </section>
+        <CTA />
       </main>
       <Footer />
     </>

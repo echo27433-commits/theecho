@@ -2,11 +2,13 @@
 
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { CTA } from "@/components/CTA";
+import { CaseStudyButton } from "@/components/CaseStudyButton";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import { ArrowRight, Calendar, Clock, Filter } from "lucide-react";
+import { BookOpen, Calendar, Clock, Filter } from "lucide-react";
 import { useState } from "react";
-import { blogs, BlogCategory } from "@/data/blogs";
+import { blogs } from "@/data/blogs";
 
 const categories = ["All", "Agentic AI", "Loyalty", "Omnichannel"];
 
@@ -23,11 +25,11 @@ export default function BlogIndex() {
   return (
     <>
       <Navbar />
-      <main className="flex min-h-screen flex-col w-full bg-[#06070B] text-foreground font-sans pt-32 pb-20">
-        {/* Ambient Lighting */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-primary-red/10 blur-[150px] rounded-full pointer-events-none" />
+      <main className="relative flex min-h-screen w-full flex-col overflow-hidden bg-background pt-32 pb-20 font-sans text-foreground">
+        <div className="pointer-events-none absolute inset-0 dot-grid-light opacity-30 dark:dot-grid" />
+        <div className="pointer-events-none absolute top-0 left-1/2 h-[500px] w-[800px] -translate-x-1/2 rounded-full bg-primary-red/10 blur-[150px]" />
         
-        <div className="max-w-[1280px] mx-auto px-6 w-full relative z-10">
+        <div className="relative z-10 mx-auto w-full max-w-[1280px] px-6">
           <div className="text-center mb-16">
             <motion.h1 
               initial={{ opacity: 0, y: 20 }}
@@ -61,10 +63,10 @@ export default function BlogIndex() {
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
-                className={`px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${
-                  activeCategory === cat 
-                    ? "bg-primary-red text-white shadow-[0_0_20px_rgba(229,72,59,0.3)]" 
-                    : "bg-white/5 text-foreground/70 hover:bg-white/10 hover:text-white"
+                className={`rounded-full px-6 py-2.5 text-sm font-medium transition-all duration-300 ${
+                  activeCategory === cat
+                    ? "bg-primary-red text-white shadow-[0_0_20px_rgba(229,72,59,0.3)]"
+                    : "border border-[var(--border)] bg-foreground/5 text-foreground/70 hover:bg-foreground/10 hover:text-foreground"
                 }`}
               >
                 {cat}
@@ -92,7 +94,7 @@ export default function BlogIndex() {
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {filteredBlogs.map((blog, idx) => (
                       <Link href={`/blog/${blog.slug}`} key={blog.slug} className="block group">
-                        <div className="h-full bg-card border border-[var(--border)] rounded-3xl overflow-hidden flex flex-col group-hover:border-primary-red/30 transition-all duration-300 hover:shadow-[0_0_30px_rgba(229,72,59,0.05)] hover:-translate-y-2">
+                        <div className="flex h-full flex-col overflow-hidden rounded-3xl border border-[var(--border)] bg-card transition-all duration-300 group-hover:border-primary-red/30 hover:-translate-y-2 hover:shadow-[0_0_30px_rgba(229,72,59,0.05)] dark:hover:shadow-[0_0_30px_rgba(229,72,59,0.08)]">
                           <div className="h-56 relative overflow-hidden">
                             <div 
                               className="absolute inset-0 bg-cover bg-center group-hover:scale-110 transition-transform duration-700"
@@ -115,8 +117,12 @@ export default function BlogIndex() {
                             <p className="text-sm text-foreground/60 mb-6 line-clamp-3 flex-1">
                               {blog.excerpt}
                             </p>
-                            <div className="mt-auto flex items-center gap-2 text-primary-red font-semibold text-sm group-hover:gap-3 transition-all duration-300">
-                              Read Article <ArrowRight size={16} />
+                            <div className="mt-auto">
+                              <CaseStudyButton
+                                color="#f20d14"
+                                label="Read Article"
+                                icon={BookOpen}
+                              />
                             </div>
                           </div>
                         </div>
@@ -130,6 +136,7 @@ export default function BlogIndex() {
 
         </div>
       </main>
+      <CTA />
       <Footer />
     </>
   );

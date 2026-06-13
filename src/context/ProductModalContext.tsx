@@ -33,7 +33,7 @@ export const productsData: ProductData[] = [
     title: "Omnichannel Comms",
     icon: Layers,
     color: "#3B82F6",
-    style: { top: "15%", right: "-5%" },
+    style: { top: "15%", right: "0%" },
     description: "Unify all your customer touchpoints into a single, seamless experience. Reach your customers wherever they are, without losing context.",
     features: ["Unified Inbox", "Cross Channel Routing", "Campaign Management"],
     image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2015&auto=format&fit=crop",

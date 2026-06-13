@@ -2,9 +2,11 @@
 
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { CTA } from "@/components/CTA";
+import { CaseStudyButton } from "@/components/CaseStudyButton";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
-import { ArrowRight, CheckCircle2, ChevronDown, LayoutDashboard, MessageSquare, Bot, Heart, Database } from "lucide-react";
+import { CheckCircle2, ChevronDown, MessageSquare, Bot, Heart, Database, Sparkles } from "lucide-react";
 import { useProductModal } from "@/context/ProductModalContext";
 
 const fadeUp = {
@@ -21,6 +23,29 @@ const staggerContainer = {
     }
   }
 };
+
+const heroImages = [
+  {
+    src: "https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=600&auto=format&fit=crop",
+    alt: "Team collaborating on customer engagement strategy",
+    offset: "translate-y-0",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=600&auto=format&fit=crop",
+    alt: "Professionals working together in a modern office",
+    offset: "md:translate-y-8",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1553877522-43269d4ea984?q=80&w=600&auto=format&fit=crop",
+    alt: "Business team reviewing analytics dashboard",
+    offset: "md:-translate-y-6",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=600&auto=format&fit=crop",
+    alt: "Customer success meeting in progress",
+    offset: "translate-y-0",
+  },
+];
 
 const faqs = [
   {
@@ -50,53 +75,72 @@ export default function About() {
   return (
     <>
       <Navbar />
-      <main className="flex min-h-screen flex-col w-full overflow-hidden bg-[#06070B] text-foreground font-sans">
+      <main className="flex min-h-screen flex-col w-full overflow-hidden bg-background text-foreground font-sans">
         
-        {/* --- 1. HERO SECTION (ZenZest Style) --- */}
-        <section className="relative pt-[140px] pb-16 overflow-hidden">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-primary-red/10 blur-[150px] rounded-full pointer-events-none" />
-          
-          <div className="max-w-[1280px] mx-auto px-6 relative z-10 text-center">
-            <motion.div initial="hidden" animate="visible" variants={staggerContainer} className="max-w-4xl mx-auto">
-              <motion.div variants={fadeUp} className="inline-block px-4 py-1.5 rounded-full border border-primary-red/30 bg-primary-red/10 text-primary-red text-sm font-semibold tracking-wide mb-6">
+        {/* Hero */}
+        <section className="relative pb-20 pt-[140px] lg:pb-24">
+          <div className="pointer-events-none absolute inset-0 dot-grid-light opacity-30 dark:dot-grid" />
+          <div className="pointer-events-none absolute top-0 left-1/2 h-[500px] w-[800px] -translate-x-1/2 rounded-full bg-primary-red/10 blur-[150px]" />
+
+          <div className="relative z-10 mx-auto max-w-[1280px] px-6">
+            <motion.div
+              initial="hidden"
+              animate="visible"
+              variants={staggerContainer}
+              className="mx-auto mb-16 max-w-4xl text-center md:mb-20"
+            >
+              <motion.div
+                variants={fadeUp}
+                className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary-red/20 bg-primary-red/10 px-4 py-1.5 text-xs font-semibold text-primary-red"
+              >
+                <Sparkles size={12} />
                 About Echo
               </motion.div>
-              <motion.h1 variants={fadeUp} className="text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight mb-6 leading-[1.1]">
-                AI Powered Customer Engagement For <span className="gradient-text-red">Modern Businesses</span>
+              <motion.h1
+                variants={fadeUp}
+                className="mb-6 text-4xl font-extrabold leading-[1.1] tracking-tight md:text-5xl lg:text-6xl xl:text-7xl"
+              >
+                AI Powered Customer Engagement For{" "}
+                <span className="gradient-text-red">Modern Businesses</span>
               </motion.h1>
-              <motion.p variants={fadeUp} className="text-lg md:text-xl text-foreground/60 leading-relaxed mb-10 max-w-2xl mx-auto">
+              <motion.p
+                variants={fadeUp}
+                className="mx-auto mb-10 max-w-2xl text-lg leading-relaxed text-foreground/60 md:text-xl"
+              >
                 Echo combines intelligent automation, omnichannel communication, and conversational AI into one unified platform designed to improve customer experience at scale.
               </motion.p>
-              <motion.div variants={fadeUp}>
-                <a href="/contact" className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-primary-red text-white font-bold text-lg hover:bg-red-600 transition-all duration-300">
-                  Get Started Today <ArrowRight size={20} />
-                </a>
+              <motion.div variants={fadeUp} className="flex justify-center">
+                <CaseStudyButton
+                  color="#f20d14"
+                  label="Get Started Today"
+                  href="/contact"
+                />
               </motion.div>
             </motion.div>
 
-            {/* Custom Shaped Images Grid */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4, duration: 0.8 }}
-              className="mt-20 flex justify-center items-center gap-4 md:gap-6 flex-wrap lg:flex-nowrap"
+              transition={{ delay: 0.35, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              className="flex flex-wrap items-end justify-center gap-4 md:gap-5 lg:flex-nowrap lg:gap-6"
             >
-              <div 
-                className="w-[200px] h-[250px] bg-cover bg-center border border-[var(--border)]"
-                style={{ backgroundImage: "url('https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=400&auto=format&fit=crop')", borderRadius: "20px 20px 20px 100px" }}
-              />
-              <div 
-                className="w-[200px] h-[250px] bg-cover bg-center border border-[var(--border)] mt-8"
-                style={{ backgroundImage: "url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=400&auto=format&fit=crop')", borderRadius: "20px 20px 100px 20px" }}
-              />
-              <div 
-                className="w-[200px] h-[250px] bg-cover bg-center border border-[var(--border)] -mt-8"
-                style={{ backgroundImage: "url('https://images.unsplash.com/photo-1553877522-43269d4ea984?q=80&w=400&auto=format&fit=crop')", borderRadius: "100px 20px 20px 20px" }}
-              />
-              <div 
-                className="w-[200px] h-[250px] bg-cover bg-center border border-[var(--border)]"
-                style={{ backgroundImage: "url('https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=400&auto=format&fit=crop')", borderRadius: "20px 100px 20px 20px" }}
-              />
+              {heroImages.map((image, i) => (
+                <motion.div
+                  key={image.src}
+                  initial={{ opacity: 0, y: 24 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.45 + i * 0.08, duration: 0.6 }}
+                  className={`group relative aspect-[4/5] w-[42%] shrink-0 overflow-visible sm:w-[170px] md:w-[190px] lg:w-[220px] ${image.offset}`}
+                >
+                  <div className="relative h-full w-full overflow-hidden rounded-2xl border border-[var(--border)] bg-card shadow-[0_8px_30px_rgba(0,0,0,0.06)] transition-transform duration-500 group-hover:-translate-y-1 dark:shadow-[0_8px_30px_rgba(0,0,0,0.22)]">
+                    <img
+                      src={image.src}
+                      alt={image.alt}
+                      className="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                    />
+                  </div>
+                </motion.div>
+              ))}
             </motion.div>
           </div>
         </section>
@@ -236,57 +280,7 @@ export default function About() {
           </div>
         </section>
 
-        {/* --- 7. FINAL CTA SECTION --- */}
-        <section className="py-24 px-6 relative">
-          <div className="max-w-[1280px] mx-auto">
-            <motion.div 
-              initial={{ opacity: 0, y: 40 }} 
-              whileInView={{ opacity: 1, y: 0 }} 
-              viewport={{ once: true }} 
-              transition={{ duration: 0.8 }}
-              className="relative rounded-[40px] overflow-hidden bg-card border border-[var(--border)] p-10 md:p-20 flex flex-col lg:flex-row items-center gap-12"
-            >
-              <div className="absolute inset-0 bg-primary-red/5" />
-              <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary-red/10 blur-[150px] rounded-full pointer-events-none" />
-
-              <div className="relative z-10 lg:w-1/2 text-center lg:text-left">
-                <h2 className="text-4xl md:text-6xl font-bold mb-6 leading-tight text-white">
-                  Ready To Transform Your Business Effortlessly? <br/>
-                  <span className="gradient-text-red">Get Started Today!</span>
-                </h2>
-                <p className="text-lg text-foreground/60 mb-10 max-w-xl mx-auto lg:mx-0">
-                  Join hundreds of forward-thinking enterprises that are scaling customer loyalty and engagement with Echo.
-                </p>
-                <a href="/contact" className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-primary-red text-white font-bold text-lg hover:scale-105 transition-transform duration-300 shadow-[0_0_30px_rgba(229,72,59,0.3)]">
-                  Start Your Journey <ArrowRight size={20} />
-                </a>
-              </div>
-
-              <div className="relative z-10 lg:w-1/2 w-full mt-10 lg:mt-0">
-                <div className="bg-[#06070B] border border-[var(--border)] rounded-2xl shadow-2xl p-4 transform lg:rotate-2 hover:rotate-0 transition-transform duration-500">
-                  {/* Mockup Top Bar */}
-                  <div className="flex items-center gap-2 mb-4 border-b border-[var(--border)] pb-4">
-                    <div className="w-3 h-3 rounded-full bg-red-500" />
-                    <div className="w-3 h-3 rounded-full bg-yellow-500" />
-                    <div className="w-3 h-3 rounded-full bg-green-500" />
-                  </div>
-                  {/* Mockup Content */}
-                  <div className="grid grid-cols-3 gap-4">
-                    <div className="col-span-2 space-y-4">
-                      <div className="h-32 bg-white/5 rounded-xl flex items-center justify-center text-white/20"><LayoutDashboard size={32} /></div>
-                      <div className="h-20 bg-white/5 rounded-xl" />
-                    </div>
-                    <div className="space-y-4">
-                      <div className="h-20 bg-primary-red/20 rounded-xl" />
-                      <div className="h-32 bg-white/5 rounded-xl" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </section>
-
+        <CTA />
       </main>
       <Footer />
     </>

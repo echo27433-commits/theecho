@@ -155,6 +155,36 @@
     background: radial-gradient(ellipse 60% 40% at 50% 50%, rgba(242,13,20,0.08) 0%, transparent 70%);
   }
 
+/* Hero orb — spread floating nodes on mobile only */
+@media (max-width: 767px) {
+  .hero-orb-node--loyalty {
+    top: 4% !important;
+    left: 0% !important;
+    right: auto !important;
+  }
+
+  .hero-orb-node--omnichannel {
+    top: 20% !important;
+    right: 0% !important;
+    left: auto !important;
+  }
+
+  .hero-orb-node--ai-platform {
+    bottom: 6% !important;
+    left: 18% !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .hero-orb-node--loyalty {
+    left: 4% !important;
+  }
+
+  .hero-orb-node--omnichannel {
+    right: 4% !important;
+  }
+}
+
   /* Premium button shine */
   .btn-shine {
     position: relative;
@@ -412,4 +442,87 @@ html[data-magicui-theme-vt="active"]::view-transition-group(root) {
 body.theme-swipe-active,
 body.theme-swipe-active * {
   transition: none !important;
+}
+
+/* COBE globe marker labels — https://cobe.vercel.app/ */
+.cobe-marker-label {
+  position: absolute;
+  padding: 0.22rem 0.5rem;
+  border-radius: 5px;
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 20;
+  background: rgba(255, 255, 255, 0.95);
+  color: #0f0f10;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+}
+
+.dark .cobe-marker-label {
+  background: rgba(14, 16, 24, 0.92);
+  color: #f4f4f5;
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+}
+
+.cobe-marker-label--hq {
+  border-color: rgba(242, 13, 20, 0.35);
+  color: #f20d14;
+}
+
+.dark .cobe-marker-label--hq {
+  color: #ff6b6b;
+  border-color: rgba(242, 13, 20, 0.45);
+}
+
+.cobe-marker-label__badge {
+  margin-left: 0.3rem;
+  border-radius: 9999px;
+  background: rgba(242, 13, 20, 0.12);
+  padding: 0.08rem 0.3rem;
+  font-size: 0.5rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #f20d14;
+}
+
+.dark .cobe-marker-label__badge {
+  background: rgba(242, 13, 20, 0.2);
+  color: #ff8c7a;
+}
+
+/* Each label anchors to a different side of its marker */
+.cobe-marker-label--uae {
+  top: anchor(bottom);
+  left: anchor(center);
+  translate: -50% 18px;
+}
+
+.cobe-marker-label--saudi {
+  top: anchor(center);
+  right: anchor(left);
+  translate: -14px -50%;
+}
+
+.cobe-marker-label--bahrain {
+  bottom: anchor(top);
+  left: anchor(center);
+  translate: -130% -14px;
+}
+
+.cobe-marker-label--qatar {
+  bottom: anchor(top);
+  right: anchor(center);
+  translate: 55% -20px;
+}
+
+.cobe-marker-label--india {
+  bottom: anchor(top);
+  left: anchor(center);
+  translate: -50% -14px;
 }
