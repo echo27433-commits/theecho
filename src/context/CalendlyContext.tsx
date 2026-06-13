@@ -1,6 +1,16 @@
 "use client";
-import { createContext, useContext, useState, ReactNode, useEffect } from "react";
-import { PopupModal } from "react-calendly";
+import { createContext, useContext, useCallback, ReactNode } from "react";
+import Script from "next/script";
+
+const CALENDLY_URL = "https://calendly.com/hetjani818";
+
+declare global {
+  interface Window {
+    Calendly?: {
+      initPopupWidget: (options: { url: string }) => void;
+    };
+  }
+}
 
 type CalendlyContextType = {
   openCalendly: () => void;
@@ -9,31 +19,31 @@ type CalendlyContextType = {
 const CalendlyContext = createContext<CalendlyContextType | undefined>(undefined);
 
 export function CalendlyProvider({ children }: { children: ReactNode }) {
-  const [isOpen, setIsOpen] = useState(false);
-  const [rootElement, setRootElement] = useState<HTMLElement | null>(null);
+  const openCalendly = useCallback(() => {
+    const open = () => window.Calendly?.initPopupWidget({ url: CALENDLY_URL });
 
-  useEffect(() => {
-    setRootElement(document.body);
+    if (window.Calendly) {
+      open();
+      return;
+    }
+
+    const interval = window.setInterval(() => {
+      if (window.Calendly) {
+        window.clearInterval(interval);
+        open();
+      }
+    }, 100);
+
+    window.setTimeout(() => window.clearInterval(interval), 10000);
   }, []);
 
   return (
-    <CalendlyContext.Provider value={{ openCalendly: () => setIsOpen(true) }}>
+    <CalendlyContext.Provider value={{ openCalendly }}>
+      <Script
+        src="https://assets.calendly.com/assets/external/widget.js"
+        strategy="lazyOnload"
+      />
       {children}
-      {isOpen && rootElement && (
-        <PopupModal
-          url="https://calendly.com/echo-demo"
-          pageSettings={{
-            backgroundColor: '06070B',
-            hideEventTypeDetails: false,
-            hideLandingPageDetails: false,
-            primaryColor: 'f20d14',
-            textColor: 'ffffff'
-          }}
-          onModalClose={() => setIsOpen(false)}
-          open={isOpen}
-          rootElement={rootElement}
-        />
-      )}
     </CalendlyContext.Provider>
   );
 }
