@@ -24,14 +24,14 @@ function Logo({ className = "" }: { className?: string }) {
       href="/"
       className={`group flex min-w-0 items-center py-0.5 pl-0 pr-1 md:px-2.5 md:py-1 ${className}`}
     >
-      <div className="relative flex h-14 max-w-[260px] items-center overflow-hidden sm:h-[60px] sm:max-w-[280px] md:h-[68px] md:max-w-none">
+      <div className="relative flex h-[68px] max-w-[320px] items-center overflow-hidden sm:h-[76px] sm:max-w-[340px] md:h-[68px] md:max-w-none">
         <Image
           src="/The_Echo_Logo_v2.png"
           alt="ECHO Logo"
           width={440}
           height={160}
           unoptimized={true}
-          className="h-14 w-full max-w-[260px] object-contain object-left transition-transform duration-300 group-hover:scale-105 sm:h-[60px] sm:max-w-[280px] md:h-[158px] md:max-w-none md:w-auto"
+          className="h-[68px] w-full max-w-[320px] object-contain object-left transition-transform duration-300 group-hover:scale-105 sm:h-[76px] sm:max-w-[340px] md:h-[158px] md:max-w-none md:w-auto"
         />
       </div>
     </Link>
@@ -80,7 +80,7 @@ export function Navbar() {
               : "bg-background/50 backdrop-blur-md border-white/10 dark:border-white/5"
           }`}
         >
-          <div className="flex h-16 min-w-0 items-center justify-between gap-2 overflow-hidden px-3 sm:gap-4 sm:px-5 md:h-[72px]">
+          <div className="flex h-[76px] min-w-0 items-center justify-between gap-2 overflow-hidden px-3 sm:gap-4 sm:px-5 md:h-[72px]">
             <Logo className="flex-1 md:flex-none" />
 
             {/* Desktop Nav */}
@@ -125,7 +125,7 @@ export function Navbar() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -12, scale: 0.98 }}
               transition={{ type: "spring", stiffness: 380, damping: 32 }}
-              className="fixed top-[5.25rem] left-4 right-4 z-50 rounded-2xl border border-[var(--border)] bg-background/95 backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.2)] p-5 md:hidden"
+              className="fixed top-[5.75rem] left-4 right-4 z-50 rounded-2xl border border-[var(--border)] bg-background/95 backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.2)] p-5 md:hidden"
             >
               <nav className="flex flex-col gap-1">
                 {navLinks.map((link, i) => (

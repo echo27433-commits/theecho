@@ -76,7 +76,7 @@ function OverviewSection({
       icon: Target,
       title: "Challenge",
       description: "What needed to change",
-      color: "#f20d14",
+      color,
       step: "01",
     },
     {
@@ -104,7 +104,10 @@ function OverviewSection({
       className="mb-16"
     >
       <div className="mb-8">
-        <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-primary-red/20 bg-primary-red/10 px-3 py-1.5 text-xs font-semibold text-primary-red">
+        <div
+          className="mb-3 inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs font-semibold"
+          style={{ background: `${color}15`, color, borderColor: `${color}30` }}
+        >
           <Sparkles size={11} />
           The Journey
         </div>
@@ -414,7 +417,7 @@ function LineChartSection({ data, color, slug }: { data: UseCaseData["lineChart"
         </div>
         <div className="rounded-lg border border-[var(--border)] bg-foreground/[0.03] p-3 text-center">
           <p className="mb-0.5 text-[10px] font-semibold uppercase tracking-wider text-foreground/45">Change</p>
-          <p className="text-lg font-extrabold" style={{ color: isPositive ? color : "#f20d14" }}>
+          <p className="text-lg font-extrabold" style={{ color }}>
             {isPositive ? "+" : ""}
             {changePct}%
           </p>
@@ -737,7 +740,10 @@ export default function UseCaseDetail() {
 
                 <motion.div variants={fadeUp} className="relative z-10">
                   <div className="mb-5 flex flex-wrap items-center gap-3">
-                    <div className="inline-flex items-center gap-2 rounded-full border border-primary-red/20 bg-primary-red/10 px-3 py-1.5 text-xs font-semibold text-primary-red">
+                    <div
+                      className="inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs font-semibold"
+                      style={{ background: `${uc.color}15`, color: uc.color, borderColor: `${uc.color}30` }}
+                    >
                       <Sparkles size={11} />
                       Case Study
                     </div>
@@ -815,7 +821,10 @@ export default function UseCaseDetail() {
               viewport={{ once: true }}
               className="mb-10"
             >
-              <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-primary-red/20 bg-primary-red/10 px-3 py-1.5 text-xs font-semibold text-primary-red">
+              <div
+                className="mb-3 inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs font-semibold"
+                style={{ background: `${uc.color}15`, color: uc.color, borderColor: `${uc.color}30` }}
+              >
                 <Sparkles size={11} />
                 Performance Metrics
               </div>

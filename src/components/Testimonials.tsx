@@ -25,7 +25,7 @@ const testimonials = [
     quote:
       "Echo helped us turn WhatsApp into a high-performing customer channel. From promotions to automated responses, we boosted campaign conversions by 35% while reducing customer response time by over 60%.",
     company: "Mark & Save",
-    color: "#10B981",
+    color: "#F5B800",
     logo: "/mark_save_logo.png",
     logoDark: "/mark_save_logo_dark.png",
   },

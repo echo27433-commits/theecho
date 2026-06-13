@@ -178,6 +178,6 @@ export const useCasesData: UseCaseData[] = [
         { label: "Repeat Purchases", value: "35%", icon: "🔁" }
       ]
     },
-    color: "#f20d14"
+    color: "#F5B800"
   }
 ];
