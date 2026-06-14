@@ -11,6 +11,7 @@ import { NavHeader } from "@/components/ui/nav-header";
 import { BookCallButton } from "@/components/BookCallButton";
 
 const navLinks = [
+  { name: "Home", href: "/" },
   { name: "About Us", href: "/about" },
   { name: "Product", href: "/product" },
   { name: "Use Cases", href: "/use-cases" },

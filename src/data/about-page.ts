@@ -61,28 +61,40 @@ export const aboutValues: {
   },
 ];
 
+export const aboutJourney = {
+  eyebrow: "Our journey",
+  title: "From UAE roots to a full engagement stack",
+  subtitle: "Three defining chapters in how Echo evolved — from founding in the Gulf to launching the platforms brands rely on today.",
+};
+
 export const aboutMilestones = [
   {
-    year: "2019",
+    year: "2014",
     title: "Founded in the UAE",
-    description: "Started with a loyalty-first vision for MENA brands tired of disconnected point systems.",
+    description: "Echo began with a vision to help brands build stronger, more meaningful customer relationships across the region.",
+    accent: "#f20d14",
   },
   {
-    year: "2021",
-    title: "Omnichannel suite launched",
-    description: "Unified WhatsApp, SMS, and web chat into one workspace for enterprise teams.",
+    year: "2025",
+    title: "Omnichannel launched",
+    description: "Unified WhatsApp, SMS, and web chat into one workspace — giving teams a single view of every customer conversation.",
+    accent: "#3B82F6",
   },
   {
-    year: "2023",
-    title: "Agentic AI platform",
-    description: "Moved beyond scripted bots to context-aware AI that learns from every conversation.",
-  },
-  {
-    year: "Today",
-    title: "Trusted across the region",
-    description: "Powering loyalty and conversations for 500+ brands across retail, hospitality, and government.",
+    year: "2026",
+    title: "Loyalty and Agentic AI platform",
+    description: "Launched our loyalty engine and agentic AI platform — connecting retention, automation, and intelligent conversations in one stack.",
+    accent: "#A855F7",
   },
 ];
+
+export const aboutBuild = {
+  eyebrow: "What we build",
+  title: "One platform.",
+  titleAccent: "Endless possibilities",
+  subtitle:
+    "Loyalty, omnichannel, and agentic AI — three engines designed to work together so every customer touchpoint drives growth.",
+};
 
 export const aboutPillars: {
   id: string;

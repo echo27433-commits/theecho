@@ -15,6 +15,8 @@ import {
   aboutStory,
   aboutValues,
   aboutMilestones,
+  aboutJourney,
+  aboutBuild,
   aboutPillars,
   aboutIndustries,
   aboutApproach,
@@ -186,81 +188,165 @@ export default function About() {
           </div>
         </section>
 
-        {/* Timeline */}
-        <section className="py-20 lg:py-28">
-          <div className="mx-auto max-w-[1280px] px-6">
-            <div className="mb-14">
-              <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-primary-red">Our journey</p>
-              <h2 className="text-3xl font-bold text-foreground md:text-4xl">From loyalty platform to full engagement stack</h2>
-            </div>
+        {/* Journey */}
+        <section className="relative overflow-hidden border-t border-[var(--border)] bg-card/20 py-20 lg:py-28">
+          <div className="pointer-events-none absolute inset-0 dot-grid-light opacity-20 dark:dot-grid" />
+          <div className="pointer-events-none absolute left-1/2 top-0 h-[420px] w-[700px] -translate-x-1/2 rounded-full bg-primary-red/6 blur-[120px]" />
 
-            <div className="grid grid-cols-1 gap-0 md:grid-cols-2 lg:grid-cols-4">
-              {aboutMilestones.map((milestone, i) => (
-                <motion.div
-                  key={milestone.year}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1 }}
-                  className="relative border-t border-[var(--border)] py-8 pr-6 md:border-t-0 md:border-l md:py-0 md:pl-8 md:first:border-l-0 md:first:pl-0"
-                >
-                  <p className="mb-3 text-3xl font-extrabold tracking-tight text-primary-red">{milestone.year}</p>
-                  <h3 className="mb-2 text-lg font-bold text-foreground">{milestone.title}</h3>
-                  <p className="text-sm leading-relaxed text-foreground/55">{milestone.description}</p>
-                </motion.div>
-              ))}
+          <div className="relative mx-auto max-w-[1280px] px-6">
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7 }}
+              className="mx-auto mb-16 max-w-3xl text-center"
+            >
+              <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-primary-red">
+                {aboutJourney.eyebrow}
+              </p>
+              <h2 className="mb-4 text-3xl font-extrabold tracking-tight text-foreground md:text-4xl lg:text-5xl">
+                {aboutJourney.title}
+              </h2>
+              <p className="text-base leading-relaxed text-foreground/55 md:text-lg">{aboutJourney.subtitle}</p>
+            </motion.div>
+
+            <div className="relative">
+              <div className="pointer-events-none absolute left-8 top-0 hidden h-full w-px bg-gradient-to-b from-primary-red/50 via-primary-red/20 to-transparent lg:left-[16.666%] lg:top-[4.5rem] lg:block lg:h-px lg:w-[66.666%] lg:bg-gradient-to-r lg:from-primary-red/10 lg:via-primary-red/35 lg:to-primary-red/10" />
+
+              <div className="grid grid-cols-1 gap-10 lg:grid-cols-3 lg:items-stretch lg:gap-8">
+                {aboutMilestones.map((milestone, i) => (
+                  <motion.div
+                    key={milestone.year}
+                    initial={{ opacity: 0, y: 28 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.12, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                    className="relative flex h-full flex-col pl-12 lg:pl-0"
+                  >
+                    <div
+                      className="absolute left-0 top-8 flex h-4 w-4 items-center justify-center rounded-full border-2 border-background lg:left-1/2 lg:top-[4.25rem] lg:-translate-x-1/2"
+                      style={{ backgroundColor: milestone.accent, boxShadow: `0 0 0 6px ${milestone.accent}22` }}
+                    />
+
+                    {i < aboutMilestones.length - 1 && (
+                      <div className="absolute bottom-0 left-[7px] top-12 w-px bg-gradient-to-b from-[var(--border)] to-transparent lg:hidden" />
+                    )}
+
+                    <div className="group flex h-full flex-col rounded-3xl border border-[var(--border)] bg-card p-7 shadow-[0_20px_60px_rgba(0,0,0,0.04)] transition-all duration-300 hover:-translate-y-1 hover:border-foreground/10 dark:shadow-[0_20px_60px_rgba(0,0,0,0.25)] lg:mt-24 lg:p-8">
+                      <div className="mb-6 flex items-center justify-between gap-4 lg:min-h-[7.5rem] lg:flex-col lg:items-start">
+                        <div
+                          className="inline-flex items-center rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-[0.18em]"
+                          style={{ color: milestone.accent, backgroundColor: `${milestone.accent}14` }}
+                        >
+                          Phase {String(i + 1).padStart(2, "0")}
+                        </div>
+                        <p
+                          className="text-4xl font-extrabold tracking-tight md:text-5xl"
+                          style={{ color: milestone.accent }}
+                        >
+                          {milestone.year}
+                        </p>
+                      </div>
+
+                      <h3 className="mb-3 min-h-[3.5rem] text-xl font-bold leading-snug text-foreground md:min-h-[4rem] md:text-2xl">
+                        {milestone.title}
+                      </h3>
+                      <p className="flex-1 text-sm leading-relaxed text-foreground/55 md:text-base">{milestone.description}</p>
+
+                      <div
+                        className="mt-6 h-1 w-16 shrink-0 rounded-full transition-all duration-300 group-hover:w-24"
+                        style={{ background: `linear-gradient(90deg, ${milestone.accent}, transparent)` }}
+                      />
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
             </div>
           </div>
         </section>
 
-        {/* Pillars */}
-        <section className="border-t border-[var(--border)] bg-card/20 py-20 lg:py-28">
+        {/* What we build */}
+        <section className="border-t border-[var(--border)] bg-card/15 py-20 lg:py-28">
           <div className="mx-auto max-w-[1280px] px-6">
-            <div className="mb-14 text-center">
-              <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-primary-red">What we build</p>
-              <h2 className="text-3xl font-bold text-foreground md:text-4xl">One platform. Three engines for growth.</h2>
+            <div className="mb-14 grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-end lg:gap-16">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.7 }}
+              >
+                <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-primary-red">
+                  {aboutBuild.eyebrow}
+                </p>
+                <h2 className="text-2xl font-extrabold leading-tight tracking-tight text-foreground sm:text-3xl md:text-4xl lg:text-5xl">
+                  {aboutBuild.title}
+                  <br />
+                  <span className="gradient-text-red">{aboutBuild.titleAccent}</span>
+                </h2>
+              </motion.div>
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.7, delay: 0.08 }}
+                className="max-w-xl text-base leading-relaxed text-foreground/55 lg:text-lg"
+              >
+                {aboutBuild.subtitle}
+              </motion.p>
             </div>
 
-            <div className="space-y-5">
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, delay: 0.12 }}
+              className="overflow-hidden rounded-3xl border border-[var(--border)] bg-card"
+            >
               {aboutPillars.map((pillar, i) => (
-                <motion.div
+                <Link
                   key={pillar.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.08 }}
+                  href={pillar.href}
+                  className={`group grid grid-cols-1 items-center gap-6 p-7 transition-colors hover:bg-foreground/[0.02] md:grid-cols-[auto_1fr_auto] md:gap-8 md:p-8 lg:p-10 ${
+                    i > 0 ? "border-t border-[var(--border)]" : ""
+                  }`}
                 >
-                  <Link
-                    href={pillar.href}
-                    className="group flex flex-col gap-6 rounded-2xl border border-[var(--border)] bg-card p-7 transition-all hover:border-foreground/15 hover:-translate-y-0.5 md:flex-row md:items-center md:justify-between md:p-8"
-                  >
-                    <div className="flex items-start gap-5 md:items-center">
-                      <span className="text-4xl font-extrabold leading-none" style={{ color: pillar.color }}>
-                        {pillar.number}
-                      </span>
-                      <div>
-                        <div className="mb-2 flex items-center gap-3">
-                          <div
-                            className="flex h-9 w-9 items-center justify-center rounded-lg"
-                            style={{ background: `${pillar.color}15` }}
-                          >
-                            <pillar.icon size={18} style={{ color: pillar.color }} />
-                          </div>
-                          <h3 className="text-xl font-bold text-foreground md:text-2xl">{pillar.title}</h3>
-                        </div>
-                        <p className="max-w-2xl text-sm leading-relaxed text-foreground/55 md:text-base">{pillar.description}</p>
-                      </div>
-                    </div>
+                  <div className="flex items-center gap-5">
                     <span
-                      className="inline-flex shrink-0 items-center gap-2 text-sm font-semibold transition-colors"
+                      className="text-3xl font-extrabold tabular-nums md:text-4xl"
                       style={{ color: pillar.color }}
                     >
-                      Explore <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+                      {pillar.number}
                     </span>
-                  </Link>
-                </motion.div>
+                    <div
+                      className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl"
+                      style={{ backgroundColor: `${pillar.color}14`, color: pillar.color }}
+                    >
+                      <pillar.icon size={22} />
+                    </div>
+                  </div>
+
+                  <div className="min-w-0">
+                    <h3 className="mb-2 text-xl font-bold text-foreground md:text-2xl">{pillar.title}</h3>
+                    <p className="max-w-2xl text-sm leading-relaxed text-foreground/55 md:text-base">
+                      {pillar.description}
+                    </p>
+                  </div>
+
+                  <span
+                    className="inline-flex items-center gap-2 self-start text-sm font-semibold md:self-center"
+                    style={{ color: pillar.color }}
+                  >
+                    Explore
+                    <span
+                      className="flex h-9 w-9 items-center justify-center rounded-full border transition-all duration-300 group-hover:scale-105"
+                      style={{ borderColor: `${pillar.color}35`, backgroundColor: `${pillar.color}10` }}
+                    >
+                      <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-0.5" />
+                    </span>
+                  </span>
+                </Link>
               ))}
-            </div>
+            </motion.div>
           </div>
         </section>
 

@@ -3,13 +3,27 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { useProductModal } from "@/context/ProductModalContext";
+
+const productLinks = [
+  { label: "Loyalty", href: "/product/loyalty" },
+  { label: "AI Conversational Platform", href: "/product/ai-platform" },
+  { label: "Omnichannel Messaging Suite", href: "/product/omnichannel" },
+];
 
 const footerLinks = {
-  Products: ["Loyalty", "Omnichannel Messaging", "AI Conversational Platform"],
-  Company: ["About Us", "Blog", "Careers", "Contact Us"],
-  Resources: ["Documentation", "Blog", "Help Center"],
+  Company: ["About Us", "Home", "Product", "Use Cases", "Blog", "Contact"],
   Legal: ["Privacy Policy", "Terms of Service"],
+};
+
+const companyHrefByLabel: Record<string, string> = {
+  "About Us": "/about",
+  Home: "/",
+  Product: "/product",
+  "Use Cases": "/use-cases",
+  Blog: "/blog",
+  Contact: "/contact",
+  "Privacy Policy": "/privacy-policy",
+  "Terms of Service": "/terms-of-service",
 };
 
 const LINKEDIN_URL = "https://www.linkedin.com/company/echoproduct/?viewAsMember=true";
@@ -23,8 +37,6 @@ const LinkedinIcon = () => (
 );
 
 export function Footer() {
-  const { openModal } = useProductModal();
-
   return (
     <footer className="relative bg-[#06070B] text-white overflow-hidden">
       {/* Top gradient border */}
@@ -36,7 +48,7 @@ export function Footer() {
       <div className="absolute inset-0 dot-grid opacity-20 pointer-events-none" />
 
       <div className="max-w-[1280px] mx-auto px-6 pt-16 pb-10 relative">
-        <div className="grid grid-cols-1 md:grid-cols-[1.5fr_1fr_1fr_1fr_1fr] gap-10 mb-14">
+        <div className="grid grid-cols-1 md:grid-cols-[1.5fr_1fr_1fr_1fr] gap-10 mb-14">
           {/* Brand column */}
           <div>
             <div className="relative mb-5 group">
@@ -69,6 +81,28 @@ export function Footer() {
             </div>
           </div>
 
+          {/* Products */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <h3 className="text-xs font-semibold uppercase tracking-[0.16em] text-white mb-5">Products</h3>
+            <ul className="space-y-3">
+              {productLinks.map((product) => (
+                <li key={product.href}>
+                  <Link
+                    href={product.href}
+                    className="text-sm text-white hover:text-white/80 transition-colors duration-200 hover:translate-x-0.5 inline-block"
+                  >
+                    {product.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </motion.div>
+
           {/* Link columns */}
           {Object.entries(footerLinks).map(([category, links], colIdx) => (
             <motion.div
@@ -76,40 +110,22 @@ export function Footer() {
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: colIdx * 0.08 }}
+              transition={{ duration: 0.5, delay: (colIdx + 1) * 0.08 }}
             >
               <h3 className="text-xs font-semibold uppercase tracking-[0.16em] text-white mb-5">
                 {category}
               </h3>
               <ul className="space-y-3">
-                {links.map((link) => {
-                  const isProduct = category === "Products";
-                  const productId = link === "Loyalty" ? "loyalty" : link === "Omnichannel Messaging" ? "omnichannel" : "ai-platform";
-
-                  if (isProduct) {
-                    return (
-                      <li key={link}>
-                        <button
-                          onClick={() => openModal(productId)}
-                          className="text-sm text-white hover:text-white/80 transition-colors duration-200 hover:translate-x-0.5 inline-block text-left"
-                        >
-                          {link}
-                        </button>
-                      </li>
-                    );
-                  }
-
-                  return (
-                    <li key={link}>
-                      <Link
-                        href={link === "Contact Us" ? "/contact" : link === "About Us" ? "/about" : link === "Blog" ? "/blog" : "#"}
-                        className="text-sm text-white hover:text-white/80 transition-colors duration-200 hover:translate-x-0.5 inline-block"
-                      >
-                        {link}
-                      </Link>
-                    </li>
-                  );
-                })}
+                {links.map((link) => (
+                  <li key={link}>
+                    <Link
+                      href={companyHrefByLabel[link] ?? "#"}
+                      className="text-sm text-white hover:text-white/80 transition-colors duration-200 hover:translate-x-0.5 inline-block"
+                    >
+                      {link}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </motion.div>
           ))}
@@ -117,19 +133,19 @@ export function Footer() {
 
         {/* Attribution */}
         <p className="mb-8 text-center text-xs italic text-white">
-          Echo is a product of <span className="font-medium not-italic text-white">Unicorn</span>
+          Echo is developed by <span className="font-medium not-italic text-white">Unicorn</span> to power the future of customer engagement
         </p>
 
         {/* Bottom bar */}
         <div className="pt-8 border-t border-white/[0.06] flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-xs text-white">
-            © 2024 The Echo. All rights reserved.
+            © 2026 The Echo. All rights reserved.
           </p>
           <div className="flex gap-6">
-            <Link href="#" className="text-xs text-white hover:text-white/80 transition-colors">
+            <Link href="/privacy-policy" className="text-xs text-white hover:text-white/80 transition-colors">
               Privacy Policy
             </Link>
-            <Link href="#" className="text-xs text-white hover:text-white/80 transition-colors">
+            <Link href="/terms-of-service" className="text-xs text-white hover:text-white/80 transition-colors">
               Terms of Service
             </Link>
           </div>
