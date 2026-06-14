@@ -37,7 +37,7 @@ export function CTA() {
               <span className="gradient-text-red">together</span>
             </h2>
             <p className="mb-10 max-w-md text-base text-gray-500 dark:text-white/50">
-              Book a personalized demo call with our team today.
+              Book a personalized call with our team today.
             </p>
             <BookCallButton onClick={openCalendly} size="lg" />
           </div>

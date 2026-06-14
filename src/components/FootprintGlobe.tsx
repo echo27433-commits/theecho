@@ -51,25 +51,28 @@ export function FootprintGlobe() {
 
     let frameId = 0;
     let globe: ReturnType<typeof createGlobe> | null = null;
+    let isActive = true;
 
     const getSize = () => Math.max(container.offsetWidth, 280);
+    const getDpr = () => Math.min(1.5, window.devicePixelRatio || 1);
 
     const buildGlobe = (size: number) => {
       widthRef.current = size;
       const colors = getGlobeColors(isDark);
+      const dpr = getDpr();
 
       if (globe) {
         globe.destroy();
       }
 
       globe = createGlobe(canvas, {
-        devicePixelRatio: 2,
-        width: size * 2,
-        height: size * 2,
+        devicePixelRatio: dpr,
+        width: size * dpr,
+        height: size * dpr,
         phi: phiRef.current,
         theta: thetaRef.current,
         diffuse: 1.25,
-        mapSamples: 20000,
+        mapSamples: 10000,
         mapBaseBrightness: isDark ? 0.02 : 0.05,
         ...colors,
         markerColor: BRAND_RED,
@@ -87,10 +90,25 @@ export function FootprintGlobe() {
     buildGlobe(getSize());
 
     const animate = () => {
-      globe?.update({ phi: phiRef.current, theta: thetaRef.current });
+      if (isActive) {
+        globe?.update({ phi: phiRef.current, theta: thetaRef.current });
+      }
       frameId = requestAnimationFrame(animate);
     };
     frameId = requestAnimationFrame(animate);
+
+    const visibilityObserver = new IntersectionObserver(
+      ([entry]) => {
+        isActive = entry.isIntersecting;
+      },
+      { threshold: 0.08 }
+    );
+    visibilityObserver.observe(container);
+
+    const onVisibilityChange = () => {
+      isActive = document.visibilityState === "visible";
+    };
+    document.addEventListener("visibilitychange", onVisibilityChange);
 
     const onPointerDown = (e: PointerEvent) => {
       dragRef.current = {
@@ -129,8 +147,9 @@ export function FootprintGlobe() {
 
     const observer = new ResizeObserver(() => {
       const size = getSize();
+      const dpr = getDpr();
       if (size !== widthRef.current) {
-        globe?.update({ width: size * 2, height: size * 2 });
+        globe?.update({ width: size * dpr, height: size * dpr });
         widthRef.current = size;
       }
     });
@@ -138,6 +157,8 @@ export function FootprintGlobe() {
 
     return () => {
       cancelAnimationFrame(frameId);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
+      visibilityObserver.disconnect();
       canvas.removeEventListener("pointerdown", onPointerDown);
       canvas.removeEventListener("pointermove", onPointerMove);
       canvas.removeEventListener("pointerup", onPointerUp);

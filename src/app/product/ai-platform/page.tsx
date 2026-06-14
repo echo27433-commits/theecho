@@ -1,8 +1,7 @@
 "use client";
 
 import { Navbar } from "@/components/Navbar";
-import { Footer } from "@/components/Footer";
-import { CTA } from "@/components/CTA";
+import { DeferredFooter, DeferredCTA } from "@/components/deferred";
 import { BookCallButton } from "@/components/BookCallButton";
 import { ProductPlatformSections } from "@/components/ProductPlatformSections";
 import { motion } from "framer-motion";
@@ -126,9 +125,9 @@ export default function AIPlatformProductPage() {
           features={features}
         />
 
-        <CTA />
+        <DeferredCTA />
       </main>
-      <Footer />
+      <DeferredFooter />
     </>
   );
 }

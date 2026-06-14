@@ -35,12 +35,26 @@ type CalendlyContextType = {
   openCalendly: () => void;
 };
 
+function ensureCalendlyAssets() {
+  if (typeof document === "undefined") return;
+
+  if (!document.querySelector('link[data-calendly-css]')) {
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = "https://assets.calendly.com/assets/external/widget.css";
+    link.setAttribute("data-calendly-css", "true");
+    document.head.appendChild(link);
+  }
+}
+
 const CalendlyContext = createContext<CalendlyContextType | undefined>(undefined);
 
 export function CalendlyProvider({ children }: { children: ReactNode }) {
   const { resolvedTheme } = useTheme();
 
   const openCalendly = useCallback(() => {
+    ensureCalendlyAssets();
+
     const isDark =
       resolvedTheme === "dark" || document.documentElement.classList.contains("dark");
     const url = getCalendlyUrl(isDark);

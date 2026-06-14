@@ -1,8 +1,7 @@
 "use client";
 
 import { Navbar } from "@/components/Navbar";
-import { Footer } from "@/components/Footer";
-import { CTA } from "@/components/CTA";
+import { DeferredFooter, DeferredCTA } from "@/components/deferred";
 import { motion } from "framer-motion";
 import { TrendingUp } from "lucide-react";
 import Link from "next/link";
@@ -142,9 +141,9 @@ export default function UseCasesPage() {
           </div>
         </section>
 
-        <CTA />
+        <DeferredCTA />
       </main>
-      <Footer />
+      <DeferredFooter />
     </>
   );
 }

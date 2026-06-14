@@ -1,8 +1,7 @@
 "use client";
 
 import { Navbar } from "@/components/Navbar";
-import { Footer } from "@/components/Footer";
-import { CTA } from "@/components/CTA";
+import { DeferredFooter, DeferredCTA } from "@/components/deferred";
 import { BookCallButton } from "@/components/BookCallButton";
 import { CaseStudyButton } from "@/components/CaseStudyButton";
 import { motion } from "framer-motion";
@@ -262,9 +261,9 @@ export default function ProductsPage() {
           </div>
         </section>
 
-        <CTA />
+        <DeferredCTA />
       </main>
-      <Footer />
+      <DeferredFooter />
     </>
   );
 }

@@ -1,8 +1,7 @@
 "use client";
 
 import { Navbar } from "@/components/Navbar";
-import { Footer } from "@/components/Footer";
-import { CTA } from "@/components/CTA";
+import { DeferredFooter, DeferredCTA } from "@/components/deferred";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { ArrowLeft, Calendar, Clock, User, Share2 } from "lucide-react";
@@ -121,8 +120,8 @@ export default function BlogPost() {
           </div>
         </section>
       </main>
-      <CTA />
-      <Footer />
+      <DeferredCTA />
+      <DeferredFooter />
     </>
   );
 }

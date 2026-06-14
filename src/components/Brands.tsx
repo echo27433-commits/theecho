@@ -22,7 +22,7 @@ const brands = [
 const defaultLogoClass = "h-14 md:h-16 lg:h-[84px] w-auto";
 
 // Double the array for seamless infinite marquee
-const doubled = [...brands, ...brands, ...brands];
+const doubled = [...brands, ...brands];
 
 export function Brands() {
   const ref = useRef<HTMLDivElement>(null);
@@ -56,11 +56,15 @@ export function Brands() {
                 <img
                   src={brand.logo}
                   alt={`${brand.name} logo`}
+                  loading="lazy"
+                  decoding="async"
                   className={`${"logoClass" in brand ? brand.logoClass : defaultLogoClass} object-contain dark:hidden`}
                 />
                 <img
                   src={brand.logoDark}
                   alt={`${brand.name} logo`}
+                  loading="lazy"
+                  decoding="async"
                   className={`${"logoClass" in brand ? brand.logoClass : defaultLogoClass} object-contain hidden dark:block`}
                 />
               </div>

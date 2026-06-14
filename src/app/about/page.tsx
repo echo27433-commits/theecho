@@ -1,275 +1,358 @@
 "use client";
 
 import { Navbar } from "@/components/Navbar";
-import { Footer } from "@/components/Footer";
-import { CTA } from "@/components/CTA";
+import { DeferredFooter, DeferredCTA } from "@/components/deferred";
+import { BookCallButton } from "@/components/BookCallButton";
 import { CaseStudyButton } from "@/components/CaseStudyButton";
 import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 import { useState } from "react";
-import { CheckCircle2, ChevronDown, MessageSquare, Bot, Heart, Database, Sparkles } from "lucide-react";
-import { useProductModal } from "@/context/ProductModalContext";
+import { ArrowRight, ChevronDown, Sparkles } from "lucide-react";
+import { useCalendly } from "@/context/CalendlyContext";
+import {
+  aboutHero,
+  aboutStats,
+  aboutStory,
+  aboutValues,
+  aboutMilestones,
+  aboutPillars,
+  aboutIndustries,
+  aboutApproach,
+  aboutGlobal,
+} from "@/data/about-page";
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as const } }
+  hidden: { opacity: 0, y: 28 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.75, ease: [0.16, 1, 0.3, 1] as const } },
 };
 
-const staggerContainer = {
+const stagger = {
   hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.15
-    }
-  }
+  visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
 };
-
-const heroImages = [
-  {
-    src: "https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=600&auto=format&fit=crop",
-    alt: "Team collaborating on customer engagement strategy",
-    offset: "translate-y-0",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=600&auto=format&fit=crop",
-    alt: "Professionals working together in a modern office",
-    offset: "md:translate-y-8",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1553877522-43269d4ea984?q=80&w=600&auto=format&fit=crop",
-    alt: "Business team reviewing analytics dashboard",
-    offset: "md:-translate-y-6",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=600&auto=format&fit=crop",
-    alt: "Customer success meeting in progress",
-    offset: "translate-y-0",
-  },
-];
-
-const faqs = [
-  {
-    question: "How does the AI conversational platform integrate?",
-    answer: "Our AI platform integrates seamlessly with your existing CRM and communication channels like WhatsApp, SMS, and web chat via robust APIs, requiring minimal setup time."
-  },
-  {
-    question: "Can I manage all my channels from one dashboard?",
-    answer: "Yes, the Omnichannel Communication Suite centralizes all your customer interactions across various channels into a single, unified dashboard for your team."
-  },
-  {
-    question: "How does the Loyalty Platform improve retention?",
-    answer: "It uses predictive analytics to trigger personalized rewards and engagement campaigns at the exact moment a customer is most likely to churn or make a repeat purchase."
-  },
-  {
-    question: "Is Echo suitable for enterprise-scale operations?",
-    answer: "Absolutely. Echo is built on a highly scalable, secure infrastructure trusted by major brands in retail, hospitality, and government sectors."
-  }
-];
-
-
 
 export default function About() {
+  const { openCalendly } = useCalendly();
   const [openFaq, setOpenFaq] = useState<number | null>(0);
-  const { openModal } = useProductModal();
 
   return (
     <>
       <Navbar />
-      <main className="flex min-h-screen flex-col w-full overflow-hidden bg-background text-foreground font-sans">
-        
+      <main className="flex min-h-screen w-full flex-col overflow-hidden bg-background font-sans text-foreground">
+
         {/* Hero */}
-        <section className="relative pb-20 pt-[140px] lg:pb-24">
+        <section className="relative pb-16 pt-[140px] lg:pb-24">
           <div className="pointer-events-none absolute inset-0 dot-grid-light opacity-30 dark:dot-grid" />
-          <div className="pointer-events-none absolute top-0 left-1/2 h-[500px] w-[800px] -translate-x-1/2 rounded-full bg-primary-red/10 blur-[150px]" />
+          <div className="pointer-events-none absolute top-0 left-1/2 h-[520px] w-[900px] -translate-x-1/2 rounded-full bg-primary-red/8 blur-[150px]" />
 
           <div className="relative z-10 mx-auto max-w-[1280px] px-6">
-            <motion.div
-              initial="hidden"
-              animate="visible"
-              variants={staggerContainer}
-              className="mx-auto mb-16 max-w-4xl text-center md:mb-20"
-            >
-              <motion.div
-                variants={fadeUp}
-                className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary-red/20 bg-primary-red/10 px-4 py-1.5 text-xs font-semibold text-primary-red"
-              >
-                <Sparkles size={12} />
-                About Echo
-              </motion.div>
-              <motion.h1
-                variants={fadeUp}
-                className="mb-6 text-4xl font-extrabold leading-[1.1] tracking-tight md:text-5xl lg:text-6xl xl:text-7xl"
-              >
-                AI Powered Customer Engagement For{" "}
-                <span className="gradient-text-red">Modern Businesses</span>
-              </motion.h1>
-              <motion.p
-                variants={fadeUp}
-                className="mx-auto mb-10 max-w-2xl text-lg leading-relaxed text-foreground/60 md:text-xl"
-              >
-                Echo combines intelligent automation, omnichannel communication, and conversational AI into one unified platform designed to improve customer experience at scale.
-              </motion.p>
-              <motion.div variants={fadeUp} className="flex justify-center">
-                <CaseStudyButton
-                  color="#f20d14"
-                  label="Get Started Today"
-                  href="/contact"
-                />
-              </motion.div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.35, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="flex flex-wrap items-end justify-center gap-4 md:gap-5 lg:flex-nowrap lg:gap-6"
-            >
-              {heroImages.map((image, i) => (
+            <div className="grid grid-cols-1 items-center gap-14 lg:grid-cols-2 lg:gap-20">
+              <motion.div initial="hidden" animate="visible" variants={stagger}>
                 <motion.div
-                  key={image.src}
-                  initial={{ opacity: 0, y: 24 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.45 + i * 0.08, duration: 0.6 }}
-                  className={`group relative aspect-[4/5] w-[42%] shrink-0 overflow-visible sm:w-[170px] md:w-[190px] lg:w-[220px] ${image.offset}`}
+                  variants={fadeUp}
+                  className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary-red/20 bg-primary-red/10 px-4 py-1.5 text-xs font-semibold text-primary-red"
                 >
-                  <div className="relative h-full w-full overflow-hidden rounded-2xl border border-[var(--border)] bg-card shadow-[0_8px_30px_rgba(0,0,0,0.06)] transition-transform duration-500 group-hover:-translate-y-1 dark:shadow-[0_8px_30px_rgba(0,0,0,0.22)]">
-                    <img
-                      src={image.src}
-                      alt={image.alt}
-                      className="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
-                    />
-                  </div>
+                  <Sparkles size={12} />
+                  {aboutHero.badge}
                 </motion.div>
-              ))}
-            </motion.div>
-          </div>
-        </section>
-
-
-        {/* --- 3. MISSION SECTION (Side-by-side) --- */}
-        <section className="py-24 relative overflow-hidden">
-          <div className="max-w-[1280px] mx-auto px-6 relative z-10">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-              <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer}>
-                <motion.div variants={fadeUp} className="w-12 h-12 bg-purple-500/10 text-purple-400 rounded-2xl flex items-center justify-center mb-6">
-                  <Database size={24} />
-                </motion.div>
-                <motion.h2 variants={fadeUp} className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight">
-                  Intelligent Customer Engagement Built for Growth
-                </motion.h2>
-                <motion.p variants={fadeUp} className="text-foreground/60 text-lg mb-8 leading-relaxed">
-                  Echo enables organizations to create seamless customer journeys through automation, personalization, and real time communication. Turn every customer interaction into long term value.
+                <motion.h1
+                  variants={fadeUp}
+                  className="mb-6 text-4xl font-extrabold leading-[1.08] tracking-tight md:text-5xl lg:text-6xl xl:text-[3.75rem]"
+                >
+                  {aboutHero.title}{" "}
+                  <span className="gradient-text-red">{aboutHero.titleAccent}</span>
+                </motion.h1>
+                <motion.p variants={fadeUp} className="mb-10 max-w-xl text-lg leading-relaxed text-foreground/60 md:text-xl">
+                  {aboutHero.subtitle}
                 </motion.p>
-                <motion.ul variants={staggerContainer} className="space-y-4">
-                  {[
-                    "Increase customer retention",
-                    "Improve engagement effortlessly",
-                    "Scale communication workflows"
-                  ].map((point, i) => (
-                    <motion.li key={i} variants={fadeUp} className="flex items-center gap-3 bg-card border border-[var(--border)] p-4 rounded-xl">
-                      <div className="text-green-400"><CheckCircle2 size={20} /></div>
-                      <span className="font-semibold">{point}</span>
-                    </motion.li>
-                  ))}
-                </motion.ul>
+                <motion.div variants={fadeUp} className="flex flex-wrap items-center gap-4">
+                  <BookCallButton onClick={openCalendly} size="lg" />
+                  <Link
+                    href="/use-cases"
+                    className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] px-6 py-3 text-sm font-semibold text-foreground/70 transition-colors hover:bg-foreground/5 hover:text-foreground"
+                  >
+                    See customer stories <ArrowRight size={16} />
+                  </Link>
+                </motion.div>
               </motion.div>
 
-              <motion.div 
-                initial={{ opacity: 0, x: 40 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8 }}
+              <motion.div
+                initial={{ opacity: 0, y: 32 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                 className="relative"
               >
-                <div className="rounded-[40px] overflow-hidden border border-[var(--border)] h-[600px]">
-                  <div className="absolute inset-0 bg-cover bg-center hover:scale-105 transition-transform duration-700" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1573164713988-8665fc963095?q=80&w=1000&auto=format&fit=crop')" }} />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#06070B] via-transparent to-transparent" />
+                <div className="relative overflow-hidden rounded-3xl border border-[var(--border)] bg-card p-8 shadow-[0_24px_80px_rgba(0,0,0,0.06)] dark:shadow-[0_24px_80px_rgba(0,0,0,0.35)] md:p-10">
+                  <div className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-primary-red/10 blur-3xl" />
+                  <div className="pointer-events-none absolute -bottom-12 -left-12 h-36 w-36 rounded-full bg-purple-500/8 blur-2xl" />
+
+                  <p className="relative mb-8 text-2xl font-bold leading-snug tracking-tight text-foreground md:text-3xl">
+                    &ldquo;{aboutStory.quote.text}&rdquo;
+                  </p>
+                  <p className="relative mb-10 text-sm font-medium text-foreground/45">{aboutStory.quote.attribution}</p>
+
+                  <div className="relative grid grid-cols-2 gap-4 border-t border-[var(--border)] pt-8">
+                    {aboutStats.slice(0, 2).map((stat) => (
+                      <div key={stat.label}>
+                        <p className="text-2xl font-extrabold tracking-tight text-primary-red md:text-3xl">{stat.value}</p>
+                        <p className="mt-1 text-xs text-foreground/50">{stat.label}</p>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </motion.div>
             </div>
           </div>
         </section>
 
-        {/* --- 4. BENTO BOX SECTION (Core Products) --- */}
-        <section className="py-24 bg-card/20 border-t border-[var(--border)]">
-          <div className="max-w-[1280px] mx-auto px-6 text-center mb-16">
-            <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="text-primary-red font-semibold uppercase tracking-widest text-sm mb-4">Core Ecosystem</motion.p>
-            <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-3xl md:text-5xl font-bold max-w-3xl mx-auto leading-tight">
-              Echo Is More Than A Tool; It's Your Partner In Growth
-            </motion.h2>
-          </div>
-
-          <div className="max-w-[1280px] mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Left Column Images */}
-            <div className="space-y-6">
-              <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="h-[300px] rounded-3xl overflow-hidden border border-[var(--border)] relative group">
-                <div className="absolute inset-0 bg-cover bg-center group-hover:scale-105 transition-transform duration-700" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=800&auto=format&fit=crop')" }} />
+        {/* Stats */}
+        <section className="border-y border-[var(--border)] py-14">
+          <div className="mx-auto grid max-w-[1280px] grid-cols-2 gap-8 px-6 lg:grid-cols-4">
+            {aboutStats.map((stat, i) => (
+              <motion.div
+                key={stat.label}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.07 }}
+                className="text-center"
+              >
+                <p className="mb-1 text-3xl font-extrabold tracking-tight text-primary-red md:text-4xl">{stat.value}</p>
+                <p className="text-sm text-foreground/55">{stat.label}</p>
               </motion.div>
-              <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }} className="h-[400px] rounded-3xl overflow-hidden border border-[var(--border)] relative group">
-                <div className="absolute inset-0 bg-cover bg-center group-hover:scale-105 transition-transform duration-700" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1600880292089-90a7e086ee0c?q=80&w=800&auto=format&fit=crop')" }} />
+            ))}
+          </div>
+        </section>
+
+        {/* Story */}
+        <section className="py-20 lg:py-28">
+          <div className="mx-auto max-w-[1280px] px-6">
+            <div className="grid grid-cols-1 gap-16 lg:grid-cols-[1fr_1.1fr] lg:gap-24">
+              <motion.div
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.7 }}
+              >
+                <p className="mb-4 text-[11px] font-semibold uppercase tracking-[0.22em] text-primary-red">{aboutStory.eyebrow}</p>
+                <h2 className="text-3xl font-extrabold leading-tight tracking-tight text-foreground md:text-4xl lg:text-5xl">
+                  {aboutStory.title}
+                </h2>
+              </motion.div>
+
+              <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={stagger}
+                className="space-y-6"
+              >
+                {aboutStory.paragraphs.map((paragraph) => (
+                  <motion.p key={paragraph.slice(0, 24)} variants={fadeUp} className="text-lg leading-relaxed text-foreground/60">
+                    {paragraph}
+                  </motion.p>
+                ))}
               </motion.div>
             </div>
+          </div>
+        </section>
 
-            {/* Right Column Bento Cards */}
-            <div className="flex flex-col gap-6">
-              {[
-                { id: "loyalty", title: "Loyalty Platform", icon: Heart, color: "text-red-400", bg: "bg-red-400/10", desc: "Build lasting relationships with intelligent reward systems and personalized retention strategies designed for your audience." },
-                { id: "omnichannel", title: "Omnichannel Communication", icon: MessageSquare, color: "text-blue-400", bg: "bg-blue-400/10", desc: "Connect seamlessly across WhatsApp, SMS, Email, and social platforms from one unified, highly-efficient hub." },
-                { id: "ai-platform", title: "AI Conversational Platform", icon: Bot, color: "text-purple-400", bg: "bg-purple-400/10", desc: "Automate support and sales with context-aware AI that understands, interacts, and converts customers 24/7." }
-              ].map((item, i) => (
-                <motion.div 
-                  key={i} 
-                  initial={{ opacity: 0, x: 20 }} 
-                  whileInView={{ opacity: 1, x: 0 }} 
-                  viewport={{ once: true }} 
-                  transition={{ delay: i * 0.1 }} 
-                  onClick={() => openModal(item.id)}
-                  className="flex-1 bg-card/60 border border-[var(--border)] rounded-3xl p-8 hover:border-primary-red/30 transition-colors flex flex-col justify-center cursor-pointer"
+        {/* Values */}
+        <section className="border-t border-[var(--border)] bg-card/25 py-20 lg:py-28">
+          <div className="mx-auto max-w-[1280px] px-6">
+            <div className="mb-14 text-center">
+              <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-primary-red">What we stand for</p>
+              <h2 className="text-3xl font-bold text-foreground md:text-4xl">Principles that guide every product decision</h2>
+            </div>
+
+            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+              {aboutValues.map((value, i) => (
+                <motion.div
+                  key={value.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.08 }}
+                  className="rounded-2xl border border-[var(--border)] bg-card p-7 transition-colors hover:border-primary-red/20"
                 >
-                  <div className={`w-12 h-12 rounded-2xl ${item.bg} ${item.color} flex items-center justify-center mb-6`}>
-                    <item.icon size={24} />
+                  <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-xl bg-primary-red/10 text-primary-red">
+                    <value.icon size={20} />
                   </div>
-                  <h3 className="text-2xl font-bold mb-3">{item.title}</h3>
-                  <p className="text-foreground/60 leading-relaxed text-lg">{item.desc}</p>
+                  <h3 className="mb-3 text-lg font-bold text-foreground">{value.title}</h3>
+                  <p className="text-sm leading-relaxed text-foreground/55">{value.description}</p>
                 </motion.div>
               ))}
             </div>
           </div>
         </section>
 
-
-        {/* --- 6. FAQ SECTION --- */}
-        <section className="py-24 bg-card/30 border-t border-[var(--border)]">
-          <div className="max-w-[800px] mx-auto px-6">
-            <div className="text-center mb-16">
-              <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-3xl md:text-5xl font-bold mb-4">
-                Have Any <span className="gradient-text-red">Questions?</span>
-              </motion.h2>
-              <p className="text-foreground/60">Find answers to common questions about our platform.</p>
+        {/* Timeline */}
+        <section className="py-20 lg:py-28">
+          <div className="mx-auto max-w-[1280px] px-6">
+            <div className="mb-14">
+              <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-primary-red">Our journey</p>
+              <h2 className="text-3xl font-bold text-foreground md:text-4xl">From loyalty platform to full engagement stack</h2>
             </div>
 
-            <div className="space-y-4">
-              {faqs.map((faq, i) => (
-                <motion.div key={i} initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} className="border border-[var(--border)] rounded-2xl bg-card overflow-hidden">
-                  <button 
-                    onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                    className="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-white/5 transition-colors"
+            <div className="grid grid-cols-1 gap-0 md:grid-cols-2 lg:grid-cols-4">
+              {aboutMilestones.map((milestone, i) => (
+                <motion.div
+                  key={milestone.year}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1 }}
+                  className="relative border-t border-[var(--border)] py-8 pr-6 md:border-t-0 md:border-l md:py-0 md:pl-8 md:first:border-l-0 md:first:pl-0"
+                >
+                  <p className="mb-3 text-3xl font-extrabold tracking-tight text-primary-red">{milestone.year}</p>
+                  <h3 className="mb-2 text-lg font-bold text-foreground">{milestone.title}</h3>
+                  <p className="text-sm leading-relaxed text-foreground/55">{milestone.description}</p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Pillars */}
+        <section className="border-t border-[var(--border)] bg-card/20 py-20 lg:py-28">
+          <div className="mx-auto max-w-[1280px] px-6">
+            <div className="mb-14 text-center">
+              <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-primary-red">What we build</p>
+              <h2 className="text-3xl font-bold text-foreground md:text-4xl">One platform. Three engines for growth.</h2>
+            </div>
+
+            <div className="space-y-5">
+              {aboutPillars.map((pillar, i) => (
+                <motion.div
+                  key={pillar.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.08 }}
+                >
+                  <Link
+                    href={pillar.href}
+                    className="group flex flex-col gap-6 rounded-2xl border border-[var(--border)] bg-card p-7 transition-all hover:border-foreground/15 hover:-translate-y-0.5 md:flex-row md:items-center md:justify-between md:p-8"
                   >
-                    <span className="font-bold text-lg">{faq.question}</span>
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-all ${openFaq === i ? 'bg-primary-red text-white rotate-180' : 'bg-white/5 text-foreground/60'}`}>
+                    <div className="flex items-start gap-5 md:items-center">
+                      <span className="text-4xl font-extrabold leading-none" style={{ color: pillar.color }}>
+                        {pillar.number}
+                      </span>
+                      <div>
+                        <div className="mb-2 flex items-center gap-3">
+                          <div
+                            className="flex h-9 w-9 items-center justify-center rounded-lg"
+                            style={{ background: `${pillar.color}15` }}
+                          >
+                            <pillar.icon size={18} style={{ color: pillar.color }} />
+                          </div>
+                          <h3 className="text-xl font-bold text-foreground md:text-2xl">{pillar.title}</h3>
+                        </div>
+                        <p className="max-w-2xl text-sm leading-relaxed text-foreground/55 md:text-base">{pillar.description}</p>
+                      </div>
+                    </div>
+                    <span
+                      className="inline-flex shrink-0 items-center gap-2 text-sm font-semibold transition-colors"
+                      style={{ color: pillar.color }}
+                    >
+                      Explore <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+                    </span>
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Industries + Global */}
+        <section className="py-20 lg:py-28">
+          <div className="mx-auto max-w-[1280px] px-6">
+            <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-20">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+              >
+                <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-primary-red">Who we serve</p>
+                <h2 className="mb-8 text-3xl font-bold text-foreground md:text-4xl">Built for operators who run at scale</h2>
+                <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                  {aboutIndustries.map((industry) => (
+                    <li
+                      key={industry}
+                      className="rounded-xl border border-[var(--border)] bg-card px-4 py-3.5 text-sm font-medium text-foreground/75"
+                    >
+                      {industry}
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.1 }}
+                className="relative overflow-hidden rounded-3xl border border-[var(--border)] bg-gradient-to-br from-card via-card to-primary-red/[0.04] p-8 md:p-10"
+              >
+                <div className="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full bg-primary-red/8 blur-3xl" />
+                <div className="relative">
+                  <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-2xl bg-primary-red/10 text-primary-red">
+                    <aboutGlobal.icon size={22} />
+                  </div>
+                  <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-primary-red">{aboutGlobal.eyebrow}</p>
+                  <h3 className="mb-4 text-2xl font-bold text-foreground md:text-3xl">{aboutGlobal.title}</h3>
+                  <p className="mb-8 leading-relaxed text-foreground/55">{aboutGlobal.description}</p>
+                  <CaseStudyButton color="#f20d14" label={aboutGlobal.ctaLabel} href={aboutGlobal.ctaHref} />
+                </div>
+              </motion.div>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ */}
+        <section className="border-t border-[var(--border)] bg-card/25 py-20 lg:py-28">
+          <div className="mx-auto max-w-[800px] px-6">
+            <div className="mb-12 text-center">
+              <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-primary-red">Common questions</p>
+              <h2 className="text-3xl font-bold text-foreground md:text-4xl">
+                The details, <span className="gradient-text-red">answered</span>
+              </h2>
+            </div>
+
+            <div className="space-y-3">
+              {aboutApproach.map((item, i) => (
+                <motion.div
+                  key={item.question}
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.06 }}
+                  className="overflow-hidden rounded-2xl border border-[var(--border)] bg-card"
+                >
+                  <button
+                    type="button"
+                    onClick={() => setOpenFaq(openFaq === i ? null : i)}
+                    className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left transition-colors hover:bg-foreground/[0.03]"
+                  >
+                    <span className="font-semibold text-foreground">{item.question}</span>
+                    <div
+                      className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition-all ${
+                        openFaq === i ? "rotate-180 bg-primary-red text-white" : "bg-foreground/5 text-foreground/50"
+                      }`}
+                    >
                       <ChevronDown size={18} />
                     </div>
                   </button>
-                  <AnimatePresence>
+                  <AnimatePresence initial={false}>
                     {openFaq === i && (
-                      <motion.div 
-                        initial={{ height: 0, opacity: 0 }} 
-                        animate={{ height: "auto", opacity: 1 }} 
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.3 }}
+                        transition={{ duration: 0.28 }}
                       >
-                        <div className="px-6 pb-6 text-foreground/60 leading-relaxed border-t border-[var(--border)] pt-4">
-                          {faq.answer}
+                        <div className="border-t border-[var(--border)] px-6 pb-5 pt-4 text-sm leading-relaxed text-foreground/55">
+                          {item.answer}
                         </div>
                       </motion.div>
                     )}
@@ -280,9 +363,9 @@ export default function About() {
           </div>
         </section>
 
-        <CTA />
+        <DeferredCTA />
       </main>
-      <Footer />
+      <DeferredFooter />
     </>
   );
 }

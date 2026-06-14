@@ -36,9 +36,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={cn("dark", "font-sans", geist.variable)} suppressHydrationWarning>
-      <head>
-        <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet" />
-      </head>
+      <head />
       <body className="font-sans antialiased overflow-x-hidden">
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
           <SmoothScrollProvider>

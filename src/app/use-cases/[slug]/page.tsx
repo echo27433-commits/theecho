@@ -1,8 +1,7 @@
 "use client";
 
 import { Navbar } from "@/components/Navbar";
-import { Footer } from "@/components/Footer";
-import { CTA } from "@/components/CTA";
+import { DeferredFooter, DeferredCTA } from "@/components/deferred";
 import { ClientLogoBand } from "@/components/ClientLogoBand";
 import { CaseStudyButton } from "@/components/CaseStudyButton";
 import { motion, useInView } from "framer-motion";
@@ -897,9 +896,9 @@ export default function UseCaseDetail() {
           </div>
         </section>
 
-        <CTA />
+        <DeferredCTA />
       </main>
-      <Footer />
+      <DeferredFooter />
     </>
   );
 }

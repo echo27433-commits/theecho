@@ -1,8 +1,7 @@
 "use client";
 
 import { Navbar } from "@/components/Navbar";
-import { Footer } from "@/components/Footer";
-import { CTA } from "@/components/CTA";
+import { DeferredFooter, DeferredCTA } from "@/components/deferred";
 import { CaseStudyButton } from "@/components/CaseStudyButton";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
@@ -136,8 +135,8 @@ export default function BlogIndex() {
 
         </div>
       </main>
-      <CTA />
-      <Footer />
+      <DeferredCTA />
+      <DeferredFooter />
     </>
   );
 }

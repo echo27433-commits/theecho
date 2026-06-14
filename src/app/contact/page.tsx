@@ -1,9 +1,7 @@
 "use client";
 
 import { Navbar } from "@/components/Navbar";
-import { Footer } from "@/components/Footer";
-import { CTA } from "@/components/CTA";
-import { FootprintGlobe } from "@/components/FootprintGlobe";
+import { DeferredFooter, DeferredCTA, DeferredFootprintGlobe } from "@/components/deferred";
 import { footprintCountries } from "@/data/footprint";
 import { Mail, MapPin, Phone, Globe } from "lucide-react";
 import { useState } from "react";
@@ -308,7 +306,7 @@ export default function Contact() {
                 transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
                 className="relative flex items-center justify-center"
               >
-                <FootprintGlobe />
+                <DeferredFootprintGlobe />
                 <p className="pointer-events-none absolute bottom-2 left-1/2 -translate-x-1/2 text-center text-[11px] text-foreground/40">
                   Drag to explore · HQ in UAE
                 </p>
@@ -317,8 +315,8 @@ export default function Contact() {
           </div>
         </section>
       </main>
-      <CTA />
-      <Footer />
+      <DeferredCTA />
+      <DeferredFooter />
     </>
   );
 }

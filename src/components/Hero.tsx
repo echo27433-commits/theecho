@@ -295,10 +295,43 @@ function DarkOrb({ onSelectProduct }: { onSelectProduct: (productId: string) => 
   };
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % productsData.length);
-    }, 6000);
-    return () => clearInterval(timer);
+    let timer: ReturnType<typeof setInterval> | null = null;
+    let isVisible = true;
+
+    const startTimer = () => {
+      if (timer) return;
+      timer = setInterval(() => {
+        if (isVisible) {
+          setActiveIndex((prev) => (prev + 1) % productsData.length);
+        }
+      }, 6000);
+    };
+
+    const stopTimer = () => {
+      if (timer) {
+        clearInterval(timer);
+        timer = null;
+      }
+    };
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isVisible = entry.isIntersecting;
+        if (isVisible) startTimer();
+        else stopTimer();
+      },
+      { threshold: 0.1 }
+    );
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+      startTimer();
+    }
+
+    return () => {
+      stopTimer();
+      observer.disconnect();
+    };
   }, []);
 
   useEffect(() => {

@@ -4,98 +4,83 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 
+const PRELOADER_KEY = "echo-preloader-seen";
+
 export function Preloader() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // We add a small delay after the window load event to ensure all
-    // React hydration and heavy framer-motion calculations are finished
-    // before we reveal the site. This completely hides the "stuck" feeling.
+    if (sessionStorage.getItem(PRELOADER_KEY)) {
+      setIsLoading(false);
+      return;
+    }
+
     const hidePreloader = () => {
-      setTimeout(() => {
+      window.setTimeout(() => {
+        sessionStorage.setItem(PRELOADER_KEY, "1");
         setIsLoading(false);
-      }, 600); // 600ms grace period for smooth hydration
+      }, 250);
     };
 
     if (document.readyState === "complete") {
       hidePreloader();
     } else {
-      window.addEventListener("load", hidePreloader);
+      window.addEventListener("load", hidePreloader, { once: true });
       return () => window.removeEventListener("load", hidePreloader);
     }
   }, []);
 
-  // Prevent scrolling while preloader is active
   useEffect(() => {
-    if (isLoading) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
+    if (!isLoading) return;
+    document.body.style.overflow = "hidden";
     return () => {
       document.body.style.overflow = "";
     };
   }, [isLoading]);
 
+  if (!isLoading) return null;
+
   return (
     <AnimatePresence>
-      {isLoading && (
+      <motion.div
+        initial={{ opacity: 1 }}
+        exit={{ opacity: 0, transition: { duration: 0.45, ease: [0.16, 1, 0.3, 1] } }}
+        className="fixed inset-0 z-[99999] flex flex-col items-center justify-center bg-background pointer-events-auto"
+      >
         <motion.div
-          initial={{ opacity: 1 }}
-          exit={{ opacity: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }}
-          className="fixed inset-0 z-[99999] flex flex-col items-center justify-center bg-[#06070B] pointer-events-auto"
+          animate={{
+            scale: [1, 1.04, 1],
+            opacity: [0.85, 1, 0.85],
+          }}
+          transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+          className="relative mb-6 h-24 w-24"
         >
-          {/* Logo Animation */}
-          <motion.div
-            animate={{ 
-              scale: [1, 1.05, 1], 
-              opacity: [0.8, 1, 0.8],
-              filter: ["blur(0px)", "blur(2px)", "blur(0px)"]
-            }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            className="relative w-32 h-32 mb-8"
-          >
-            <Image
-              src="/The_Echo_Logo_v2.png"
-              alt="Loading Echo..."
-              fill
-              className="object-contain"
-              unoptimized
-            />
-          </motion.div>
-          
-          {/* Loading Indicator Dots */}
-          <div className="flex items-center gap-3">
-            {[0, 1, 2].map((i) => (
-              <motion.div
-                key={i}
-                animate={{
-                  y: ["0%", "-50%", "0%"],
-                  opacity: [0.3, 1, 0.3],
-                }}
-                transition={{
-                  duration: 1,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: i * 0.15,
-                }}
-                className="w-2.5 h-2.5 rounded-full bg-primary-red"
-                style={{
-                  boxShadow: "0 0 10px rgba(242, 13, 20, 0.5)",
-                }}
-              />
-            ))}
-          </div>
-          
-          <motion.p
-            animate={{ opacity: [0.5, 1, 0.5] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            className="mt-6 text-sm font-medium tracking-widest uppercase text-foreground/50"
-          >
-            Initializing...
-          </motion.p>
+          <Image
+            src="/The_Echo_Logo_v2.png"
+            alt="Loading Echo..."
+            fill
+            priority
+            sizes="96px"
+            className="object-contain"
+          />
         </motion.div>
-      )}
+
+        <div className="flex items-center gap-2">
+          {[0, 1, 2].map((i) => (
+            <motion.div
+              key={i}
+              animate={{ opacity: [0.3, 1, 0.3] }}
+              transition={{
+                duration: 0.9,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: i * 0.12,
+              }}
+              className="h-2 w-2 rounded-full bg-primary-red"
+            />
+          ))}
+        </div>
+      </motion.div>
     </AnimatePresence>
   );
-}
+};

@@ -130,7 +130,7 @@ function ProductModal({ product, onClose }: { product: ProductData; onClose: () 
         </button>
 
         {/* Left Column: Text Content */}
-        <div className="flex-1 p-6 md:p-10 lg:p-12 flex flex-col justify-center relative overflow-y-auto custom-scrollbar">
+        <div className="flex-1 p-6 md:p-10 lg:p-12 flex flex-col justify-center relative overflow-y-auto custom-scrollbar" data-lenis-prevent>
           {/* Subtle Color Glow */}
           <div 
             className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none" 
