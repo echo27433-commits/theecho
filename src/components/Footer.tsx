@@ -49,7 +49,7 @@ export function Footer() {
                 className="group-hover:scale-105 transition-transform duration-300 object-contain rounded-lg"
               />
             </div>
-            <p className="text-sm text-gray-500 leading-relaxed mb-6 max-w-[220px]">
+            <p className="text-sm text-white leading-relaxed mb-6 max-w-[220px]">
               AI powered engagement and loyalty platform for modern businesses.
             </p>
 
@@ -61,7 +61,7 @@ export function Footer() {
                 rel="noopener noreferrer"
                 whileHover={{ y: -2, scale: 1.1 }}
                 transition={{ type: "spring", stiffness: 400, damping: 20 }}
-                className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/[0.06] bg-white/[0.04] text-gray-500 transition-colors duration-200 hover:border-primary-red/20 hover:bg-primary-red/10 hover:text-white"
+                className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/[0.06] bg-white/[0.04] text-white transition-colors duration-200 hover:border-primary-red/20 hover:bg-primary-red/10 hover:text-white"
                 aria-label="LinkedIn"
               >
                 <LinkedinIcon />
@@ -78,7 +78,7 @@ export function Footer() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: colIdx * 0.08 }}
             >
-              <h3 className="text-xs font-semibold uppercase tracking-[0.16em] text-gray-500 mb-5">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.16em] text-white mb-5">
                 {category}
               </h3>
               <ul className="space-y-3">
@@ -91,7 +91,7 @@ export function Footer() {
                       <li key={link}>
                         <button
                           onClick={() => openModal(productId)}
-                          className="text-sm text-gray-500 hover:text-white transition-colors duration-200 hover:translate-x-0.5 inline-block text-left"
+                          className="text-sm text-white hover:text-white/80 transition-colors duration-200 hover:translate-x-0.5 inline-block text-left"
                         >
                           {link}
                         </button>
@@ -103,7 +103,7 @@ export function Footer() {
                     <li key={link}>
                       <Link
                         href={link === "Contact Us" ? "/contact" : link === "About Us" ? "/about" : link === "Blog" ? "/blog" : "#"}
-                        className="text-sm text-gray-500 hover:text-white transition-colors duration-200 hover:translate-x-0.5 inline-block"
+                        className="text-sm text-white hover:text-white/80 transition-colors duration-200 hover:translate-x-0.5 inline-block"
                       >
                         {link}
                       </Link>
@@ -115,16 +115,21 @@ export function Footer() {
           ))}
         </div>
 
+        {/* Attribution */}
+        <p className="mb-8 text-center text-xs italic text-white">
+          Echo is a product of <span className="font-medium not-italic text-white">Unicorn</span>
+        </p>
+
         {/* Bottom bar */}
         <div className="pt-8 border-t border-white/[0.06] flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-xs text-gray-600">
+          <p className="text-xs text-white">
             © 2024 The Echo. All rights reserved.
           </p>
           <div className="flex gap-6">
-            <Link href="#" className="text-xs text-gray-600 hover:text-gray-400 transition-colors">
+            <Link href="#" className="text-xs text-white hover:text-white/80 transition-colors">
               Privacy Policy
             </Link>
-            <Link href="#" className="text-xs text-gray-600 hover:text-gray-400 transition-colors">
+            <Link href="#" className="text-xs text-white hover:text-white/80 transition-colors">
               Terms of Service
             </Link>
           </div>
