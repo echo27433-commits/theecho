@@ -4,7 +4,7 @@ import { Navbar } from "@/components/Navbar";
 import { DeferredFooter, DeferredCTA } from "@/components/deferred";
 import { BookCallButton } from "@/components/BookCallButton";
 import { motion } from "framer-motion";
-import { Bot, CheckCircle2, ArrowDown, Layers, Bell, XCircle, ArrowRight, MessageSquare, Sparkles } from "lucide-react";
+import { Bot, CheckCircle2, Bell, XCircle, ArrowRight, MessageSquare, Sparkles, Unplug, Link2 } from "lucide-react";
 import { useCalendly } from "@/context/CalendlyContext";
 import {
   AI_PLATFORM_COLOR,
@@ -464,7 +464,7 @@ export default function AIPlatformProductPage() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="mx-auto mb-16 max-w-3xl text-center"
+              className="mx-auto mb-14 max-w-3xl text-center"
             >
               <p
                 className="mb-3 text-[11px] font-semibold uppercase tracking-[0.22em]"
@@ -477,109 +477,134 @@ export default function AIPlatformProductPage() {
               </h2>
             </motion.div>
 
-            <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-10">
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                className="relative overflow-hidden rounded-3xl border border-dashed border-foreground/15 bg-foreground/[0.02] p-7 lg:col-span-4 lg:p-8"
-              >
-                <div className="relative mb-6 flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-foreground/[0.06] text-foreground/40">
-                    <Layers size={18} />
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="overflow-hidden rounded-3xl border border-[var(--border)] bg-card shadow-[0_24px_80px_rgba(0,0,0,0.12)]"
+            >
+              {/* Before — pain points strip */}
+              <div className="relative border-b border-[var(--border)] bg-foreground/[0.02] px-6 py-7 md:px-9 md:py-8">
+                <div className="pointer-events-none absolute inset-0 bg-[repeating-linear-gradient(-45deg,transparent,transparent_14px,rgba(255,255,255,0.012)_14px,rgba(255,255,255,0.012)_28px)]" />
+
+                <div className="relative mb-5 flex items-center gap-3">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-foreground/[0.06] text-foreground/35">
+                    <Unplug size={18} />
                   </div>
                   <div>
                     <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-foreground/35">Before</p>
-                    <h3 className="text-lg font-bold text-foreground/70 md:text-xl">
+                    <h3 className="text-base font-bold text-foreground/65 md:text-lg">
                       {aiPlatformBenefits.fragmented.title}
                     </h3>
                   </div>
                 </div>
-                <ul className="relative space-y-3">
-                  {aiPlatformBenefits.fragmented.items.map((item, idx) => (
-                    <li
-                      key={item}
-                      className="flex items-center gap-3 rounded-2xl border border-foreground/[0.06] bg-background/50 px-4 py-3.5"
-                    >
-                      <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-foreground/[0.06] text-[11px] font-bold text-foreground/30">
-                        {String(idx + 1).padStart(2, "0")}
-                      </span>
-                      <span className="text-sm leading-snug text-foreground/50">{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </motion.div>
 
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.08 }}
-                className="relative overflow-hidden rounded-3xl border border-[var(--border)] bg-card p-7 lg:col-span-8 lg:p-8"
+                <div className="relative flex flex-wrap gap-2">
+                  {aiPlatformBenefits.fragmented.items.map((item, idx) => (
+                    <span
+                      key={item}
+                      className="inline-flex items-center gap-2 rounded-full border border-foreground/[0.08] bg-background/60 px-3.5 py-2 text-xs font-medium text-foreground/45 md:text-sm"
+                    >
+                      <XCircle size={12} className="shrink-0 text-foreground/25" />
+                      <span>{item}</span>
+                      <span className="text-[10px] font-bold text-foreground/20">{String(idx + 1).padStart(2, "0")}</span>
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Transform divider */}
+              <div
+                className="relative flex items-center justify-center gap-3 border-b border-[var(--border)] px-6 py-4"
+                style={{
+                  background: `linear-gradient(90deg, transparent, ${AI_PLATFORM_COLOR}10, transparent)`,
+                }}
               >
+                <span className="rounded-full border border-[var(--border)] bg-card px-3 py-1 text-xs font-semibold text-foreground/45">
+                  Fragmented
+                </span>
+                <div className="flex items-center gap-1.5">
+                  <span className="h-px w-8 bg-foreground/15 md:w-12" />
+                  <ArrowRight size={16} style={{ color: AI_PLATFORM_COLOR }} />
+                  <span className="h-px w-8 bg-foreground/15 md:w-12" />
+                </div>
+                <span
+                  className="rounded-full px-3 py-1 text-xs font-semibold text-white"
+                  style={{ backgroundColor: AI_PLATFORM_COLOR }}
+                >
+                  Unified
+                </span>
+              </div>
+
+              {/* After — benefits bento */}
+              <div className="relative p-6 md:p-9">
                 <div
-                  className="pointer-events-none absolute -left-10 -top-10 h-40 w-40 rounded-full blur-3xl"
+                  className="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full blur-3xl"
                   style={{ background: `${AI_PLATFORM_COLOR}12` }}
                 />
 
-                <div className="relative mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                  <div className="flex items-center gap-3">
-                    <div
-                      className="flex h-10 w-10 items-center justify-center rounded-xl text-white shadow-[0_4px_20px_rgba(168,85,247,0.35)]"
-                      style={{ backgroundColor: AI_PLATFORM_COLOR }}
-                    >
-                      <CheckCircle2 size={18} />
-                    </div>
-                    <div>
-                      <p
-                        className="text-[10px] font-semibold uppercase tracking-[0.2em]"
-                        style={{ color: AI_PLATFORM_COLOR }}
-                      >
-                        After
-                      </p>
-                      <h3 className="text-lg font-bold text-foreground md:text-xl">
-                        {aiPlatformBenefits.unified.title}
-                      </h3>
-                    </div>
+                <div className="relative mb-8 flex items-center gap-3">
+                  <div
+                    className="flex h-10 w-10 items-center justify-center rounded-xl text-white shadow-[0_4px_20px_rgba(168,85,247,0.35)]"
+                    style={{ backgroundColor: AI_PLATFORM_COLOR }}
+                  >
+                    <Link2 size={18} />
                   </div>
-                  <div className="hidden items-center gap-2 text-xs font-medium text-foreground/40 sm:flex">
-                    <span className="rounded-full border border-[var(--border)] px-3 py-1">Fragmented</span>
-                    <ArrowDown size={14} className="rotate-[-90deg]" style={{ color: AI_PLATFORM_COLOR }} />
-                    <span className="rounded-full px-3 py-1 text-white" style={{ backgroundColor: AI_PLATFORM_COLOR }}>
-                      Unified
-                    </span>
+                  <div>
+                    <p
+                      className="text-[10px] font-semibold uppercase tracking-[0.2em]"
+                      style={{ color: AI_PLATFORM_COLOR }}
+                    >
+                      After
+                    </p>
+                    <h3 className="text-base font-bold text-foreground md:text-lg">
+                      {aiPlatformBenefits.unified.title}
+                    </h3>
                   </div>
                 </div>
 
-                <div className="relative grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <div className="relative grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-6">
                   {aiPlatformBenefits.unified.items.map((item, idx) => (
                     <motion.div
                       key={item.title}
-                      initial={{ opacity: 0, y: 12 }}
+                      initial={{ opacity: 0, y: 14 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
-                      transition={{ delay: 0.1 + idx * 0.06 }}
+                      transition={{ delay: idx * 0.07 }}
                       className={`group relative overflow-hidden rounded-2xl border border-[var(--border)] bg-foreground/[0.02] p-5 transition-all duration-300 hover:border-[#A855F740] hover:bg-[#A855F706] ${
-                        idx === aiPlatformBenefits.unified.items.length - 1 ? "sm:col-span-2 sm:max-w-md sm:justify-self-center" : ""
+                        idx < 3 ? "lg:col-span-2" : "lg:col-span-3"
                       }`}
                     >
-                      <div className="relative flex gap-4">
-                        <div
-                          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl transition-transform duration-300 group-hover:scale-105"
-                          style={{ background: `${AI_PLATFORM_COLOR}14`, color: AI_PLATFORM_COLOR }}
-                        >
-                          <item.icon size={20} />
+                      <div
+                        className="pointer-events-none absolute -right-6 -top-6 h-20 w-20 rounded-full opacity-0 blur-2xl transition-opacity duration-300 group-hover:opacity-100"
+                        style={{ background: `${AI_PLATFORM_COLOR}20` }}
+                      />
+
+                      <div className="relative flex items-start gap-4">
+                        <div className="flex shrink-0 flex-col items-center gap-2">
+                          <span
+                            className="text-[10px] font-bold uppercase tracking-[0.16em]"
+                            style={{ color: `${AI_PLATFORM_COLOR}80` }}
+                          >
+                            {String(idx + 1).padStart(2, "0")}
+                          </span>
+                          <div
+                            className="flex h-11 w-11 items-center justify-center rounded-xl transition-transform duration-300 group-hover:scale-105"
+                            style={{ background: `${AI_PLATFORM_COLOR}14`, color: AI_PLATFORM_COLOR }}
+                          >
+                            <item.icon size={20} />
+                          </div>
                         </div>
-                        <div className="min-w-0">
-                          <h4 className="mb-1.5 text-base font-bold text-foreground">{item.title}</h4>
+                        <div className="min-w-0 pt-0.5">
+                          <h4 className="mb-1.5 text-base font-bold leading-snug text-foreground">{item.title}</h4>
                           <p className="text-sm leading-relaxed text-foreground/55">{item.text}</p>
                         </div>
                       </div>
                     </motion.div>
                   ))}
                 </div>
-              </motion.div>
-            </div>
+              </div>
+            </motion.div>
           </div>
         </section>
 
