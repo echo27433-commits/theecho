@@ -107,6 +107,24 @@
     animation: shimmer 3s linear infinite;
   }
 
+  .gradient-text-blue {
+    background: linear-gradient(135deg, #3B82F6 0%, #60A5FA 50%, #3B82F6 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shimmer 3s linear infinite;
+  }
+
+  .gradient-text-purple {
+    background: linear-gradient(135deg, #A855F7 0%, #C084FC 50%, #A855F7 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shimmer 3s linear infinite;
+  }
+
   .gradient-text-aurora {
     background: linear-gradient(135deg, #f20d14 0%, #FF6B6B 30%, #A855F7 60%, #3B82F6 100%);
     -webkit-background-clip: text;

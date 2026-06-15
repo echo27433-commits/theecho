@@ -15,21 +15,29 @@ const sizes = {
   },
 } as const;
 
+const variants = {
+  red: "bg-primary-red shadow-[0_4px_24px_rgba(242,13,20,0.45)] hover:shadow-[0_6px_32px_rgba(242,13,20,0.6)]",
+  blue: "bg-[#3B82F6] shadow-[0_4px_24px_rgba(59,130,246,0.45)] hover:shadow-[0_6px_32px_rgba(59,130,246,0.6)]",
+  purple: "bg-[#A855F7] shadow-[0_4px_24px_rgba(168,85,247,0.45)] hover:shadow-[0_6px_32px_rgba(168,85,247,0.6)]",
+} as const;
+
 export function BookCallButton({
   onClick,
   className = "",
   size = "default",
+  variant = "red",
 }: {
   onClick: () => void;
   className?: string;
   size?: keyof typeof sizes;
+  variant?: keyof typeof variants;
 }) {
   const s = sizes[size];
 
   return (
     <button
       onClick={onClick}
-      className={`group relative inline-flex w-fit shrink-0 items-center rounded-full bg-primary-red font-semibold text-white shadow-[0_4px_24px_rgba(242,13,20,0.45)] transition-all duration-300 hover:shadow-[0_6px_32px_rgba(242,13,20,0.6)] hover:-translate-y-0.5 btn-shine overflow-hidden ${s.button} ${className}`}
+      className={`group relative inline-flex w-fit shrink-0 items-center rounded-full font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 btn-shine overflow-hidden ${variants[variant]} ${s.button} ${className}`}
     >
       <Calendar className={`${s.icon} shrink-0 opacity-90`} />
       <span>Book a Call</span>
