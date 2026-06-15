@@ -54,7 +54,7 @@ export const productsData: ProductData[] = [
     description:
       "Deploy highly intelligent, agentic AI that understands context, intent, and sentiment to resolve queries instantly and proactively.",
     features: ["Agentic Resolution", "Sentiment Analysis", "Seamless Human Handoff"],
-    image: "https://images.unsplash.com/photo-1661956602116-aa6865609028?q=80&w=2064&auto=format&fit=crop",
+    image: "/ai-converation.png",
     link: "/product/ai-platform",
   },
 ];
