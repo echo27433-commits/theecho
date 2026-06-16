@@ -53,11 +53,17 @@ export const enterpriseBrandLogos = [
 
 export const enterpriseIntegrations = [
   "Salesforce",
+  "Zoho CRM",
+  "Microsoft Dynamics",
   "HubSpot",
   "Shopify",
+  "WooCommerce",
   "SAP",
-  "Microsoft Dynamics",
+  "Oracle",
+  "Google Analytics",
+  "Meta",
   "Stripe",
+  "Custom APIs",
 ];
 
 export const enterpriseCompliance = {

@@ -99,8 +99,8 @@ export function EnterpriseReady() {
               </p>
               <h3 className="mb-3 text-xl font-bold text-white md:text-2xl">Works with your stack</h3>
               <p className="mb-6 max-w-md text-sm leading-relaxed text-white/50">
-                Sync customer data, engagement history, and conversational intelligence across CRM, commerce, and
-                analytics platforms.
+                Integrate customer engagement workflows directly with CRM, commerce, analytics, payments, and custom
+                systems across your stack.
               </p>
 
               <div className="flex flex-wrap gap-2">
@@ -115,9 +115,9 @@ export function EnterpriseReady() {
               </div>
 
               <div className="mt-6 flex items-center gap-2 text-xs font-medium text-white/35">
-                <span>+ Custom APIs</span>
-                <ArrowRight size={12} className="text-primary-red/70" />
                 <span>Full stack connectivity</span>
+                <ArrowRight size={12} className="text-primary-red/70" />
+                <span>Plug-and-play or custom API</span>
               </div>
             </div>
 
