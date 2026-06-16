@@ -6,7 +6,7 @@ export const aboutHero = {
   title: "About",
   titleAccent: "Echo",
   subtitle:
-    "Echo is an enterprise AI company headquartered in the UAE. We unify loyalty, omnichannel conversations, and intelligent automation — so brands connect with customers at scale, on every channel that matters.",
+    "Echo is an enterprise AI company headquartered in the UAE. We unify loyalty, omnichannel conversations, and intelligent automation, so brands connect with customers at scale, on every channel that matters.",
 };
 
 export const aboutStats = [
@@ -20,8 +20,8 @@ export const aboutStory = {
   eyebrow: "Why we exist",
   title: "Customer relationships deserve better infrastructure",
   paragraphs: [
-    "Most brands are drowning in channels but starving for connection. Loyalty programs sit in silos. Support teams repeat the same answers. Campaigns go out blind. Customers feel it — and they leave.",
-    "Echo was built to fix that. One platform where loyalty, conversations, and AI work together — so every touchpoint feels personal, every team stays aligned, and every interaction drives measurable growth.",
+    "Most brands are drowning in channels but starving for connection. Loyalty programs sit in silos. Support teams repeat the same answers. Campaigns go out blind. Customers feel it, and they leave.",
+    "Echo was built to fix that. One platform where loyalty, conversations, and AI work together, so every touchpoint feels personal, every team stays aligned, and every interaction drives measurable growth.",
     "We started in the Gulf and grew alongside the brands we serve: retailers, hospitality groups, government entities, and enterprise operators who needed technology that scales without losing the human touch.",
   ],
   quote: {
@@ -39,19 +39,19 @@ export const aboutValues: {
     icon: Heart,
     title: "Relationships over transactions",
     description:
-      "We design for lifetime value — not one-off conversions. Every feature we ship should deepen trust between a brand and its customers.",
+      "We design for lifetime value, not one off conversions. Every feature we ship should deepen trust between a brand and its customers.",
   },
   {
     icon: Target,
     title: "Outcomes you can measure",
     description:
-      "Retention rates, response times, campaign ROI — we hold ourselves to the same metrics our clients care about. If it doesn't move the needle, it doesn't ship.",
+      "Retention rates, response times, campaign ROI. We hold ourselves to the same metrics our clients care about. If it doesn't move the needle, it doesn't ship.",
   },
   {
     icon: Shield,
-    title: "Enterprise-grade by default",
+    title: "Enterprise grade by default",
     description:
-      "Security, uptime, and compliance aren't add-ons. Echo is built for operators who can't afford downtime — from retail chains to government programs.",
+      "Security, uptime, and compliance aren't add ons. Echo is built for operators who can't afford downtime, from retail chains to government programs.",
   },
   {
     icon: Users,
@@ -64,7 +64,7 @@ export const aboutValues: {
 export const aboutJourney = {
   eyebrow: "Our journey",
   title: "From UAE roots to a full engagement stack",
-  subtitle: "Three defining chapters in how Echo evolved — from founding in the Gulf to launching the platforms brands rely on today.",
+  subtitle: "Three defining chapters in how Echo evolved, from founding in the Gulf to launching the platforms brands rely on today.",
 };
 
 export const aboutMilestones = [
@@ -77,13 +77,13 @@ export const aboutMilestones = [
   {
     year: "2025",
     title: "Omnichannel launched",
-    description: "Unified WhatsApp, SMS, and web chat into one workspace — giving teams a single view of every customer conversation.",
+    description: "Unified WhatsApp, SMS, and web chat into one workspace, giving teams a single view of every customer conversation.",
     accent: "#3B82F6",
   },
   {
     year: "2026",
     title: "Loyalty and Agentic AI platform",
-    description: "Launched our loyalty engine and agentic AI platform — connecting retention, automation, and intelligent conversations in one stack.",
+    description: "Launched our loyalty engine and agentic AI platform, connecting retention, automation, and intelligent conversations in one stack.",
     accent: "#A855F7",
   },
 ];
@@ -93,7 +93,7 @@ export const aboutBuild = {
   title: "One platform.",
   titleAccent: "Endless possibilities",
   subtitle:
-    "Loyalty, omnichannel, and agentic AI — three engines designed to work together so every customer touchpoint drives growth.",
+    "Loyalty, omnichannel, and agentic AI: three engines designed to work together so every customer touchpoint drives growth.",
 };
 
 export const aboutPillars: {
@@ -110,7 +110,7 @@ export const aboutPillars: {
     number: "01",
     title: "Loyalty Platform",
     description:
-      "Predictive rewards, smart segmentation, and retention campaigns that trigger at the right moment — not the right guess.",
+      "Predictive rewards, smart segmentation, and retention campaigns that trigger at the right moment, not the right guess.",
     color: "#f20d14",
     icon: Heart,
     href: "/product/loyalty",
@@ -130,7 +130,7 @@ export const aboutPillars: {
     number: "03",
     title: "AI Conversational Platform",
     description:
-      "Agentic AI that resolves, routes, and learns — handling volume 24/7 while escalating what matters to your people.",
+      "Agentic AI that resolves, routes, and learns, handling volume 24/7 while escalating what matters to your people.",
     color: "#A855F7",
     icon: Bot,
     href: "/product/ai-platform",
@@ -138,7 +138,7 @@ export const aboutPillars: {
 ];
 
 export const aboutIndustries = [
-  "Retail & E-commerce",
+  "Retail & E commerce",
   "Hospitality & F&B",
   "Government & Public Sector",
   "Events & Entertainment",
@@ -150,12 +150,12 @@ export const aboutApproach = [
   {
     question: "How is Echo different from a chatbot vendor?",
     answer:
-      "We're a full engagement platform — loyalty, omnichannel, and AI in one stack. Chatbots answer questions; Echo builds relationships across every stage of the customer journey.",
+      "We're a full engagement platform with loyalty, omnichannel, and AI in one stack. Chatbots answer questions; Echo builds relationships across every stage of the customer journey.",
   },
   {
     question: "Who is Echo built for?",
     answer:
-      "Mid-to-large enterprises and ambitious growth brands in MENA and beyond — teams that need scale, compliance, and measurable ROI, not another point solution.",
+      "Mid to large enterprises and ambitious growth brands in MENA and beyond: teams that need scale, compliance, and measurable ROI, not another point solution.",
   },
   {
     question: "How fast can we go live?",
@@ -165,7 +165,7 @@ export const aboutApproach = [
   {
     question: "Where is Echo based?",
     answer:
-      "Our headquarters is in the UAE, with active operations across Saudi Arabia, Bahrain, Qatar, Kuwait, and Oman — serving brands throughout the Gulf and wider MENA region.",
+      "Our headquarters is in the UAE, with active operations across Saudi Arabia, Bahrain, Qatar, Kuwait, and Oman, serving brands throughout the Gulf and wider MENA region.",
   },
 ];
 
@@ -173,7 +173,7 @@ export const aboutGlobal = {
   eyebrow: "Global footprint",
   title: "Rooted in the Gulf. Built for scale.",
   description:
-    "From our UAE headquarters, we support brands across six countries — with local expertise and enterprise infrastructure that travels.",
+    "From our UAE headquarters, we support brands across six countries, with local expertise and enterprise infrastructure that travels.",
   ctaLabel: "See our locations",
   ctaHref: "/contact",
   icon: Globe2,

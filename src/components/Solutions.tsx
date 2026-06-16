@@ -34,11 +34,11 @@ const solutions = [
     title: "AI Conversational Platform",
     tagline: "Agentic AI that understands.",
     description:
-      "Deploy intelligent AI agents that resolve complex queries, deliver personalized self-service, and learn from every conversation.",
+      "Deploy intelligent AI agents that resolve complex queries, deliver personalized self service, and learn from every conversation.",
     icon: Code2,
     color: "#A855F7",
     gradient: "from-[#A855F7]/20 to-[#C084FC]/5",
-    features: ["Agentic AI", "Self-service flows", "Smart routing"],
+    features: ["Agentic AI", "Self service flows", "Smart routing"],
     href: "/product/ai-platform",
   },
 ];

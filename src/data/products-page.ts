@@ -41,9 +41,9 @@ export const productsPageData: ProductPageItem[] = [
     gradient: "from-[#f20d14]/20 to-[#FF8C7A]/5",
     features: ["Reward programs", "Automated support", "Engagement tracking"],
     capabilities: [
-      "Smart rewards with AI-driven point allocation",
-      "Targeted retention campaigns for at-risk segments",
-      "Real-time loyalty metrics and program ROI dashboards",
+      "Smart rewards with AI driven point allocation",
+      "Targeted retention campaigns for at risk segments",
+      "Real time loyalty metrics and program ROI dashboards",
     ],
     image: "/loyal.png",
     link: "/product/loyalty",
@@ -58,15 +58,15 @@ export const productsPageData: ProductPageItem[] = [
     description:
       "Engage audiences across WhatsApp, Email, SMS, and Web with a single, unified messaging platform that eliminates silos and delays.",
     longDescription:
-      "The Omnichannel Communication Suite centralizes all customer interactions across WhatsApp, SMS, email, and web chat into a single unified dashboard — so your team never loses context and customers never repeat themselves.",
+      "The Omnichannel Communication Suite centralizes all customer interactions across WhatsApp, SMS, email, and web chat into a single unified dashboard, so your team never loses context and customers never repeat themselves.",
     icon: MessageSquare,
     color: "#3B82F6",
     gradient: "from-[#3B82F6]/20 to-[#60A5FA]/5",
     features: ["WhatsApp & SMS", "Email automation", "Unified inbox"],
     capabilities: [
       "Unified inbox across WhatsApp, SMS, email, and web",
-      "Intelligent cross-channel routing to the right agent or bot",
-      "Rich media campaigns optimized for mobile-first audiences",
+      "Intelligent cross channel routing to the right agent or bot",
+      "Rich media campaigns optimized for mobile first audiences",
     ],
     image: "/omnichnnel.png",
     link: "/product/omnichannel",
@@ -79,17 +79,17 @@ export const productsPageData: ProductPageItem[] = [
     tagline: "Agentic AI that understands.",
     headline: "AI that resolves, not just replies",
     description:
-      "Deploy intelligent AI agents that resolve complex queries, deliver personalized self-service, and learn from every conversation.",
+      "Deploy intelligent AI agents that resolve complex queries, deliver personalized self service, and learn from every conversation.",
     longDescription:
-      "Go beyond rule-based chatbots. Echo's Agentic AI understands context, intent, and sentiment to resolve queries instantly, escalate seamlessly to humans, and continuously improve from every interaction.",
+      "Go beyond rule based chatbots. Echo's Agentic AI understands context, intent, and sentiment to resolve queries instantly, escalate seamlessly to humans, and continuously improve from every interaction.",
     icon: Bot,
     color: "#A855F7",
     gradient: "from-[#A855F7]/20 to-[#C084FC]/5",
-    features: ["Agentic AI", "Self-service flows", "Smart routing"],
+    features: ["Agentic AI", "Self service flows", "Smart routing"],
     capabilities: [
-      "Context-aware AI with sentiment and intent understanding",
+      "Context aware AI with sentiment and intent understanding",
       "Automated workflows that resolve repetitive tickets instantly",
-      "Enterprise-grade security with seamless human handoff",
+      "Enterprise grade security with seamless human handoff",
     ],
     image: "/ai-converation.png",
     link: "/product/ai-platform",
@@ -105,5 +105,5 @@ export const productEcosystemCopy = {
   subtitle:
     "Echo combines intelligent automation, omnichannel communication, and conversational AI into one unified platform designed to improve customer experience at scale.",
   mission:
-    "Enable organizations to create seamless customer journeys through automation, personalization, and real-time communication — turning every interaction into long-term value.",
+    "Enable organizations to create seamless customer journeys through automation, personalization, and real time communication, turning every interaction into long term value.",
 };

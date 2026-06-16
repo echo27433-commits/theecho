@@ -32,8 +32,8 @@ export const aiPlatformHero = {
   title: "Agentic AI That Understands,",
   titleAccent: "Responds, and Resolves",
   subtitle:
-    "Powered by Agentic AI, Echo automates conversations, resolves queries, qualifies leads, and delivers personalized self-service — all from one unified ecosystem.",
-  tags: ["Intent understanding", "Smart routing", "Lead qualification", "24/7 self-service"],
+    "Powered by Agentic AI, Echo automates conversations, resolves queries, qualifies leads, and delivers personalized self service, all from one unified ecosystem.",
+  tags: ["Intent understanding", "Smart routing", "Lead qualification", "24/7 self service"],
 };
 
 export const aiPlatformStats = [
@@ -45,7 +45,7 @@ export const aiPlatformStats = [
 
 export const agenticAI = {
   eyebrow: "What is Agentic AI?",
-  title: "Beyond rule-based chatbots",
+  title: "Beyond rule based chatbots",
   description:
     "Traditional chatbots answer predefined questions and struggle when conversations get complex. Agentic AI understands context, takes action, and continuously learns.",
   traditional: {
@@ -73,7 +73,7 @@ export const onePlatform = {
   eyebrow: "One platform",
   title: "Every customer conversation, connected",
   description:
-    "Echo centralizes the entire conversation lifecycle — so every touchpoint stays connected and teams get a complete customer view.",
+    "Echo centralizes the entire conversation lifecycle, so every touchpoint stays connected and teams get a complete customer view.",
   journeySteps: [
     { icon: Globe, label: "Visit your website" },
     { icon: MessageSquare, label: "Start a live chat conversation" },
@@ -101,7 +101,7 @@ export const aiPlatformCapabilities: {
 }[] = [
   {
     icon: Headphones,
-    title: "AI-Powered Customer Support",
+    title: "AI Powered Customer Support",
     description: "Provide instant responses to customer inquiries 24 hours a day, 7 days a week.",
     highlights: [
       "Frequently asked questions",
@@ -116,7 +116,7 @@ export const aiPlatformCapabilities: {
   {
     icon: Target,
     title: "Intelligent Lead Qualification",
-    description: "Automatically qualify leads so sales teams focus on high-value opportunities.",
+    description: "Automatically qualify leads so sales teams focus on high value opportunities.",
     highlights: [
       "Qualify leads automatically",
       "Collect customer information",
@@ -138,8 +138,8 @@ export const aiPlatformCapabilities: {
   },
   {
     icon: Sparkles,
-    title: "Personalized Self-Service",
-    description: "Intelligent self-service that adapts dynamically — not static help centers.",
+    title: "Personalized Self Service",
+    description: "Intelligent self service that adapts dynamically, not static help centers.",
     highlights: [
       "Resolve common issues",
       "Access account information",
@@ -183,7 +183,7 @@ export const aiPlatformIndustries: {
   useCases: string[];
 }[] = [
   {
-    name: "Retail & E-Commerce",
+    name: "Retail & E Commerce",
     icon: ShoppingBag,
     useCases: ["Product inquiries", "Order tracking", "Loyalty engagement", "Upselling & recommendations"],
   },
@@ -195,7 +195,7 @@ export const aiPlatformIndustries: {
   {
     name: "Healthcare",
     icon: HeartPulse,
-    useCases: ["Appointment scheduling", "Patient support", "Follow-up communication"],
+    useCases: ["Appointment scheduling", "Patient support", "Follow up communication"],
   },
   {
     name: "Hospitality & Travel",
@@ -239,7 +239,7 @@ export const aiPlatformClosing = {
   title: "Intelligent, proactive,",
   titleAccent: "and conversational.",
   subtitle:
-    "Echo combines Agentic AI, self-service automation, intelligent routing, and centralized customer management into one powerful ecosystem — helping organizations deliver faster support at scale.",
+    "Echo combines Agentic AI, self service automation, intelligent routing, and centralized customer management into one powerful ecosystem, helping organizations deliver faster support at scale.",
   highlights: [
     "Move beyond static workflows and scripted chatbots",
     "Understand intent, take action, and improve continuously",

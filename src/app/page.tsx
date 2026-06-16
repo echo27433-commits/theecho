@@ -7,6 +7,9 @@ const Stats = dynamic(() => import("@/components/Stats").then((mod) => mod.Stats
 const Industries = dynamic(() => import("@/components/Industries").then((mod) => mod.Industries));
 const UseCases = dynamic(() => import("@/components/UseCases").then((mod) => mod.UseCases));
 const Testimonials = dynamic(() => import("@/components/Testimonials").then((mod) => mod.Testimonials));
+const EnterpriseReady = dynamic(() =>
+  import("@/components/EnterpriseReady").then((mod) => mod.EnterpriseReady)
+);
 
 export default function Home() {
   return (
@@ -19,6 +22,7 @@ export default function Home() {
         <Stats />
         <Industries />
         <UseCases />
+        <EnterpriseReady />
         <Testimonials />
         <DeferredCTA />
       </main>

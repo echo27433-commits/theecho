@@ -21,7 +21,7 @@ const stats: Stat[] = [
     value: 70,
     suffix: "%+",
     label: "Customer Queries Automated",
-    description: "Resolved through intelligent self-service and AI workflows",
+    description: "Resolved through intelligent self service and AI workflows",
   },
   {
     value: 55,

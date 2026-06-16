@@ -191,7 +191,7 @@ export default function LoyaltyProductPage() {
                 For businesses of all sizes
               </h2>
               <p className="text-base leading-relaxed text-foreground/55 md:text-lg">
-                Three powerful modules — Offer Connect, Game Point, and GiftOS — designed to launch fast, engage
+                Three powerful modules: Offer Connect, Game Point, and GiftOS, designed to launch fast, engage
                 customers, and grow transaction volume.
               </p>
             </motion.div>

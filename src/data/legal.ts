@@ -42,7 +42,7 @@ export const privacyPolicy: LegalDocument = {
         "Providing, operating, and improving our loyalty, omnichannel, and AI platforms",
         "Responding to inquiries, scheduling demos, and delivering customer support",
         "Personalizing user experience and analyzing product usage",
-        "Sending service-related communications and, where permitted, marketing updates",
+        "Sending service related communications and, where permitted, marketing updates",
         "Maintaining security, preventing fraud, and complying with legal obligations",
       ],
     },
@@ -139,7 +139,7 @@ export const termsOfService: LegalDocument = {
       title: "4. Acceptable use",
       paragraphs: ["You agree not to misuse our services. Without limitation, you must not:"],
       list: [
-        "Violate applicable laws, regulations, or third-party rights",
+        "Violate applicable laws, regulations, or third party rights",
         "Upload, transmit, or distribute unlawful, harmful, or abusive content",
         "Attempt to gain unauthorized access to our systems or other users' accounts",
         "Interfere with or disrupt the integrity or performance of our services",
@@ -171,7 +171,7 @@ export const termsOfService: LegalDocument = {
       id: "disclaimers",
       title: "8. Disclaimers",
       paragraphs: [
-        "Our services are provided on an \"as is\" and \"as available\" basis to the fullest extent permitted by law. Echo disclaims all warranties, whether express or implied, including implied warranties of merchantability, fitness for a particular purpose, and non-infringement.",
+        "Our services are provided on an \"as is\" and \"as available\" basis to the fullest extent permitted by law. Echo disclaims all warranties, whether express or implied, including implied warranties of merchantability, fitness for a particular purpose, and non infringement.",
       ],
     },
     {

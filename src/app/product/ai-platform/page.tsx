@@ -381,7 +381,7 @@ export default function AIPlatformProductPage() {
                 transition={{ delay: 0.08 }}
                 className="text-base leading-relaxed text-foreground/55 lg:text-lg"
               >
-                Automate support, qualify leads, route conversations, and deliver personalized self-service from one
+                Automate support, qualify leads, route conversations, and deliver personalized self service from one
                 intelligent platform.
               </motion.p>
             </div>

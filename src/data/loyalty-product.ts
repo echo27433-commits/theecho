@@ -27,7 +27,7 @@ export const loyaltyHero = {
   title: "Loyalty:",
   titleAccent: "Rocket Fuel for your Business Growth",
   subtitle:
-    "360° loyalty solutions for businesses of all sizes — increase revenue, acquire more customers, and access a global network trusted across banks, airlines, retailers, and loyalty programs.",
+    "360° loyalty solutions for businesses of all sizes: increase revenue, acquire more customers, and access a global network trusted across banks, airlines, retailers, and loyalty programs.",
   regions: ["UAE", "USA", "Singapore", "Qatar"],
 };
 
@@ -45,7 +45,7 @@ export const loyaltyValuePillars = [
   {
     icon: Globe2,
     title: "Access Global Network",
-    description: "Tap into 50+ countries, 15+ airlines, and 100+ brands — transforming local rewards into global rewards.",
+    description: "Tap into 50+ countries, 15+ airlines, and 100+ brands, transforming local rewards into global rewards.",
   },
 ];
 
@@ -128,12 +128,12 @@ export const loyaltySolutions: {
     title: "Game Point",
     tagline: "Gamify loyalty and maximize engagement",
     description:
-      "Gamify loyalty and maximize engagement with easy plug-and-play integrations — launch fast without heavy overhead.",
+      "Gamify loyalty and maximize engagement with easy plug and play integrations, launch fast without heavy overhead.",
     benefits: [
       "Increase repeat visits",
       "Customize rewards to KPIs",
       "Launch without overhead",
-      "Plug-and-play integrations",
+      "Plug and play integrations",
     ],
   },
   {
@@ -153,12 +153,12 @@ export const loyaltySolutions: {
 ];
 
 export const loyaltyTechnology = {
-  title: "Fast, smart and secure with cutting-edge technology",
+  title: "Fast, smart and secure with cutting edge technology",
   subtitle: "Helping your business operate with zero CapEx and the fastest time to market.",
   advantages: [
     { icon: Zap, title: "Zero CapEx", description: "Launch loyalty programs without heavy upfront infrastructure investment." },
-    { icon: TrendingUp, title: "Fastest time to market", description: "Go live quickly with proven plug-and-play loyalty modules." },
-    { icon: Shield, title: "Transparency & security", description: "Enterprise-grade traceability with secure, auditable reward flows." },
+    { icon: TrendingUp, title: "Fastest time to market", description: "Go live quickly with proven plug and play loyalty modules." },
+    { icon: Shield, title: "Transparency & security", description: "Enterprise grade traceability with secure, auditable reward flows." },
     { icon: Globe2, title: "Global connectivity", description: "Connect with global brands, merchants, and SMEs in one ecosystem." },
   ],
 };
@@ -179,7 +179,7 @@ export const loyaltyEcosystem = {
   title: "Loyyal",
   titleAccent: "Global Loyalty Ecosystem",
   subtitle:
-    "Top spenders across the Middle East, Europe, India, and the US — connected through one powerful loyalty network.",
+    "Top spenders across the Middle East, Europe, India, and the US, connected through one powerful loyalty network.",
   stats: [
     { value: "$360B", label: "Unredeemed global rewards" },
     { value: "50+", label: "Countries connected" },

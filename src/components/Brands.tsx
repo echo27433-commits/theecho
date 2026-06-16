@@ -41,7 +41,7 @@ export function Brands() {
         transition={{ duration: 0.6 }}
         className="text-center text-[11px] text-foreground/40 font-semibold mb-12 uppercase tracking-[0.22em]"
       >
-        Trusted by forward-thinking organizations
+        Trusted by forward thinking organizations
       </motion.p>
 
       {/* Marquee strip */}

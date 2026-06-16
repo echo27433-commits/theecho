@@ -191,7 +191,7 @@ export default function OmnichannelProductPage() {
                 transition={{ delay: 0.08 }}
                 className="text-base leading-relaxed text-foreground/55 lg:text-lg"
               >
-                Whether communicating through SMS, Email, WhatsApp, RCS, Web Chat, or future digital channels — Echo
+                Whether communicating through SMS, Email, WhatsApp, RCS, Web Chat, or future digital channels, Echo
                 provides a unified communication layer that eliminates silos.
               </motion.p>
             </div>

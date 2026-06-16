@@ -827,7 +827,7 @@ export default function UseCaseDetail() {
                 <Sparkles size={11} />
                 Performance Metrics
               </div>
-              <h2 className="text-2xl font-bold text-foreground md:text-3xl">Data-driven outcomes</h2>
+              <h2 className="text-2xl font-bold text-foreground md:text-3xl">Data driven outcomes</h2>
               <p className="mt-2 text-foreground/50">
                 Real results from the Echo platform implementation at {uc.client}.
               </p>
