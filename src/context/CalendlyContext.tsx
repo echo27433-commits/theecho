@@ -4,7 +4,7 @@ import { createContext, useContext, useCallback, ReactNode } from "react";
 import Script from "next/script";
 import { useTheme } from "next-themes";
 
-const CALENDLY_BASE = "https://calendly.com/hetjani818";
+const CALENDLY_BASE = "https://calendly.com/karankrunch210/30min";
 
 declare global {
   interface Window {
