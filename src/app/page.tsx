@@ -21,8 +21,8 @@ export default function Home() {
         <Solutions />
         <Stats />
         <Industries />
-        <UseCases />
         <EnterpriseReady />
+        <UseCases />
         <Testimonials />
         <DeferredCTA />
       </main>

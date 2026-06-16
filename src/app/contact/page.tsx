@@ -255,10 +255,6 @@ export default function Contact() {
                   <h2 className="mb-5 text-3xl font-extrabold tracking-tight text-foreground md:text-4xl lg:text-5xl">
                     Our <span className="gradient-text-red">Footprint</span>
                   </h2>
-                  <p className="max-w-lg text-base leading-relaxed text-foreground/60 md:text-lg">
-                    Echo supports businesses across key markets in the Middle East and India — delivering
-                    localized engagement at enterprise scale.
-                  </p>
 
                   <div className="mt-8 flex items-baseline gap-3 border-l-2 border-primary-red pl-4">
                     <span className="text-4xl font-extrabold tracking-tight text-primary-red md:text-5xl">5</span>
