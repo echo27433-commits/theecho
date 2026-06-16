@@ -52,15 +52,6 @@ export default function LoyaltyProductPage() {
                 {loyaltyHero.subtitle}
               </p>
 
-              <div className="mb-10 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-xs font-semibold uppercase tracking-[0.2em] text-foreground/45">
-                {loyaltyHero.regions.map((region, i) => (
-                  <span key={region} className="inline-flex items-center gap-3">
-                    {i > 0 && <span className="hidden text-foreground/25 sm:inline">|</span>}
-                    <span>{region}</span>
-                  </span>
-                ))}
-              </div>
-
               <BookCallButton onClick={openCalendly} size="lg" />
             </motion.div>
 

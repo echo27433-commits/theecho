@@ -56,15 +56,15 @@ export const productsPageData: ProductPageItem[] = [
     tagline: "One inbox. Every channel.",
     headline: "Every channel, one conversation",
     description:
-      "Engage audiences across WhatsApp, Email, SMS, and Web with a single, unified messaging platform that eliminates silos and delays.",
+      "Engage audiences across WhatsApp, Email, SMS, RCS, Social, and Web with a single, unified messaging platform that eliminates silos and delays.",
     longDescription:
-      "The Omnichannel Communication Suite centralizes all customer interactions across WhatsApp, SMS, email, and web chat into a single unified dashboard, so your team never loses context and customers never repeat themselves.",
+      "The Omnichannel Communication Suite centralizes all customer interactions across WhatsApp, SMS, email, RCS, Social, and web chat into a single unified dashboard, so your team never loses context and customers never repeat themselves.",
     icon: MessageSquare,
     color: "#3B82F6",
     gradient: "from-[#3B82F6]/20 to-[#60A5FA]/5",
-    features: ["WhatsApp & SMS", "Email automation", "Unified inbox"],
+    features: ["WhatsApp & SMS", "Email automation", "Unified inbox", "RCS", "Social"],
     capabilities: [
-      "Unified inbox across WhatsApp, SMS, email, and web",
+      "Unified inbox across WhatsApp, SMS, email, RCS, Social, and web",
       "Intelligent cross channel routing to the right agent or bot",
       "Rich media campaigns optimized for mobile first audiences",
     ],

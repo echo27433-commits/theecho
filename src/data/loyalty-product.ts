@@ -28,7 +28,6 @@ export const loyaltyHero = {
   titleAccent: "Rocket Fuel for your Business Growth",
   subtitle:
     "360° loyalty solutions for businesses of all sizes: increase revenue, acquire more customers, and access a global network trusted across banks, airlines, retailers, and loyalty programs.",
-  regions: ["UAE", "USA", "Singapore", "Qatar"],
 };
 
 export const loyaltyValuePillars = [

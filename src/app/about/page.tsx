@@ -360,7 +360,7 @@ export default function About() {
                 viewport={{ once: true }}
               >
                 <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-primary-red">Who we serve</p>
-                <h2 className="mb-8 text-3xl font-bold text-foreground md:text-4xl">Built for operators who run at scale</h2>
+                <h2 className="mb-8 text-3xl font-bold text-foreground md:text-4xl">Powering customer engagement across industries</h2>
                 <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                   {aboutIndustries.map((industry) => (
                     <li

@@ -1,5 +1,12 @@
 import type { ElementType } from "react";
 import { Heart, MessageSquare, Bot, Shield, Target, Users, Globe2 } from "lucide-react";
+import { footprintCountries } from "./footprint";
+
+const footprintMarkets = footprintCountries.filter((country) => !country.label);
+const footprintMarketNames = footprintMarkets.map((country) => country.short).join(", ").replace(/, ([^,]*)$/, ", and $1");
+
+const footprintFaqAnswer =
+  `Our headquarters is in the UAE, with active operations across ${footprintMarketNames}, serving brands throughout the GCC, South Asia, and the wider MENA region. Explore our full footprint on the Contact page.`;
 
 export const aboutHero = {
   badge: "About Echo",
@@ -120,7 +127,7 @@ export const aboutPillars: {
     number: "02",
     title: "Omnichannel Suite",
     description:
-      "One inbox for WhatsApp, SMS, email, and web. Your team sees the full picture; your customers get one consistent voice.",
+      "One inbox for WhatsApp, SMS, email, RCS, Social, and web. Your team sees the full picture; your customers get one consistent voice.",
     color: "#3B82F6",
     icon: MessageSquare,
     href: "/product/omnichannel",
@@ -164,14 +171,13 @@ export const aboutApproach = [
   },
   {
     question: "Where is Echo based?",
-    answer:
-      "Our headquarters is in the UAE, with active operations across Saudi Arabia, Bahrain, Qatar, Kuwait, and Oman, serving brands throughout the Gulf and wider MENA region.",
+    answer: footprintFaqAnswer,
   },
 ];
 
 export const aboutGlobal = {
   eyebrow: "Global footprint",
-  title: "Rooted in the Gulf. Built for scale.",
+  title: "Local expertise. Global reach.",
   description:
     "From our UAE headquarters, we support brands across six countries, with local expertise and enterprise infrastructure that travels.",
   ctaLabel: "See our locations",
