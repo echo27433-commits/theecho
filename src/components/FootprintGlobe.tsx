@@ -5,8 +5,8 @@ import createGlobe from "cobe";
 import { useTheme } from "next-themes";
 import { BRAND_RED, footprintCountries, globeArcs, globeMarkers } from "@/data/footprint";
 
-const INITIAL_PHI = 6.28;
-const INITIAL_THETA = 0.5;
+const INITIAL_PHI = 3.43;
+const INITIAL_THETA = 0.34;
 
 type AnchorLabelStyle = React.CSSProperties & {
   positionAnchor?: string;
