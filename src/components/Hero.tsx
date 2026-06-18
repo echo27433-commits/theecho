@@ -122,7 +122,7 @@ function BotGuideBubble({ activeProduct }: { activeProduct: (typeof productsData
         transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
         style={{ transformOrigin: "bottom center" }}
       >
-        <div className="rounded-2xl border border-foreground/8 bg-background/90 px-3.5 py-3 shadow-[0_8px_32px_rgba(0,0,0,0.12)] backdrop-blur-md dark:border-white/10 dark:bg-background/85 dark:shadow-[0_8px_32px_rgba(0,0,0,0.4)]">
+        <div className="rounded-2xl border border-foreground/8 bg-background/90 px-3.5 py-3 shadow-[0_8px_32px_rgba(0,0,0,0.12)] backdrop-blur-md max-sm:px-3 max-sm:py-2.5 dark:border-white/10 dark:bg-background/85 dark:shadow-[0_8px_32px_rgba(0,0,0,0.4)]">
             <div className="mb-2 flex items-center gap-2">
               <div className="relative h-6 w-6 shrink-0 overflow-hidden rounded-full">
                 <Image src="/bot.png" alt="" width={24} height={24} className="h-full w-full scale-125 object-contain" />
@@ -199,7 +199,7 @@ function ProductHubCard({
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.6, delay, ease: [0.16, 1, 0.3, 1] }}
-      className={`group relative z-10 flex w-full items-center gap-4 rounded-2xl border p-4 text-left transition-all duration-300 sm:gap-5 sm:rounded-3xl sm:p-5 md:p-6 ${
+      className={`group relative z-10 flex w-full items-center gap-4 rounded-2xl border p-4 text-left transition-all duration-300 max-sm:gap-2 max-sm:rounded-xl max-sm:p-2.5 sm:gap-5 sm:rounded-3xl sm:p-5 md:p-6 ${
         isActive
           ? "overflow-hidden font-semibold text-white btn-shine hover:-translate-y-0.5 [box-shadow:0_4px_24px_var(--btn-glow)] hover:[box-shadow:0_6px_32px_var(--btn-glow-hover)]"
           : "opacity-70 backdrop-blur-sm hover:opacity-90"
@@ -215,7 +215,7 @@ function ProductHubCard({
     >
       <div
         data-hub-icon
-        className={`relative z-[15] flex h-12 w-12 shrink-0 items-center justify-center rounded-full sm:h-14 sm:w-14 ${
+        className={`relative z-[15] flex h-12 w-12 shrink-0 items-center justify-center rounded-full max-sm:h-9 max-sm:w-9 sm:h-14 sm:w-14 ${
           isActive ? "bg-white/20" : ""
         }`}
         style={
@@ -227,15 +227,15 @@ function ProductHubCard({
               }
         }
       >
-        <Icon className="text-white" size={22} />
+        <Icon className="h-[22px] w-[22px] text-white max-sm:h-[18px] max-sm:w-[18px]" />
       </div>
 
       <div className="min-w-0 flex-1 text-left">
-        <p className={`text-base leading-snug sm:text-lg ${isActive ? "font-semibold text-white" : "font-bold text-foreground"}`}>
+        <p className={`text-base leading-snug max-sm:text-xs sm:text-lg ${isActive ? "font-semibold text-white" : "font-bold text-foreground"}`}>
           {product.title}
         </p>
         <p
-          className={`mt-1 line-clamp-2 text-xs leading-relaxed sm:text-sm ${
+          className={`mt-1 line-clamp-2 text-xs leading-relaxed max-sm:mt-0.5 max-sm:text-[10px] sm:text-sm ${
             isActive ? "text-white/75" : "text-foreground/50"
           }`}
         >
@@ -246,7 +246,7 @@ function ProductHubCard({
       <motion.span
         animate={isActive ? { x: [0, 3, 0] } : { x: 0 }}
         transition={isActive ? { duration: 1.6, repeat: Infinity, ease: "easeInOut" } : { duration: 0.3 }}
-        className={`relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full transition-all duration-300 group-hover:translate-x-0.5 sm:h-11 sm:w-11 ${
+        className={`relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full transition-all duration-300 group-hover:translate-x-0.5 max-sm:h-8 max-sm:w-8 sm:h-11 sm:w-11 ${
           isActive ? "bg-white/20 group-hover:bg-white/30" : "border"
         }`}
         style={
@@ -266,7 +266,7 @@ function ProductHubCard({
             transition={{ duration: 1.8, repeat: Infinity, ease: "easeOut" }}
           />
         )}
-        <ArrowRight size={16} className={isActive ? "text-white" : undefined} style={isActive ? undefined : { color: product.color }} />
+        <ArrowRight size={16} className={`max-sm:h-3.5 max-sm:w-3.5 ${isActive ? "text-white" : ""}`} style={isActive ? undefined : { color: product.color }} />
       </motion.span>
     </motion.button>
   );
@@ -370,15 +370,15 @@ function HeroProductHub({ onSelectProduct }: { onSelectProduct: (productId: stri
   }, [updateConnectorLines, activeIndex]);
 
   return (
-    <div ref={containerRef} className="relative mx-auto w-full max-w-[800px] lg:max-w-[900px]">
+    <div ref={containerRef} className="relative mx-auto w-full max-w-[800px] max-sm:min-w-0 lg:max-w-[900px]">
       <HubConnectorLines lines={connectorLines} activeIndex={activeIndex} />
 
-      <div className="relative flex items-center">
+      <div className="relative flex items-center max-sm:min-w-0">
         {/* Central hub — bot mascot */}
-        <div className="relative z-40 flex w-[270px] shrink-0 items-center justify-center overflow-visible sm:w-[330px] lg:w-[380px]">
+        <div className="relative z-40 flex w-[330px] shrink-0 items-center justify-center overflow-visible max-sm:w-[150px] sm:w-[330px] lg:w-[380px]">
           <div
             ref={hubRef}
-            className="relative isolate flex h-[270px] w-[270px] items-center justify-center overflow-visible sm:h-[330px] sm:w-[330px] lg:h-[380px] lg:w-[380px]"
+            className="relative isolate flex h-[330px] w-[330px] items-center justify-center overflow-visible max-sm:h-[150px] max-sm:w-[150px] sm:h-[330px] sm:w-[330px] lg:h-[380px] lg:w-[380px]"
           >
             <Image
               src="/bot.png"
@@ -394,7 +394,7 @@ function HeroProductHub({ onSelectProduct }: { onSelectProduct: (productId: stri
             />
 
             <div
-              className="pointer-events-none absolute left-1/2 z-[100] w-[min(240px,calc(100vw-3rem))]"
+              className="pointer-events-none absolute left-1/2 z-[100] w-[min(240px,calc(100vw-3rem))] max-sm:w-[min(168px,calc(100vw-2rem))]"
               style={{ top: bubbleAnchorY, transform: "translate(-50%, -100%)" }}
             >
               <BotGuideBubble activeProduct={productsData[activeIndex]} />
@@ -403,10 +403,10 @@ function HeroProductHub({ onSelectProduct }: { onSelectProduct: (productId: stri
         </div>
 
         {/* Space between hub and cards */}
-        <div className="w-12 shrink-0 sm:w-16 md:w-20 lg:w-24" aria-hidden />
+        <div className="w-16 shrink-0 max-sm:w-2 sm:w-16 md:w-20 lg:w-24" aria-hidden />
 
         {/* Product cards */}
-        <div className="relative z-10 flex flex-1 flex-col gap-5 sm:gap-6 md:gap-7">
+        <div className="relative z-10 flex flex-1 flex-col gap-5 max-sm:min-w-0 max-sm:gap-2.5 sm:gap-6 md:gap-7">
           {productsData.map((product, i) => (
             <div
               key={product.id}
@@ -440,7 +440,7 @@ export function Hero() {
 
   return (
     <>
-      <section className="relative flex min-h-screen items-center overflow-hidden pt-24">
+      <section className="relative flex min-h-screen items-center overflow-x-hidden pt-24 lg:overflow-hidden">
         <div className="pointer-events-none absolute top-[-20%] right-[-10%] -z-10 h-[700px] w-[700px] animate-blob rounded-full bg-primary-red/8 blur-[140px] dark:bg-primary-red/12" />
         <div
           className="pointer-events-none absolute bottom-[-10%] left-[-10%] -z-10 h-[600px] w-[600px] rounded-full bg-purple-500/5 blur-[120px] dark:bg-purple-500/10"
@@ -455,7 +455,7 @@ export function Hero() {
         <div className="radial-spotlight pointer-events-none absolute top-0 right-0 left-0 -z-10 h-[600px]" />
         <div className="noise-overlay pointer-events-none absolute inset-0 -z-10" />
 
-        <div className="mx-auto grid w-full max-w-[1280px] grid-cols-1 items-center gap-12 px-6 py-20 lg:grid-cols-2 lg:gap-12 xl:gap-16">
+        <div className="mx-auto grid w-full max-w-[1280px] grid-cols-1 items-center gap-12 px-4 py-20 sm:px-6 lg:grid-cols-2 lg:gap-12 xl:gap-16">
           <div className="max-w-xl">
             <motion.div
               initial={{ opacity: 0, y: 16 }}
@@ -506,7 +506,7 @@ export function Hero() {
               initial={{ opacity: 0, x: 40 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-              className="relative flex items-center justify-center overflow-visible"
+              className="relative flex w-full items-center justify-center overflow-visible max-sm:min-w-0"
             >
               <HeroProductHub onSelectProduct={openModal} />
             </motion.div>

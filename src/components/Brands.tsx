@@ -50,7 +50,7 @@ export function Brands() {
           {doubled.map((brand, i) => (
             <div
               key={i}
-              className="flex items-center gap-6 px-10 group cursor-default select-none"
+              className="flex items-center gap-3 px-5 group cursor-default select-none sm:px-6"
             >
               <div className="flex items-center justify-center overflow-visible transition-all duration-300 opacity-50 grayscale group-hover:opacity-100 group-hover:grayscale-0">
                 <img
@@ -68,7 +68,7 @@ export function Brands() {
                   className={`${"logoClass" in brand ? brand.logoClass : defaultLogoClass} object-contain hidden dark:block`}
                 />
               </div>
-              <div className="w-px h-8 bg-[var(--border)] mx-6 opacity-60" />
+              <div className="mx-2 h-8 w-px bg-[var(--border)] opacity-60 sm:mx-3" />
             </div>
           ))}
         </div>

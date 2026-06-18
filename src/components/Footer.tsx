@@ -133,7 +133,16 @@ export function Footer() {
 
         {/* Attribution */}
         <p className="mb-8 text-center text-xs italic text-white">
-          Echo is developed by <span className="font-medium not-italic text-white">Unicorn</span> to power the future of customer engagement
+          Echo is developed by{" "}
+          <a
+            href="https://theunicorn.global/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-bold not-italic text-white underline underline-offset-2 transition-colors hover:text-white/80"
+          >
+            Unicorn
+          </a>{" "}
+          to power the future of customer engagement
         </p>
 
         {/* Bottom bar */}
