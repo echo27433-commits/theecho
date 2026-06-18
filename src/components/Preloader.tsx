@@ -19,15 +19,21 @@ export function Preloader() {
       window.setTimeout(() => {
         sessionStorage.setItem(PRELOADER_KEY, "1");
         setIsLoading(false);
-      }, 250);
+      }, 200);
     };
 
-    if (document.readyState === "complete") {
+    if (document.readyState === "interactive" || document.readyState === "complete") {
       hidePreloader();
     } else {
-      window.addEventListener("load", hidePreloader, { once: true });
-      return () => window.removeEventListener("load", hidePreloader);
+      document.addEventListener("DOMContentLoaded", hidePreloader, { once: true });
     }
+
+    const fallback = window.setTimeout(hidePreloader, 1800);
+
+    return () => {
+      document.removeEventListener("DOMContentLoaded", hidePreloader);
+      window.clearTimeout(fallback);
+    };
   }, []);
 
   useEffect(() => {

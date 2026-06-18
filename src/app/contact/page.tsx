@@ -25,6 +25,18 @@ const LinkedinIcon = ({ size = 24 }: { size?: number }) => (
   </svg>
 );
 
+const CONTACT_LINKS = {
+  office:
+    "https://www.google.com/maps/search/?api=1&query=Ontario+Tower+C1801+Business+Bay+Dubai+UAE",
+  email: "mailto:hello@theecho.global",
+  phone: "tel:+971585686912",
+  whatsapp: "https://wa.me/971585686912",
+  linkedin: "https://www.linkedin.com/company/echoproduct/?viewAsMember=true",
+};
+
+const contactCardClass =
+  "relative group overflow-hidden rounded-2xl border border-[var(--border)] bg-card p-6 transition-all duration-300 hover:-translate-y-0.5 hover:border-primary-red/30 cursor-pointer";
+
 export default function Contact() {
   const [formData, setFormData] = useState({ name: "", email: "", subject: "", message: "" });
   const [loading, setLoading] = useState(false);
@@ -81,58 +93,93 @@ export default function Contact() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {/* Office spans 2 columns */}
-                  <div className="bg-card border border-[var(--border)] rounded-2xl p-6 relative group overflow-hidden sm:col-span-2">
-                    <div className="absolute inset-0 bg-primary-red/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                    <div className="w-10 h-10 rounded-xl bg-primary-red/10 text-primary-red flex items-center justify-center mb-4">
-                      <MapPin size={20} />
+                  <a
+                    href={CONTACT_LINKS.office}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`${contactCardClass} sm:col-span-2`}
+                    aria-label="Open office location in Google Maps"
+                  >
+                    <div className="absolute inset-0 bg-primary-red/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                    <div className="relative z-10">
+                      <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-primary-red/10 text-primary-red">
+                        <MapPin size={20} />
+                      </div>
+                      <h3 className="mb-1 text-lg font-bold">Office</h3>
+                      <p className="text-sm leading-relaxed text-foreground/70">
+                        Unicorn Worldwide Marketing Services FZ LLC<br />
+                        Ontario Tower, C1801, Business Bay, Dubai, UAE
+                      </p>
                     </div>
-                    <h3 className="text-lg font-bold mb-1">Office</h3>
-                    <p className="text-foreground/70 text-sm leading-relaxed">
-                      Unicorn Worldwide Marketing Services FZ LLC<br />
-                      Ontario Tower, C1801, Business Bay, Dubai, UAE
-                    </p>
-                  </div>
+                  </a>
 
                   {/* Email */}
-                  <div className="bg-card border border-[var(--border)] rounded-2xl p-6 relative group overflow-hidden">
-                    <div className="absolute inset-0 bg-primary-red/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                    <div className="w-10 h-10 rounded-xl bg-primary-red/10 text-primary-red flex items-center justify-center mb-4">
-                      <Mail size={20} />
+                  <a
+                    href={CONTACT_LINKS.email}
+                    className={contactCardClass}
+                    aria-label="Email hello@theecho.global"
+                  >
+                    <div className="absolute inset-0 bg-primary-red/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                    <div className="relative z-10">
+                      <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-primary-red/10 text-primary-red">
+                        <Mail size={20} />
+                      </div>
+                      <h3 className="mb-1 text-lg font-bold">Email</h3>
+                      <p className="text-sm text-foreground/70 transition-colors group-hover:text-primary-red">
+                        hello@theecho.global
+                      </p>
                     </div>
-                    <h3 className="text-lg font-bold mb-1">Email</h3>
-                    <a href="mailto:hello@theecho.global" className="text-foreground/70 text-sm hover:text-primary-red transition-colors block">
-                      hello@theecho.global
-                    </a>
-                  </div>
+                  </a>
 
                   {/* Phone */}
-                  <div className="bg-card border border-[var(--border)] rounded-2xl p-6 relative group overflow-hidden">
-                    <div className="absolute inset-0 bg-primary-red/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                    <div className="w-10 h-10 rounded-xl bg-primary-red/10 text-primary-red flex items-center justify-center mb-4">
-                      <Phone size={20} />
-                    </div>
-                    <h3 className="text-lg font-bold mb-1">Phone & WhatsApp</h3>
-                    <div className="flex flex-col gap-1">
-                      <a href="tel:+971585686912" className="text-foreground/70 text-sm hover:text-primary-red transition-colors block">
-                        +97158 5686912
-                      </a>
-                      <a href="https://wa.me/971585686912" target="_blank" rel="noopener noreferrer" className="text-foreground/70 text-sm hover:text-green-500 transition-colors block">
-                        Chat on WhatsApp
-                      </a>
+                  <div className={contactCardClass}>
+                    <a
+                      href={CONTACT_LINKS.phone}
+                      className="absolute inset-0 z-0"
+                      aria-label="Call +97158 5686912"
+                    />
+                    <div className="absolute inset-0 bg-primary-red/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                    <div className="relative z-10">
+                      <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-primary-red/10 text-primary-red">
+                        <Phone size={20} />
+                      </div>
+                      <h3 className="mb-1 text-lg font-bold">Phone & WhatsApp</h3>
+                      <div className="flex flex-col gap-1">
+                        <p className="text-sm text-foreground/70 transition-colors group-hover:text-primary-red">
+                          +97158 5686912
+                        </p>
+                        <a
+                          href={CONTACT_LINKS.whatsapp}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="relative z-20 inline-block text-sm text-foreground/70 transition-colors hover:text-green-500"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          Chat on WhatsApp
+                        </a>
+                      </div>
                     </div>
                   </div>
 
                   {/* Social */}
-                  <div className="bg-card border border-[var(--border)] rounded-2xl p-6 relative group overflow-hidden sm:col-span-2">
-                    <div className="absolute inset-0 bg-primary-red/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                    <div className="w-10 h-10 rounded-xl bg-primary-red/10 text-primary-red flex items-center justify-center mb-4">
-                      <LinkedinIcon size={20} />
+                  <a
+                    href={CONTACT_LINKS.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`${contactCardClass} sm:col-span-2`}
+                    aria-label="Visit Echo on LinkedIn"
+                  >
+                    <div className="absolute inset-0 bg-primary-red/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                    <div className="relative z-10">
+                      <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-primary-red/10 text-primary-red">
+                        <LinkedinIcon size={20} />
+                      </div>
+                      <h3 className="mb-1 text-lg font-bold">Social</h3>
+                      <p className="text-sm text-foreground/70 transition-colors group-hover:text-primary-red">
+                        LinkedIn
+                      </p>
                     </div>
-                    <h3 className="text-lg font-bold mb-1">Social</h3>
-                    <a href="https://www.linkedin.com/company/echoproduct/?viewAsMember=true" target="_blank" rel="noopener noreferrer" className="text-foreground/70 text-sm hover:text-primary-red transition-colors block">
-                      LinkedIn
-                    </a>
-                  </div>
+                  </a>
                 </div>
               </div>
 

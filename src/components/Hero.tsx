@@ -64,31 +64,21 @@ function HubConnectorLines({ lines, activeIndex }: { lines: ConnectorLine[]; act
               fill="none"
               strokeLinecap="round"
               filter={isActive ? "url(#hero-line-glow)" : undefined}
-              initial={{ pathLength: 0, opacity: 0 }}
+              initial={{ opacity: 0 }}
               animate={{
-                pathLength: 1,
                 opacity: 1,
                 strokeDasharray: isActive ? "6 10" : "none",
                 strokeDashoffset: isActive ? [0, -32] : 0,
               }}
               transition={{
-                pathLength: { duration: 1, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] },
-                opacity: { duration: 0.4 },
+                opacity: { duration: 0.35, delay: i * 0.05 },
                 strokeDashoffset: isActive
                   ? { duration: 1.8, repeat: Infinity, ease: "linear" }
                   : { duration: 0.3 },
               }}
             />
             <circle cx={line.startX} cy={line.startY} r={isActive ? 5 : 3.5} fill={line.color} opacity={isActive ? 1 : 0.5} />
-            <motion.circle
-              cx={line.endX}
-              cy={line.endY}
-              r={isActive ? 6 : 4}
-              fill={line.color}
-              opacity={isActive ? 1 : 0.55}
-              animate={isActive ? { r: [6, 8, 6], opacity: [1, 0.7, 1] } : {}}
-              transition={isActive ? { duration: 2, repeat: Infinity, ease: "easeInOut" } : {}}
-            />
+            <circle cx={line.endX} cy={line.endY} r={isActive ? 6 : 4} fill={line.color} opacity={isActive ? 1 : 0.55} />
           </g>
         );
       })}
@@ -125,7 +115,7 @@ function BotGuideBubble({ activeProduct }: { activeProduct: (typeof productsData
         <div className="rounded-2xl border border-foreground/8 bg-background/90 px-3.5 py-3 shadow-[0_8px_32px_rgba(0,0,0,0.12)] backdrop-blur-md max-sm:px-3 max-sm:py-2.5 dark:border-white/10 dark:bg-background/85 dark:shadow-[0_8px_32px_rgba(0,0,0,0.4)]">
             <div className="mb-2 flex items-center gap-2">
               <div className="relative h-6 w-6 shrink-0 overflow-hidden rounded-full">
-                <Image src="/bot.png" alt="" width={24} height={24} className="h-full w-full scale-125 object-contain" />
+                <img src="/bot.png" alt="" width={24} height={24} className="h-full w-full scale-125 object-contain" />
               </div>
               <span className="text-[10px] font-semibold tracking-[0.12em] text-foreground/45 uppercase">Echo Assistant</span>
               <span className="ml-auto flex gap-0.5">
@@ -196,9 +186,9 @@ function ProductHubCard({
     <motion.button
       type="button"
       onClick={onClick}
-      initial={{ opacity: 0, x: 20 }}
+      initial={{ opacity: 0, x: 12 }}
       animate={{ opacity: 1, x: 0 }}
-      transition={{ duration: 0.6, delay, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ duration: 0.45, delay: Math.min(delay, 0.35), ease: [0.16, 1, 0.3, 1] }}
       className={`group relative z-10 flex w-full items-center gap-4 rounded-2xl border p-4 text-left transition-all duration-300 max-sm:gap-2 max-sm:rounded-xl max-sm:p-2.5 sm:gap-5 sm:rounded-3xl sm:p-5 md:p-6 ${
         isActive
           ? "overflow-hidden font-semibold text-white btn-shine hover:-translate-y-0.5 [box-shadow:0_4px_24px_var(--btn-glow)] hover:[box-shadow:0_6px_32px_var(--btn-glow-hover)]"
@@ -279,6 +269,7 @@ function HeroProductHub({ onSelectProduct }: { onSelectProduct: (productId: stri
   const containerRef = useRef<HTMLDivElement>(null);
   const hubRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const connectorRafRef = useRef<number | null>(null);
 
   const updateBubbleAnchor = useCallback(() => {
     const hub = hubRef.current;
@@ -344,6 +335,16 @@ function HeroProductHub({ onSelectProduct }: { onSelectProduct: (productId: stri
     updateBubbleAnchor();
   }, [updateBubbleAnchor]);
 
+  const scheduleConnectorUpdate = useCallback(() => {
+    if (connectorRafRef.current !== null) {
+      cancelAnimationFrame(connectorRafRef.current);
+    }
+    connectorRafRef.current = requestAnimationFrame(() => {
+      connectorRafRef.current = null;
+      updateConnectorLines();
+    });
+  }, [updateConnectorLines]);
+
   useEffect(() => {
     const timer = setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % productsData.length);
@@ -352,22 +353,19 @@ function HeroProductHub({ onSelectProduct }: { onSelectProduct: (productId: stri
   }, []);
 
   useEffect(() => {
-    updateConnectorLines();
+    scheduleConnectorUpdate();
 
-    const delayed = setTimeout(updateConnectorLines, 400);
-    const delayedLong = setTimeout(updateConnectorLines, 1200);
-    window.addEventListener("resize", updateConnectorLines);
+    window.addEventListener("resize", scheduleConnectorUpdate, { passive: true });
 
-    const observer = new ResizeObserver(updateConnectorLines);
+    const observer = new ResizeObserver(scheduleConnectorUpdate);
     if (containerRef.current) observer.observe(containerRef.current);
 
     return () => {
-      clearTimeout(delayed);
-      clearTimeout(delayedLong);
-      window.removeEventListener("resize", updateConnectorLines);
+      if (connectorRafRef.current !== null) cancelAnimationFrame(connectorRafRef.current);
+      window.removeEventListener("resize", scheduleConnectorUpdate);
       observer.disconnect();
     };
-  }, [updateConnectorLines, activeIndex]);
+  }, [scheduleConnectorUpdate, activeIndex]);
 
   return (
     <div ref={containerRef} className="relative mx-auto w-full max-w-[800px] max-sm:min-w-0 lg:max-w-[900px]">
@@ -385,12 +383,11 @@ function HeroProductHub({ onSelectProduct }: { onSelectProduct: (productId: stri
               alt="Echo AI Assistant"
               width={480}
               height={480}
+              sizes="(max-width: 640px) 150px, (max-width: 1024px) 330px, 380px"
               className="relative z-[1] h-full w-full object-contain drop-shadow-[0_12px_40px_rgba(56,189,248,0.2)]"
               priority
-              onLoad={() => {
-                updateConnectorLines();
-                updateBubbleAnchor();
-              }}
+              fetchPriority="high"
+              onLoad={scheduleConnectorUpdate}
             />
 
             <div
@@ -432,35 +429,32 @@ function HeroProductHub({ onSelectProduct }: { onSelectProduct: (productId: stri
 }
 
 export function Hero() {
-  const [mounted, setMounted] = useState(false);
   const { openModal } = useProductModal();
   const { openCalendly } = useCalendly();
-
-  useEffect(() => setMounted(true), []);
 
   return (
     <>
       <section className="relative flex min-h-screen items-center overflow-x-hidden pt-24 lg:overflow-hidden">
-        <div className="pointer-events-none absolute top-[-20%] right-[-10%] -z-10 h-[700px] w-[700px] animate-blob rounded-full bg-primary-red/8 blur-[140px] dark:bg-primary-red/12" />
+        <div className="pointer-events-none absolute top-[-20%] right-[-10%] -z-10 h-[700px] w-[700px] animate-blob rounded-full bg-primary-red/8 blur-[140px] max-sm:h-[420px] max-sm:w-[420px] max-sm:blur-[80px] dark:bg-primary-red/12" />
         <div
-          className="pointer-events-none absolute bottom-[-10%] left-[-10%] -z-10 h-[600px] w-[600px] rounded-full bg-purple-500/5 blur-[120px] dark:bg-purple-500/10"
+          className="pointer-events-none absolute bottom-[-10%] left-[-10%] -z-10 h-[600px] w-[600px] rounded-full bg-purple-500/5 blur-[120px] max-sm:h-[360px] max-sm:w-[360px] max-sm:blur-[70px] dark:bg-purple-500/10"
           style={{ animation: "blob-move 14s ease-in-out infinite 2s" }}
         />
         <div
-          className="pointer-events-none absolute top-[30%] left-[30%] -z-10 h-[400px] w-[400px] rounded-full bg-blue-500/3 blur-[100px] dark:bg-blue-500/5"
+          className="pointer-events-none absolute top-[30%] left-[30%] -z-10 hidden h-[400px] w-[400px] rounded-full bg-blue-500/3 blur-[100px] sm:block dark:bg-blue-500/5"
           style={{ animation: "blob-move 18s ease-in-out infinite 4s" }}
         />
 
         <div className="pointer-events-none absolute inset-0 -z-10 dot-grid-light opacity-100 dark:dot-grid dark:opacity-100" />
         <div className="radial-spotlight pointer-events-none absolute top-0 right-0 left-0 -z-10 h-[600px]" />
-        <div className="noise-overlay pointer-events-none absolute inset-0 -z-10" />
+        <div className="noise-overlay pointer-events-none absolute inset-0 -z-10 max-sm:hidden" />
 
         <div className="mx-auto grid w-full max-w-[1280px] grid-cols-1 items-center gap-12 px-4 py-20 sm:px-6 lg:grid-cols-2 lg:gap-12 xl:gap-16">
           <div className="max-w-xl">
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
               className="mb-8 inline-flex items-center gap-2"
             >
               <span className="flex items-center gap-1.5 rounded-full border border-primary-red/20 bg-primary-red/10 px-3 py-1.5 text-xs font-semibold text-primary-red backdrop-blur-sm">
@@ -470,9 +464,9 @@ export function Hero() {
             </motion.div>
 
             <motion.h1
-              initial={{ opacity: 0, y: 24 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.6, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
               className="mb-6 text-[clamp(2.5rem,5vw,4.5rem)] leading-[1.05] font-extrabold tracking-[-0.03em]"
             >
               <span className="whitespace-nowrap text-foreground">The AI Engine for</span>
@@ -482,9 +476,9 @@ export function Hero() {
             </motion.h1>
 
             <motion.p
-              initial={{ opacity: 0, y: 16 }}
+              initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.5, delay: 0.18, ease: [0.16, 1, 0.3, 1] }}
               className="mb-10 max-w-[440px] text-base leading-relaxed text-foreground/60 md:text-lg"
             >
               Echo is an AI powered platform that helps businesses engage, automate, and grow across every channel with
@@ -492,31 +486,24 @@ export function Hero() {
             </motion.p>
 
             <motion.div
-              initial={{ opacity: 0, y: 16 }}
+              initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.85, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.5, delay: 0.26, ease: [0.16, 1, 0.3, 1] }}
               className="flex flex-col items-start gap-4 sm:flex-row"
             >
               <BookCallButton onClick={openCalendly} size="lg" />
             </motion.div>
           </div>
 
-          {mounted && (
-            <motion.div
-              initial={{ opacity: 0, x: 40 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-              className="relative flex w-full items-center justify-center overflow-visible max-sm:min-w-0"
-            >
-              <HeroProductHub onSelectProduct={openModal} />
-            </motion.div>
-          )}
+          <div className="relative flex w-full items-center justify-center overflow-visible max-sm:min-w-0">
+            <HeroProductHub onSelectProduct={openModal} />
+          </div>
         </div>
 
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 2, duration: 1 }}
+          transition={{ delay: 1, duration: 0.6 }}
           className="absolute bottom-8 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2"
         >
           <span className="text-[10px] font-medium tracking-[0.2em] text-foreground/30 uppercase">Scroll</span>

@@ -1,6 +1,7 @@
 import dynamic from "next/dynamic";
 import { Navbar } from "@/components/Navbar";
-import { DeferredBrands, DeferredHero, DeferredCTA, DeferredFooter } from "@/components/deferred";
+import { Hero } from "@/components/Hero";
+import { DeferredBrands, DeferredCTA, DeferredFooter } from "@/components/deferred";
 
 const Solutions = dynamic(() => import("@/components/Solutions").then((mod) => mod.Solutions));
 const Stats = dynamic(() => import("@/components/Stats").then((mod) => mod.Stats));
@@ -13,7 +14,7 @@ export default function Home() {
     <>
       <Navbar />
       <main className="flex min-h-screen w-full flex-col overflow-x-hidden">
-        <DeferredHero />
+        <Hero />
         <DeferredBrands />
         <Solutions />
         <Stats />
