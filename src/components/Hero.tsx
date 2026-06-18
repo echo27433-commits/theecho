@@ -374,13 +374,22 @@ function HeroProductHub({ onSelectProduct }: { onSelectProduct: (productId: stri
             ref={hubRef}
             className="relative isolate flex h-[330px] w-[330px] items-center justify-center overflow-visible max-sm:h-[150px] max-sm:w-[150px] sm:h-[330px] sm:w-[330px] lg:h-[380px] lg:w-[380px]"
           >
+            <div
+              className="pointer-events-none absolute bottom-[14%] left-1/2 z-0 h-[42%] w-[82%] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(242,13,20,0.28)_0%,rgba(242,13,20,0.1)_42%,transparent_72%)] max-sm:bottom-[18%] max-sm:h-[38%] max-sm:w-[88%]"
+              aria-hidden
+            />
+            <div
+              className="pointer-events-none absolute bottom-[11%] left-1/2 z-0 h-2 w-[48%] -translate-x-1/2 rounded-[100%] bg-foreground/10 blur-md max-sm:bottom-[14%] max-sm:h-1.5 max-sm:w-[52%] dark:bg-black/45"
+              aria-hidden
+            />
+
             <Image
               src="/bot.png"
               alt="Echo AI Assistant"
               width={480}
               height={480}
               sizes="(max-width: 640px) 150px, (max-width: 1024px) 330px, 380px"
-              className="relative z-[1] h-full w-full object-contain drop-shadow-[0_12px_40px_rgba(56,189,248,0.2)]"
+              className="relative z-[1] h-full w-full object-contain drop-shadow-[0_16px_48px_rgba(242,13,20,0.25)]"
               priority
               fetchPriority="high"
               onLoad={scheduleConnectorUpdate}
@@ -391,6 +400,13 @@ function HeroProductHub({ onSelectProduct }: { onSelectProduct: (productId: stri
               style={{ top: bubbleAnchorY, transform: "translate(-50%, -100%)" }}
             >
               <BotGuideBubble activeProduct={productsData[activeIndex]} />
+            </div>
+
+            <div className="pointer-events-none absolute bottom-0 left-1/2 z-[2] flex -translate-x-1/2 flex-col items-center gap-0.5">
+              <span className="text-xs font-bold tracking-[0.06em] text-foreground/90 sm:text-sm">Echo</span>
+              <span className="text-[9px] font-semibold tracking-[0.16em] text-foreground/40 uppercase sm:text-[10px]">
+                AI Assistant
+              </span>
             </div>
           </div>
         </div>
