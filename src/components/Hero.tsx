@@ -369,7 +369,7 @@ function HeroProductHub({ onSelectProduct }: { onSelectProduct: (productId: stri
 
       <div className="relative flex items-center max-sm:min-w-0">
         {/* Central hub — bot mascot */}
-        <div className="relative z-40 flex w-[330px] shrink-0 items-center justify-center overflow-visible max-sm:w-[150px] sm:w-[330px] lg:w-[380px]">
+        <div className="relative z-40 flex shrink-0 flex-col items-center overflow-visible max-sm:w-[150px] sm:w-[330px] lg:w-[380px]">
           <div
             ref={hubRef}
             className="relative isolate flex h-[330px] w-[330px] items-center justify-center overflow-visible max-sm:h-[150px] max-sm:w-[150px] sm:h-[330px] sm:w-[330px] lg:h-[380px] lg:w-[380px]"
@@ -401,13 +401,13 @@ function HeroProductHub({ onSelectProduct }: { onSelectProduct: (productId: stri
             >
               <BotGuideBubble activeProduct={productsData[activeIndex]} />
             </div>
+          </div>
 
-            <div className="pointer-events-none absolute bottom-0 left-1/2 z-[2] flex -translate-x-1/2 flex-col items-center gap-0.5">
-              <span className="text-xs font-bold tracking-[0.06em] text-foreground/90 sm:text-sm">Echo</span>
-              <span className="text-[9px] font-semibold tracking-[0.16em] text-foreground/40 uppercase sm:text-[10px]">
-                AI Assistant
-              </span>
-            </div>
+          <div className="pointer-events-none mt-2 flex flex-col items-center gap-0.5 max-sm:mt-1.5 sm:mt-3">
+            <span className="text-xs font-bold tracking-[0.06em] text-foreground/90 sm:text-sm">Echo</span>
+            <span className="text-[9px] font-semibold tracking-[0.16em] text-foreground/40 uppercase sm:text-[10px]">
+              AI Assistant
+            </span>
           </div>
         </div>
 
