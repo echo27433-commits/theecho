@@ -187,36 +187,6 @@
     background: radial-gradient(ellipse 60% 40% at 50% 50%, rgba(242,13,20,0.08) 0%, transparent 70%);
   }
 
-/* Hero orb — spread floating nodes on mobile only */
-@media (max-width: 767px) {
-  .hero-orb-node--loyalty {
-    top: 4% !important;
-    left: 0% !important;
-    right: auto !important;
-  }
-
-  .hero-orb-node--omnichannel {
-    top: 20% !important;
-    right: 0% !important;
-    left: auto !important;
-  }
-
-  .hero-orb-node--ai-platform {
-    bottom: 6% !important;
-    left: 18% !important;
-  }
-}
-
-@media (min-width: 768px) {
-  .hero-orb-node--loyalty {
-    left: 4% !important;
-  }
-
-  .hero-orb-node--omnichannel {
-    right: 4% !important;
-  }
-}
-
   /* Premium button shine */
   .btn-shine {
     position: relative;

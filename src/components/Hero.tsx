@@ -1,14 +1,13 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
-import { Bot, Zap, ArrowRight } from "lucide-react";
+import Image from "next/image";
+import { AnimatePresence, motion } from "framer-motion";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { Bot, Zap, ArrowRight, MessageSquare } from "lucide-react";
 
 import { useProductModal, productsData } from "@/context/ProductModalContext";
 import { useCalendly } from "@/context/CalendlyContext";
 import { BookCallButton } from "@/components/BookCallButton";
-
-
 
 function hexToRgba(hex: string, alpha: number) {
   const h = hex.replace("#", "");
@@ -18,423 +17,420 @@ function hexToRgba(hex: string, alpha: number) {
   return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 }
 
-/* ── Pointing hand SVG ── */
-function PointingHandIcon({ color }: { color: string }) {
-  return (
-    <svg
-      width="42"
-      height="42"
-      viewBox="0 0 64 64"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      style={{ filter: `drop-shadow(0 4px 14px ${hexToRgba(color, 0.5)})` }}
-      aria-hidden
-    >
-      <path
-        d="M18 30V18c0-2.2 1.8-4 4-4s4 1.8 4 4v8h2v-6c0-2.2 1.8-4 4-4s4 1.8 4 4v6h2v-4c0-2.2 1.8-4 4-4s4 1.8 4 4v14c0 .6-.1 1.2-.4 1.7l-6 12c-.8 1.6-2.4 2.6-4.2 2.6H22c-3.3 0-6-2.7-6-6V36c0-2.2 1.8-4 4-4s4 1.8 4 4v-2z"
-        fill={color}
-        stroke="white"
-        strokeWidth="2.5"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
-const SHORT_HINTS: Record<string, string> = {
-  loyalty: "For loyalty & rewards",
-  omnichannel: "For WhatsApp messages",
-  "ai-platform": "For AI conversations",
+const HERO_CARD_COPY: Record<string, string> = {
+  loyalty: "Build stronger relationships with data-driven loyalty programs.",
+  omnichannel: "Deliver seamless conversations across every channel.",
+  "ai-platform": "Automate interactions with context-aware AI conversations.",
 };
 
-const MOBILE_HINTS: Record<string, string> = {
-  loyalty: "Loyalty & rewards",
-  omnichannel: "WhatsApp messages",
-  "ai-platform": "AI conversations",
+const HERO_GUIDE_PROMPTS: Record<string, string> = {
+  loyalty: "Tap the button to explore Loyalty Management →",
+  omnichannel: "Tap the button to see Omnichannel in action →",
+  "ai-platform": "Tap the button to discover our AI Platform →",
 };
 
-type HandPlacement = "left" | "right";
-
-/* ── Animated hand cursor with Click label ── */
-function HandCursor({
-  x,
-  y,
-  color,
-  hint,
-  placement,
-}: {
-  x: number;
-  y: number;
-  color: string;
-  hint: string;
-  placement: HandPlacement;
-}) {
-  const flip = placement === "left";
-
-  return (
-    <motion.div
-      className={`pointer-events-none absolute z-50 flex max-w-[calc(100%-8px)] items-start gap-1.5 ${flip ? "flex-row-reverse" : ""}`}
-      animate={{ left: x, top: y }}
-      transition={{ type: "spring", stiffness: 60, damping: 22 }}
-    >
-      <motion.div
-        key={color}
-        initial={{ opacity: 0.6 }}
-        animate={{ y: [0, 10, 0], scale: [1, 0.9, 1], opacity: 1 }}
-        transition={{
-          opacity: { duration: 0.4 },
-          y: { duration: 1.4, repeat: Infinity, ease: "easeInOut" },
-          scale: { duration: 1.4, repeat: Infinity, ease: "easeInOut" },
-        }}
-        className={flip ? "rotate-[25deg]" : "-rotate-[25deg]"}
-      >
-        <PointingHandIcon color={color} />
-      </motion.div>
-      <div className={`mt-1 flex min-w-0 flex-col gap-1 ${flip ? "items-end" : "items-start"}`}>
-        <motion.span
-          key={`click-${color}`}
-          initial={{ opacity: 0.6 }}
-          animate={{ opacity: [0.75, 1, 0.75], scale: [1, 1.05, 1] }}
-          transition={{
-            opacity: { duration: 1.4, repeat: Infinity, ease: "easeInOut" },
-            scale: { duration: 1.4, repeat: Infinity, ease: "easeInOut" },
-          }}
-          className="shrink-0 rounded-full px-2.5 py-1 text-[11px] font-bold uppercase tracking-wide text-white"
-          style={{
-            backgroundColor: color,
-            boxShadow: `0 4px 16px ${hexToRgba(color, 0.5)}`,
-          }}
-        >
-          Click
-        </motion.span>
-        <motion.div
-          key={`hint-${color}-${hint}`}
-          initial={{ opacity: 0, y: -4 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-          className={`max-w-[110px] rounded-2xl px-2.5 py-1.5 text-[10px] leading-snug font-medium text-foreground/85 md:max-w-[130px] ${flip ? "rounded-tr-sm" : "rounded-tl-sm"}`}
-          style={{
-            backgroundColor: hexToRgba(color, 0.14),
-            border: `1px solid ${hexToRgba(color, 0.28)}`,
-          }}
-        >
-          {hint}
-        </motion.div>
-      </div>
-    </motion.div>
-  );
-}
-
-const MOBILE_LABELS: Record<string, string> = {
-  loyalty: "Loyalty",
-  omnichannel: "Omnichannel",
-  "ai-platform": "AI Platform",
+const HERO_ICONS: Record<string, React.ElementType> = {
+  loyalty: productsData[0].icon,
+  omnichannel: MessageSquare,
+  "ai-platform": Bot,
 };
 
-/* ── Floating channel node ── */
-function ChannelNode({
-  id,
-  icon: Icon,
-  label,
-  color,
-  style,
-  delay = 0,
-  isHighlighted = false,
-  nodeRef,
-  onClick,
-}: {
-  id: string;
-  icon: React.ElementType;
-  label: string;
-  color: string;
-  style: React.CSSProperties;
-  delay?: number;
-  isHighlighted?: boolean;
-  nodeRef?: (el: HTMLDivElement | null) => void;
-  onClick?: () => void;
-}) {
-  const mobileLabel = MOBILE_LABELS[id] ?? label;
+type ConnectorLine = { d: string; color: string; startX: number; startY: number; endX: number; endY: number };
+
+function HubConnectorLines({ lines, activeIndex }: { lines: ConnectorLine[]; activeIndex: number }) {
+  if (lines.length === 0) return null;
 
   return (
-    <div
-      ref={nodeRef}
-      className={`hero-orb-node hero-orb-node--${id} absolute z-30 max-w-[46%] md:max-w-none`}
-      style={style}
-    >
-      <motion.button
-        onClick={onClick}
-        initial={{ opacity: 0, scale: 0.5 }}
-        animate={{
-          opacity: 1,
-          scale: isHighlighted ? [1, 1.05, 1] : 1,
-          boxShadow: isHighlighted
-            ? [
-                `0 4px 24px ${hexToRgba(color, 0.45)}`,
-                `0 6px 36px ${hexToRgba(color, 0.7)}`,
-                `0 4px 24px ${hexToRgba(color, 0.45)}`,
-              ]
-            : `0 4px 24px ${hexToRgba(color, 0.45)}`,
-        }}
-        transition={{
-          opacity: { duration: 0.6, delay, ease: [0.16, 1, 0.3, 1] },
-          scale: { duration: 1.6, repeat: isHighlighted ? Infinity : 0, ease: "easeInOut" },
-          boxShadow: { duration: 1.6, repeat: isHighlighted ? Infinity : 0, ease: "easeInOut" },
-        }}
-        whileHover={{ scale: 1.06, y: -2 }}
-        whileTap={{ scale: 0.96 }}
-        className="group relative inline-flex w-fit max-w-full cursor-pointer items-center gap-1.5 overflow-hidden rounded-full py-1.5 pl-2.5 pr-1 text-[11px] font-semibold text-white btn-shine md:gap-2.5 md:py-2 md:pl-4 md:pr-1.5 md:text-sm"
-        style={{ backgroundColor: color }}
-      >
-        <Icon className="h-3.5 w-3.5 shrink-0 opacity-90 md:h-4 md:w-4" />
-        <span className="whitespace-nowrap md:hidden">{mobileLabel}</span>
-        <span className="hidden whitespace-nowrap md:inline">{label}</span>
-        <span className="ml-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-white/20 transition-all duration-300 group-hover:translate-x-0.5 group-hover:bg-white/30 md:ml-auto md:h-8 md:w-8">
-          <ArrowRight className="h-3 w-3 md:h-4 md:w-4" />
-        </span>
-      </motion.button>
-    </div>
-  );
-}
-
-/* ── Animated connecting SVG lines ── */
-function OrbitalLines() {
-  return (
-    <svg
-      className="absolute inset-0 w-full h-full pointer-events-none"
-      viewBox="0 0 500 500"
-      preserveAspectRatio="xMidYMid meet"
-    >
+    <svg className="pointer-events-none absolute inset-0 z-[11] h-full w-full overflow-visible">
       <defs>
-        <linearGradient id="line-red" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stopColor="#f20d14" stopOpacity="0.6" />
-          <stop offset="100%" stopColor="#f20d14" stopOpacity="0" />
-        </linearGradient>
-        <linearGradient id="line-purple" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stopColor="#A855F7" stopOpacity="0.5" />
-          <stop offset="100%" stopColor="#A855F7" stopOpacity="0" />
-        </linearGradient>
-        <linearGradient id="line-blue" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stopColor="#3B82F6" stopOpacity="0.5" />
-          <stop offset="100%" stopColor="#3B82F6" stopOpacity="0" />
-        </linearGradient>
-        <filter id="glow">
-          <feGaussianBlur stdDeviation="2" result="coloredBlur" />
-          <feMerge><feMergeNode in="coloredBlur" /><feMergeNode in="SourceGraphic" /></feMerge>
+        <filter id="hero-line-glow">
+          <feGaussianBlur stdDeviation="2" result="blur" />
+          <feMerge>
+            <feMergeNode in="blur" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
         </filter>
       </defs>
-      {/* Lines from center to the 3 new nodes */}
-      {[
-        { d: "M 250 250 L 50 120", grad: "line-red" },      // Loyalty (Left Top)
-        { d: "M 250 250 L 450 120", grad: "line-blue" },     // Omnichannel (Right Top)
-        { d: "M 250 250 L 200 400", grad: "line-purple" },   // AI Platform (Bottom Left)
-      ].map(({ d, grad }, i) => (
-        <motion.path
-          key={i}
-          d={d}
-          stroke={`url(#${grad})`}
-          strokeWidth="1.5"
-          strokeDasharray="6 4"
-          fill="none"
-          filter="url(#glow)"
-          initial={{ pathLength: 0, opacity: 0 }}
-          animate={{ pathLength: 1, opacity: 1 }}
-          transition={{ duration: 1.2, delay: 0.8 + i * 0.15, ease: [0.16, 1, 0.3, 1] }}
-        />
-      ))}
+      {lines.map((line, i) => {
+        const isActive = i === activeIndex;
+
+        return (
+          <g key={`${line.color}-${i}`}>
+            <motion.path
+              d={line.d}
+              stroke={line.color}
+              strokeWidth={isActive ? 3.5 : 2.5}
+              strokeOpacity={isActive ? 1 : 0.35}
+              fill="none"
+              strokeLinecap="round"
+              filter={isActive ? "url(#hero-line-glow)" : undefined}
+              initial={{ pathLength: 0, opacity: 0 }}
+              animate={{
+                pathLength: 1,
+                opacity: 1,
+                strokeDasharray: isActive ? "6 10" : "none",
+                strokeDashoffset: isActive ? [0, -32] : 0,
+              }}
+              transition={{
+                pathLength: { duration: 1, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] },
+                opacity: { duration: 0.4 },
+                strokeDashoffset: isActive
+                  ? { duration: 1.8, repeat: Infinity, ease: "linear" }
+                  : { duration: 0.3 },
+              }}
+            />
+            <circle cx={line.startX} cy={line.startY} r={isActive ? 5 : 3.5} fill={line.color} opacity={isActive ? 1 : 0.5} />
+            <motion.circle
+              cx={line.endX}
+              cy={line.endY}
+              r={isActive ? 6 : 4}
+              fill={line.color}
+              opacity={isActive ? 1 : 0.55}
+              animate={isActive ? { r: [6, 8, 6], opacity: [1, 0.7, 1] } : {}}
+              transition={isActive ? { duration: 2, repeat: Infinity, ease: "easeInOut" } : {}}
+            />
+          </g>
+        );
+      })}
     </svg>
   );
 }
 
+const BUBBLE_HEAD_TOP_RATIO = 0.13;
+const BUBBLE_GAP_PX = 18;
+// Visible bot silhouette inside PNG — tight fit so lines attach to the mascot, not empty padding
+const BOT_BOUNDS = { left: 0.2, top: 0.12, right: 0.56, bottom: 0.88 };
+const LINE_ORIGIN_INSET = 0.94;
 
-
-/* ── Dark mode: Glowing AI Orb ── */
-function DarkOrb({ onSelectProduct }: { onSelectProduct: (productId: string) => void }) {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [handPos, setHandPos] = useState({ x: 0, y: 0 });
-  const [handPlacement, setHandPlacement] = useState<HandPlacement>("right");
-  const [handHint, setHandHint] = useState("");
-  const [handReady, setHandReady] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const nodeRefs = useRef<(HTMLDivElement | null)[]>([]);
-
-  const updateHandPosition = (index: number) => {
-    const node = nodeRefs.current[index];
-    const container = containerRef.current;
-    const product = productsData[index];
-    if (!node || !container || !product) return;
-
-    const nodeRect = node.getBoundingClientRect();
-    const containerRect = container.getBoundingClientRect();
-    const isMobile = window.innerWidth < 768;
-    const containerWidth = containerRect.width;
-    const handOffset = isMobile ? 92 : 118;
-
-    const nodeCenterX = nodeRect.left + nodeRect.width / 2 - containerRect.left;
-    const placeLeft =
-      product.id === "omnichannel" || (isMobile && nodeCenterX > containerWidth * 0.52);
-
-    let x: number;
-    let placement: HandPlacement = "right";
-
-    if (placeLeft) {
-      placement = "left";
-      x = nodeRect.left - containerRect.left - handOffset;
-      x = Math.max(4, x);
-    } else {
-      x = nodeRect.right - containerRect.left - 4;
-      x = Math.min(x, containerWidth - (isMobile ? 88 : 128));
-    }
-
-    let y = nodeRect.top - containerRect.top + nodeRect.height / 2 - 16;
-    y = Math.max(4, Math.min(y, containerRect.height - 72));
-
-    setHandPos({ x, y });
-    setHandPlacement(placement);
-    setHandHint(isMobile ? MOBILE_HINTS[product.id] : SHORT_HINTS[product.id]);
-    setHandReady(true);
-  };
+function BotGuideBubble({ activeProduct }: { activeProduct: (typeof productsData)[0] }) {
+  const [phase, setPhase] = useState<"typing" | "message">("typing");
+  const prompt = HERO_GUIDE_PROMPTS[activeProduct.id] ?? `Explore ${activeProduct.title}`;
 
   useEffect(() => {
-    let timer: ReturnType<typeof setInterval> | null = null;
-    let isVisible = true;
+    setPhase("typing");
+    const timer = setTimeout(() => setPhase("message"), 1100);
+    return () => clearTimeout(timer);
+  }, [activeProduct.id]);
 
-    const startTimer = () => {
-      if (timer) return;
-      timer = setInterval(() => {
-        if (isVisible) {
-          setActiveIndex((prev) => (prev + 1) % productsData.length);
-        }
-      }, 6000);
-    };
+  return (
+    <AnimatePresence mode="wait">
+      <motion.div
+        key={activeProduct.id}
+        initial={{ opacity: 0, scale: 0.92 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 0.96 }}
+        transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+        style={{ transformOrigin: "bottom center" }}
+      >
+        <div className="rounded-2xl border border-foreground/8 bg-background/90 px-3.5 py-3 shadow-[0_8px_32px_rgba(0,0,0,0.12)] backdrop-blur-md dark:border-white/10 dark:bg-background/85 dark:shadow-[0_8px_32px_rgba(0,0,0,0.4)]">
+            <div className="mb-2 flex items-center gap-2">
+              <div className="relative h-6 w-6 shrink-0 overflow-hidden rounded-full">
+                <Image src="/bot.png" alt="" width={24} height={24} className="h-full w-full scale-125 object-contain" />
+              </div>
+              <span className="text-[10px] font-semibold tracking-[0.12em] text-foreground/45 uppercase">Echo Assistant</span>
+              <span className="ml-auto flex gap-0.5">
+                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-500/80" />
+                <span className="text-[9px] font-medium text-emerald-600/70 dark:text-emerald-400/70">Online</span>
+              </span>
+            </div>
 
-    const stopTimer = () => {
-      if (timer) {
-        clearInterval(timer);
-        timer = null;
+            <AnimatePresence mode="wait">
+              {phase === "typing" ? (
+                <motion.div
+                  key="typing"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="flex h-5 items-center gap-1 px-0.5"
+                >
+                  {[0, 1, 2].map((dot) => (
+                    <motion.span
+                      key={dot}
+                      className="h-1.5 w-1.5 rounded-full bg-foreground/30"
+                      animate={{ opacity: [0.3, 1, 0.3], y: [0, -2, 0] }}
+                      transition={{ duration: 0.9, repeat: Infinity, delay: dot * 0.15, ease: "easeInOut" }}
+                    />
+                  ))}
+                </motion.div>
+              ) : (
+                <motion.p
+                  key="message"
+                  initial={{ opacity: 0, y: 4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                  className="text-xs leading-relaxed text-foreground/75 sm:text-[13px]"
+                >
+                  {prompt}
+                </motion.p>
+              )}
+            </AnimatePresence>
+          </div>
+
+        <div className="relative mx-auto mb-1 h-0 w-0 border-x-[8px] border-t-[8px] border-x-transparent border-t-background/90 dark:border-t-background/85" />
+      </motion.div>
+    </AnimatePresence>
+  );
+}
+
+function ProductHubCard({
+  product,
+  onClick,
+  isActive,
+  delay,
+}: {
+  product: (typeof productsData)[0];
+  onClick: () => void;
+  isActive: boolean;
+  delay: number;
+}) {
+  const Icon = HERO_ICONS[product.id] ?? product.icon;
+  const copy = HERO_CARD_COPY[product.id] ?? product.description;
+
+  const activeButtonStyle = {
+    backgroundColor: product.color,
+    ["--btn-glow" as string]: hexToRgba(product.color, 0.45),
+    ["--btn-glow-hover" as string]: hexToRgba(product.color, 0.6),
+  } as React.CSSProperties;
+
+  return (
+    <motion.button
+      type="button"
+      onClick={onClick}
+      initial={{ opacity: 0, x: 20 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.6, delay, ease: [0.16, 1, 0.3, 1] }}
+      className={`group relative z-10 flex w-full items-center gap-4 rounded-2xl border p-4 text-left transition-all duration-300 sm:gap-5 sm:rounded-3xl sm:p-5 md:p-6 ${
+        isActive
+          ? "overflow-hidden font-semibold text-white btn-shine hover:-translate-y-0.5 [box-shadow:0_4px_24px_var(--btn-glow)] hover:[box-shadow:0_6px_32px_var(--btn-glow-hover)]"
+          : "opacity-70 backdrop-blur-sm hover:opacity-90"
+      }`}
+      style={
+        isActive
+          ? { ...activeButtonStyle, borderColor: "transparent" }
+          : {
+              borderColor: hexToRgba(product.color, 0.15),
+              background: `linear-gradient(135deg, ${hexToRgba(product.color, 0.05)} 0%, rgba(255,255,255,0.02) 100%)`,
+            }
       }
-    };
+    >
+      <div
+        data-hub-icon
+        className={`relative z-[15] flex h-12 w-12 shrink-0 items-center justify-center rounded-full sm:h-14 sm:w-14 ${
+          isActive ? "bg-white/20" : ""
+        }`}
+        style={
+          isActive
+            ? undefined
+            : {
+                background: `linear-gradient(135deg, ${product.color}, ${hexToRgba(product.color, 0.75)})`,
+                boxShadow: `0 4px 20px ${hexToRgba(product.color, 0.35)}`,
+              }
+        }
+      >
+        <Icon className="text-white" size={22} />
+      </div>
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        isVisible = entry.isIntersecting;
-        if (isVisible) startTimer();
-        else stopTimer();
-      },
-      { threshold: 0.1 }
+      <div className="min-w-0 flex-1 text-left">
+        <p className={`text-base leading-snug sm:text-lg ${isActive ? "font-semibold text-white" : "font-bold text-foreground"}`}>
+          {product.title}
+        </p>
+        <p
+          className={`mt-1 line-clamp-2 text-xs leading-relaxed sm:text-sm ${
+            isActive ? "text-white/75" : "text-foreground/50"
+          }`}
+        >
+          {copy}
+        </p>
+      </div>
+
+      <motion.span
+        animate={isActive ? { x: [0, 3, 0] } : { x: 0 }}
+        transition={isActive ? { duration: 1.6, repeat: Infinity, ease: "easeInOut" } : { duration: 0.3 }}
+        className={`relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full transition-all duration-300 group-hover:translate-x-0.5 sm:h-11 sm:w-11 ${
+          isActive ? "bg-white/20 group-hover:bg-white/30" : "border"
+        }`}
+        style={
+          isActive
+            ? undefined
+            : {
+                borderColor: hexToRgba(product.color, 0.25),
+                background: hexToRgba(product.color, 0.08),
+                color: product.color,
+              }
+        }
+      >
+        {isActive && (
+          <motion.span
+            className="absolute inset-0 rounded-full border border-white/40"
+            animate={{ scale: [1, 1.35], opacity: [0.6, 0] }}
+            transition={{ duration: 1.8, repeat: Infinity, ease: "easeOut" }}
+          />
+        )}
+        <ArrowRight size={16} className={isActive ? "text-white" : undefined} style={isActive ? undefined : { color: product.color }} />
+      </motion.span>
+    </motion.button>
+  );
+}
+
+function HeroProductHub({ onSelectProduct }: { onSelectProduct: (productId: string) => void }) {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [connectorLines, setConnectorLines] = useState<ConnectorLine[]>([]);
+  const [bubbleAnchorY, setBubbleAnchorY] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const hubRef = useRef<HTMLDivElement>(null);
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  const updateBubbleAnchor = useCallback(() => {
+    const hub = hubRef.current;
+    if (!hub) return;
+
+    const img = hub.querySelector("img");
+    if (!img) return;
+
+    const hubRect = hub.getBoundingClientRect();
+    const imgRect = img.getBoundingClientRect();
+    const headTopRatio = BUBBLE_HEAD_TOP_RATIO;
+
+    setBubbleAnchorY(
+      imgRect.top - hubRect.top + imgRect.height * headTopRatio - BUBBLE_GAP_PX,
     );
+  }, []);
 
-    if (containerRef.current) {
-      observer.observe(containerRef.current);
-      startTimer();
-    }
+  const updateConnectorLines = useCallback(() => {
+    const container = containerRef.current;
+    const hub = hubRef.current;
+    if (!container || !hub) return;
 
-    return () => {
-      stopTimer();
-      observer.disconnect();
-    };
+    const containerRect = container.getBoundingClientRect();
+    const hubRect = hub.getBoundingClientRect();
+    const img = hub.querySelector("img");
+    const anchorRect = img?.getBoundingClientRect() ?? hubRect;
+    const imgLeft = anchorRect.left - containerRect.left;
+    const imgTop = anchorRect.top - containerRect.top;
+    const botCenterX = imgLeft + anchorRect.width * ((BOT_BOUNDS.left + BOT_BOUNDS.right) / 2);
+    const botCenterY = imgTop + anchorRect.height * ((BOT_BOUNDS.top + BOT_BOUNDS.bottom) / 2);
+    const botRadiusX = anchorRect.width * ((BOT_BOUNDS.right - BOT_BOUNDS.left) / 2);
+    const botRadiusY = anchorRect.height * ((BOT_BOUNDS.bottom - BOT_BOUNDS.top) / 2);
+
+    const nextLines = productsData
+      .map((product, i) => {
+        const card = cardRefs.current[i];
+        if (!card) return null;
+
+        const icon = card.querySelector<HTMLElement>("[data-hub-icon]");
+        const targetRect = icon?.getBoundingClientRect() ?? card.getBoundingClientRect();
+        const endX = targetRect.left - containerRect.left;
+        const endY = targetRect.top + targetRect.height / 2 - containerRect.top;
+
+        const angle = Math.atan2(endY - botCenterY, endX - botCenterX);
+        const startX = botCenterX + botRadiusX * Math.cos(angle) * LINE_ORIGIN_INSET;
+        const startY = botCenterY + botRadiusY * Math.sin(angle) * LINE_ORIGIN_INSET;
+
+        const dx = endX - startX;
+        const bend = Math.max(24, Math.abs(dx) * 0.35);
+
+        return {
+          d: `M ${startX} ${startY} C ${startX + bend} ${startY}, ${endX - bend} ${endY}, ${endX} ${endY}`,
+          color: product.color,
+          startX,
+          startY,
+          endX,
+          endY,
+        };
+      })
+      .filter((line): line is ConnectorLine => line !== null);
+
+    setConnectorLines(nextLines);
+    updateBubbleAnchor();
+  }, [updateBubbleAnchor]);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % productsData.length);
+    }, 5000);
+    return () => clearInterval(timer);
   }, []);
 
   useEffect(() => {
-    const update = () => updateHandPosition(activeIndex);
-    update();
-    const raf = requestAnimationFrame(update);
-    const delayed = setTimeout(update, 1200);
-    window.addEventListener("resize", update);
+    updateConnectorLines();
+
+    const delayed = setTimeout(updateConnectorLines, 400);
+    const delayedLong = setTimeout(updateConnectorLines, 1200);
+    window.addEventListener("resize", updateConnectorLines);
+
+    const observer = new ResizeObserver(updateConnectorLines);
+    if (containerRef.current) observer.observe(containerRef.current);
+
     return () => {
-      cancelAnimationFrame(raf);
       clearTimeout(delayed);
-      window.removeEventListener("resize", update);
+      clearTimeout(delayedLong);
+      window.removeEventListener("resize", updateConnectorLines);
+      observer.disconnect();
     };
-  }, [activeIndex]);
+  }, [updateConnectorLines, activeIndex]);
 
   return (
-    <div
-      ref={containerRef}
-      className="relative mx-auto w-full max-w-[580px] px-2 max-md:max-w-[340px] max-md:overflow-hidden md:overflow-visible md:px-8"
-    >
-      <div className="relative mx-auto aspect-square w-full max-w-[500px]">
-        {/* Background ambient glow */}
-        <div className="absolute inset-0 rounded-full bg-primary-red/5 blur-3xl animate-pulse" />
+    <div ref={containerRef} className="relative mx-auto w-full max-w-[800px] lg:max-w-[900px]">
+      <HubConnectorLines lines={connectorLines} activeIndex={activeIndex} />
 
-        {/* Outer orbital ring */}
-        <div className="absolute inset-4 rounded-full border border-dashed border-foreground/10 animate-[spin_24s_linear_infinite]" />
-
-        {/* Middle ring */}
-        <div
-          className="absolute inset-[60px] rounded-full border border-primary-red/10 animate-[spin_16s_linear_infinite_reverse]"
-          style={{ borderStyle: "dotted" }}
-        />
-
-        {/* Inner ring with glow */}
-        <div className="absolute inset-[100px] rounded-full border border-primary-red/20 animate-[spin_10s_linear_infinite]" />
-
-        {/* Connection lines SVG */}
-        <OrbitalLines />
-
-        {/* Center hub */}
-        <motion.div
-          animate={{
-            opacity: [1, 0.85, 1],
-            boxShadow: [
-              "0 0 40px rgba(242,13,20,0.3)",
-              "0 0 70px rgba(242,13,20,0.55)",
-              "0 0 40px rgba(242,13,20,0.3)",
-            ],
-          }}
-          transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute left-1/2 top-1/2 z-10 flex h-[90px] w-[90px] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-primary-red/30"
-          style={{
-            background: "radial-gradient(circle, rgba(229,72,59,0.15) 0%, transparent 70%)",
-          }}
-        >
+      <div className="relative flex items-center">
+        {/* Central hub — bot mascot */}
+        <div className="relative z-40 flex w-[270px] shrink-0 items-center justify-center overflow-visible sm:w-[330px] lg:w-[380px]">
           <div
-            className="flex h-[62px] w-[62px] items-center justify-center rounded-full"
-            style={{
-              background: "linear-gradient(135deg, #f20d14, #C0392B)",
-              boxShadow: "0 0 30px rgba(229,72,59,0.5)",
-            }}
+            ref={hubRef}
+            className="relative isolate flex h-[270px] w-[270px] items-center justify-center overflow-visible sm:h-[330px] sm:w-[330px] lg:h-[380px] lg:w-[380px]"
           >
-            <Bot className="text-white" size={28} />
+            <Image
+              src="/bot.png"
+              alt="Echo AI Assistant"
+              width={480}
+              height={480}
+              className="relative z-[1] h-full w-full object-contain drop-shadow-[0_12px_40px_rgba(56,189,248,0.2)]"
+              priority
+              onLoad={() => {
+                updateConnectorLines();
+                updateBubbleAnchor();
+              }}
+            />
+
+            <div
+              className="pointer-events-none absolute left-1/2 z-[100] w-[min(240px,calc(100vw-3rem))]"
+              style={{ top: bubbleAnchorY, transform: "translate(-50%, -100%)" }}
+            >
+              <BotGuideBubble activeProduct={productsData[activeIndex]} />
+            </div>
           </div>
-          <span className="absolute inset-0 rounded-full border border-primary-red/40 animate-[pulse-ring_2s_ease-out_infinite]" />
-        </motion.div>
+        </div>
+
+        {/* Space between hub and cards */}
+        <div className="w-12 shrink-0 sm:w-16 md:w-20 lg:w-24" aria-hidden />
+
+        {/* Product cards */}
+        <div className="relative z-10 flex flex-1 flex-col gap-5 sm:gap-6 md:gap-7">
+          {productsData.map((product, i) => (
+            <div
+              key={product.id}
+              ref={(el) => {
+                cardRefs.current[i] = el;
+              }}
+            >
+              <ProductHubCard
+                product={product}
+                isActive={activeIndex === i}
+                delay={0.4 + i * 0.12}
+                onClick={() => {
+                  setActiveIndex(i);
+                  onSelectProduct(product.id);
+                }}
+              />
+            </div>
+          ))}
+        </div>
       </div>
-
-      {/* Animated hand cursor */}
-      {handReady && (
-        <HandCursor
-          x={handPos.x}
-          y={handPos.y}
-          color={productsData[activeIndex].color}
-          hint={handHint}
-          placement={handPlacement}
-        />
-      )}
-
-      {/* Channel nodes / Product Widgets */}
-      {productsData.map((prod, i) => (
-        <ChannelNode
-          key={prod.id}
-          id={prod.id}
-          icon={prod.icon}
-          label={prod.title}
-          color={prod.color}
-          style={prod.style || {}}
-          delay={1 + i * 0.2}
-          isHighlighted={activeIndex === i}
-          nodeRef={(el) => {
-            nodeRefs.current[i] = el;
-          }}
-          onClick={() => onSelectProduct(prod.id)}
-        />
-      ))}
     </div>
   );
 }
 
-
-
-/* ── Hero Section ── */
 export function Hero() {
   const [mounted, setMounted] = useState(false);
   const { openModal } = useProductModal();
@@ -444,41 +440,30 @@ export function Hero() {
 
   return (
     <>
-      <section className="relative min-h-screen flex items-center pt-24 overflow-hidden">
-        {/* ── Layered backgrounds ── */}
-        {/* Animated gradient blobs */}
-        <div className="absolute top-[-20%] right-[-10%] w-[700px] h-[700px] rounded-full bg-primary-red/8 dark:bg-primary-red/12 blur-[140px] animate-blob pointer-events-none -z-10" />
+      <section className="relative flex min-h-screen items-center overflow-hidden pt-24">
+        <div className="pointer-events-none absolute top-[-20%] right-[-10%] -z-10 h-[700px] w-[700px] animate-blob rounded-full bg-primary-red/8 blur-[140px] dark:bg-primary-red/12" />
         <div
-          className="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] rounded-full bg-purple-500/5 dark:bg-purple-500/10 blur-[120px] pointer-events-none -z-10"
+          className="pointer-events-none absolute bottom-[-10%] left-[-10%] -z-10 h-[600px] w-[600px] rounded-full bg-purple-500/5 blur-[120px] dark:bg-purple-500/10"
           style={{ animation: "blob-move 14s ease-in-out infinite 2s" }}
         />
         <div
-          className="absolute top-[30%] left-[30%] w-[400px] h-[400px] rounded-full bg-blue-500/3 dark:bg-blue-500/5 blur-[100px] pointer-events-none -z-10"
+          className="pointer-events-none absolute top-[30%] left-[30%] -z-10 h-[400px] w-[400px] rounded-full bg-blue-500/3 blur-[100px] dark:bg-blue-500/5"
           style={{ animation: "blob-move 18s ease-in-out infinite 4s" }}
         />
 
-        {/* Dot grid */}
-        <div className="absolute inset-0 dot-grid-light dark:dot-grid opacity-100 dark:opacity-100 pointer-events-none -z-10" />
+        <div className="pointer-events-none absolute inset-0 -z-10 dot-grid-light opacity-100 dark:dot-grid dark:opacity-100" />
+        <div className="radial-spotlight pointer-events-none absolute top-0 right-0 left-0 -z-10 h-[600px]" />
+        <div className="noise-overlay pointer-events-none absolute inset-0 -z-10" />
 
-        {/* Radial spotlight from top */}
-        <div className="absolute top-0 left-0 right-0 h-[600px] radial-spotlight pointer-events-none -z-10" />
-
-        {/* Noise texture */}
-        <div className="absolute inset-0 noise-overlay -z-10" />
-
-        {/* ── Content Grid ── */}
-        <div className="max-w-[1280px] mx-auto px-6 w-full grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-6 items-center py-20">
-
-          {/* LEFT: Text Content */}
+        <div className="mx-auto grid w-full max-w-[1280px] grid-cols-1 items-center gap-12 px-6 py-20 lg:grid-cols-2 lg:gap-12 xl:gap-16">
           <div className="max-w-xl">
-            {/* Badge */}
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              className="inline-flex items-center gap-2 mb-8"
+              className="mb-8 inline-flex items-center gap-2"
             >
-              <span className="flex items-center gap-1.5 bg-primary-red/10 border border-primary-red/20 text-primary-red text-xs font-semibold px-3 py-1.5 rounded-full backdrop-blur-sm">
+              <span className="flex items-center gap-1.5 rounded-full border border-primary-red/20 bg-primary-red/10 px-3 py-1.5 text-xs font-semibold text-primary-red backdrop-blur-sm">
                 <Zap size={11} className="fill-current" />
                 AI Powered Enterprise Platform
               </span>
@@ -488,25 +473,24 @@ export function Hero() {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-              className="text-[clamp(2.5rem,5vw,4.5rem)] font-extrabold tracking-[-0.03em] leading-[1.05] mb-6"
+              className="mb-6 text-[clamp(2.5rem,5vw,4.5rem)] leading-[1.05] font-extrabold tracking-[-0.03em]"
             >
-              <span className="text-foreground whitespace-nowrap">The AI Engine for</span>
+              <span className="whitespace-nowrap text-foreground">The AI Engine for</span>
               <br />
               <span className="gradient-text-red inline-block">Conversations,</span>{" "}
-              <span className="text-foreground inline-block">Loyalty & Growth</span>
+              <span className="inline-block text-foreground">Loyalty & Growth</span>
             </motion.h1>
 
-            {/* Subheadline */}
             <motion.p
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
-              className="text-base md:text-lg text-foreground/60 mb-10 max-w-[440px] leading-relaxed"
+              className="mb-10 max-w-[440px] text-base leading-relaxed text-foreground/60 md:text-lg"
             >
-              Echo is an AI powered platform that helps businesses engage, automate, and grow across every channel with intelligence that deepens with every interaction.
+              Echo is an AI powered platform that helps businesses engage, automate, and grow across every channel with
+              intelligence that deepens with every interaction.
             </motion.p>
 
-            {/* CTAs */}
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
@@ -517,7 +501,6 @@ export function Hero() {
             </motion.div>
           </div>
 
-          {/* RIGHT: Visual */}
           {mounted && (
             <motion.div
               initial={{ opacity: 0, x: 40 }}
@@ -525,22 +508,19 @@ export function Hero() {
               transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
               className="relative flex items-center justify-center overflow-visible"
             >
-              <div className="flex w-full items-center justify-center">
-                <DarkOrb onSelectProduct={openModal} />
-              </div>
+              <HeroProductHub onSelectProduct={openModal} />
             </motion.div>
           )}
         </div>
 
-        {/* Scroll indicator */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 2, duration: 1 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+          className="absolute bottom-8 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2"
         >
-          <span className="text-[10px] uppercase tracking-[0.2em] text-foreground/30 font-medium">Scroll</span>
-          <div className="w-px h-12 bg-gradient-to-b from-foreground/20 to-transparent" />
+          <span className="text-[10px] font-medium tracking-[0.2em] text-foreground/30 uppercase">Scroll</span>
+          <div className="h-12 w-px bg-gradient-to-b from-foreground/20 to-transparent" />
         </motion.div>
       </section>
     </>
