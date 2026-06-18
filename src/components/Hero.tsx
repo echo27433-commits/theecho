@@ -118,10 +118,6 @@ function BotGuideBubble({ activeProduct }: { activeProduct: (typeof productsData
                 <img src="/bot.png" alt="" width={24} height={24} className="h-full w-full scale-125 object-contain" />
               </div>
               <span className="text-[10px] font-semibold tracking-[0.12em] text-foreground/45 uppercase">Echo Assistant</span>
-              <span className="ml-auto flex gap-0.5">
-                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-500/80" />
-                <span className="text-[9px] font-medium text-emerald-600/70 dark:text-emerald-400/70">Online</span>
-              </span>
             </div>
 
             <AnimatePresence mode="wait">
@@ -450,7 +446,7 @@ export function Hero() {
         <div className="noise-overlay pointer-events-none absolute inset-0 -z-10 max-sm:hidden" />
 
         <div className="mx-auto grid w-full max-w-[1280px] grid-cols-1 items-center gap-12 px-4 py-20 sm:px-6 lg:grid-cols-2 lg:gap-12 xl:gap-16">
-          <div className="max-w-xl">
+          <div className="order-1 max-w-xl lg:order-none">
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
@@ -489,26 +485,25 @@ export function Hero() {
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.26, ease: [0.16, 1, 0.3, 1] }}
-              className="flex flex-col items-start gap-4 sm:flex-row"
+              className="hidden flex-col items-start gap-4 lg:flex"
             >
               <BookCallButton onClick={openCalendly} size="lg" />
             </motion.div>
           </div>
 
-          <div className="relative flex w-full items-center justify-center overflow-visible max-sm:min-w-0">
+          <div className="relative order-2 flex w-full items-center justify-center overflow-visible max-sm:min-w-0 lg:order-none">
             <HeroProductHub onSelectProduct={openModal} />
           </div>
-        </div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1, duration: 0.6 }}
-          className="absolute bottom-8 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2"
-        >
-          <span className="text-[10px] font-medium tracking-[0.2em] text-foreground/30 uppercase">Scroll</span>
-          <div className="h-12 w-px bg-gradient-to-b from-foreground/20 to-transparent" />
-        </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.26, ease: [0.16, 1, 0.3, 1] }}
+            className="order-3 flex w-full max-w-xl flex-col items-start gap-4 lg:hidden"
+          >
+            <BookCallButton onClick={openCalendly} size="lg" />
+          </motion.div>
+        </div>
       </section>
     </>
   );
