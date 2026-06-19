@@ -33,7 +33,7 @@ export const omnichannelHero = {
   titleAccent: "Complete Customer Visibility.",
   subtitle:
     "Echo brings every customer interaction into a single intelligent platform: manage communication, campaigns, engagement, and reporting from one centralized dashboard.",
-  channels: ["SMS", "Email", "WhatsApp", "RCS", "Web Chat", "Notifications"],
+  channels: ["SMS", "Email", "WhatsApp", "RCS", "Web Chat", "Notifications", "Social"],
 };
 
 export const omnichannelStats = [
