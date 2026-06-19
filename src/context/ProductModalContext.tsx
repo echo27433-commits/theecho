@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
+import React, { createContext, useContext, useState, useEffect, useCallback, useMemo } from "react";
 import { lockScroll, unlockScroll } from "@/lib/scroll-lock";
 import { motion, AnimatePresence } from "framer-motion";
 import { Heart, Layers, Bot, ArrowRight, X, Check } from "lucide-react";
@@ -61,6 +61,12 @@ export const productsData: ProductData[] = [
   },
 ];
 
+const PRODUCT_IMAGES = productsData.map((p) => p.image);
+
+const overlayTransition = { duration: 0.2, ease: [0.16, 1, 0.3, 1] as const };
+const panelTransition = { duration: 0.28, ease: [0.16, 1, 0.3, 1] as const };
+const contentTransition = { duration: 0.18, ease: [0.16, 1, 0.3, 1] as const };
+
 interface ProductModalContextProps {
   openModal: (productId: string) => void;
   closeModal: () => void;
@@ -76,13 +82,29 @@ export function useProductModal() {
   return context;
 }
 
+function preloadProductImages() {
+  if (typeof window === "undefined") return;
+  for (const src of PRODUCT_IMAGES) {
+    const img = new window.Image();
+    img.decoding = "async";
+    img.src = src;
+  }
+}
+
 export function ProductModalProvider({ children }: { children: React.ReactNode }) {
   const [selectedProductId, setSelectedProductId] = useState<string | null>(null);
 
-  const openModal = (productId: string) => setSelectedProductId(productId);
-  const closeModal = () => setSelectedProductId(null);
+  const openModal = useCallback((productId: string) => setSelectedProductId(productId), []);
+  const closeModal = useCallback(() => setSelectedProductId(null), []);
 
-  const selectedProduct = productsData.find((p) => p.id === selectedProductId);
+  const selectedProduct = useMemo(
+    () => productsData.find((p) => p.id === selectedProductId) ?? null,
+    [selectedProductId],
+  );
+
+  useEffect(() => {
+    preloadProductImages();
+  }, []);
 
   useEffect(() => {
     if (selectedProduct) {
@@ -93,16 +115,19 @@ export function ProductModalProvider({ children }: { children: React.ReactNode }
     return () => unlockScroll();
   }, [selectedProduct]);
 
+  const contextValue = useMemo(() => ({ openModal, closeModal }), [openModal, closeModal]);
+
   return (
-    <ProductModalContext.Provider value={{ openModal, closeModal }}>
+    <ProductModalContext.Provider value={contextValue}>
       {children}
 
       <AnimatePresence>
         {selectedProduct && (
           <ProductModal
+            key="product-modal"
             product={selectedProduct}
             onClose={closeModal}
-            onSelect={(id) => setSelectedProductId(id)}
+            onSelect={setSelectedProductId}
           />
         )}
       </AnimatePresence>
@@ -110,23 +135,107 @@ export function ProductModalProvider({ children }: { children: React.ReactNode }
   );
 }
 
-function ProductShowcaseImage({ image, title }: { image: string; title: string }) {
+function ModalProductImage({ src, alt }: { src: string; alt: string }) {
   return (
-    <div className="relative w-full px-1 sm:px-2">
+    <div className="relative isolate w-full">
       <div
-        className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[80%] w-[92%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary-red/15 blur-[72px] sm:blur-[96px]"
+        className="pointer-events-none absolute left-1/2 top-1/2 z-0 h-[75%] w-[90%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary-red/12 blur-[48px] sm:bg-primary-red/15 sm:blur-[64px]"
         aria-hidden
       />
-      <div className="relative mx-auto aspect-[4/3] w-full min-h-[200px] sm:min-h-[280px] lg:aspect-[16/10] lg:min-h-[320px]">
+      <div className="relative z-[1] mx-auto aspect-[4/3] w-full min-h-[200px] sm:min-h-[260px] lg:min-h-[300px]">
         <Image
-          src={image}
-          alt={title}
+          src={src}
+          alt={alt}
           fill
-          sizes="(max-width: 640px) 100vw, 480px"
-          className="object-contain object-center drop-shadow-[0_24px_64px_rgba(242,13,20,0.14)]"
+          priority
+          sizes="(max-width: 640px) 92vw, 520px"
+          className="object-contain object-center drop-shadow-[0_16px_48px_rgba(242,13,20,0.12)]"
         />
       </div>
     </div>
+  );
+}
+
+function ProductModalContent({ product, onClose }: { product: ProductData; onClose: () => void }) {
+  return (
+    <motion.div
+      key={product.id}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={contentTransition}
+      className="flex min-h-0 flex-1 flex-col lg:flex-row"
+    >
+      <div className="order-1 shrink-0 px-4 py-4 sm:px-5 sm:py-5 md:px-8 lg:order-2 lg:flex lg:min-h-0 lg:flex-1 lg:items-center lg:px-8 lg:py-8">
+        <ModalProductImage src={product.image} alt={product.title} />
+      </div>
+
+      <div className="relative order-2 flex shrink-0 flex-col justify-center px-4 py-5 sm:px-6 sm:py-6 md:px-8 lg:order-1 lg:w-[42%] lg:border-r lg:border-[var(--border)] lg:py-10">
+        <div
+          className="pointer-events-none absolute inset-0 opacity-[0.07]"
+          style={{ background: `radial-gradient(circle at 0% 0%, ${product.color}, transparent 55%)` }}
+        />
+
+        <div className="relative">
+          <div
+            className="mb-3 inline-flex items-center gap-2 rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] sm:mb-4 sm:px-3 sm:py-1.5 sm:text-[11px]"
+            style={{
+              color: product.color,
+              borderColor: `${product.color}35`,
+              backgroundColor: `${product.color}10`,
+            }}
+          >
+            <product.icon size={12} className="sm:hidden" />
+            <product.icon size={13} className="hidden sm:block" />
+            {product.eyebrow}
+          </div>
+
+          <h2
+            id="product-modal-title"
+            className="mb-2.5 text-2xl font-extrabold leading-[1.1] tracking-tight text-foreground sm:mb-3 sm:text-3xl md:text-4xl"
+          >
+            {product.title}
+          </h2>
+
+          <p className="mb-5 text-sm leading-relaxed text-foreground/55 sm:mb-6 sm:text-base">
+            {product.description}
+          </p>
+
+          <ul className="mb-2 space-y-2.5 sm:hidden">
+            {product.features.map((feature) => (
+              <li key={feature} className="flex items-center gap-2.5 text-sm text-foreground/75">
+                <Check size={14} className="shrink-0" style={{ color: product.color }} />
+                {feature}
+              </li>
+            ))}
+          </ul>
+
+          <div className="mb-6 hidden flex-wrap gap-2 sm:flex">
+            {product.features.map((feature) => (
+              <span
+                key={feature}
+                className="inline-flex items-center gap-1.5 rounded-xl border border-[var(--border)] bg-card px-3 py-2 text-sm text-foreground/75"
+              >
+                <Check size={14} style={{ color: product.color }} />
+                {feature}
+              </span>
+            ))}
+          </div>
+
+          <a
+            href={product.link}
+            onClick={onClose}
+            className="hidden w-full items-center justify-center gap-2.5 rounded-xl px-7 py-3.5 text-sm font-bold text-white transition-transform hover:scale-[1.02] active:scale-[0.98] sm:inline-flex"
+            style={{
+              backgroundColor: product.color,
+              boxShadow: `0 8px 28px ${product.color}45`,
+            }}
+          >
+            Explore product
+            <ArrowRight size={18} />
+          </a>
+        </div>
+      </div>
+    </motion.div>
   );
 }
 
@@ -139,65 +248,59 @@ function ProductModal({
   onClose: () => void;
   onSelect: (id: string) => void;
 }) {
-  const handleKeyDown = useCallback(
-    (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-    },
-    [onClose],
-  );
-
   useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [handleKeyDown]);
+  }, [onClose]);
 
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.25 }}
-      className="fixed inset-0 z-[100] flex items-end justify-center bg-black/50 p-0 backdrop-blur-md sm:items-center sm:p-4 md:p-6"
+      transition={overlayTransition}
+      className="fixed inset-0 z-[100] flex items-end justify-center bg-black/65 p-0 sm:items-center sm:bg-black/55 sm:p-4 md:p-6"
     >
       <div className="absolute inset-0" onClick={onClose} aria-hidden />
 
       <motion.div
-        key={product.id}
-        initial={{ opacity: 0, y: 40, scale: 0.97 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        exit={{ opacity: 0, y: 24, scale: 0.97 }}
-        transition={{ type: "spring", damping: 28, stiffness: 320 }}
-        className="relative z-10 flex h-[100dvh] w-full max-w-6xl flex-col overflow-hidden rounded-none border border-[var(--border)] bg-background shadow-[0_32px_120px_rgba(0,0,0,0.35)] sm:h-auto sm:max-h-[88vh] sm:rounded-3xl"
+        initial={{ opacity: 0, y: 28 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: 16 }}
+        transition={panelTransition}
+        className="relative z-10 flex max-h-[92dvh] w-full max-w-6xl flex-col overflow-hidden rounded-t-3xl border border-[var(--border)] bg-background shadow-[0_24px_80px_rgba(0,0,0,0.4)] sm:max-h-[88vh] sm:rounded-3xl [transform:translateZ(0)]"
         role="dialog"
         aria-modal="true"
         aria-labelledby="product-modal-title"
+        onClick={(e) => e.stopPropagation()}
       >
-        {/* Mobile drag handle */}
         <div className="flex shrink-0 justify-center pt-2 sm:hidden">
           <div className="h-1 w-10 rounded-full bg-foreground/15" />
         </div>
 
         <div
-          className="h-1 w-full shrink-0 sm:block"
+          className="h-1 w-full shrink-0"
           style={{ background: `linear-gradient(90deg, ${product.color}, ${product.color}66, transparent)` }}
         />
 
-        {/* Header */}
-        <div className="relative shrink-0 border-b border-[var(--border)] px-4 py-3 sm:flex sm:items-center sm:justify-between sm:gap-4 sm:px-5 sm:py-4 md:px-7">
+        <div className="relative shrink-0 border-b border-[var(--border)] px-4 py-3 sm:flex sm:items-center sm:justify-between sm:gap-4 sm:px-5 sm:py-3.5">
           <div className="grid grid-cols-3 gap-2 pr-12 sm:flex sm:flex-wrap sm:items-center sm:pr-0">
             {productsData.map((p) => (
               <button
                 key={p.id}
                 type="button"
                 onClick={() => onSelect(p.id)}
-                className={`inline-flex items-center justify-center gap-2 rounded-xl border px-2 py-2.5 text-xs font-semibold transition-all duration-200 sm:justify-start sm:px-3 sm:text-sm ${
+                className={`inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl border px-2 py-2.5 text-xs font-semibold transition-colors duration-150 sm:justify-start sm:px-3 sm:text-sm ${
                   p.id === product.id
-                    ? "border-transparent text-white shadow-sm"
+                    ? "border-transparent text-white"
                     : "border-[var(--border)] bg-card text-foreground/55 hover:border-foreground/15 hover:text-foreground"
                 }`}
                 style={
                   p.id === product.id
-                    ? { backgroundColor: p.color, boxShadow: `0 4px 20px ${p.color}40` }
+                    ? { backgroundColor: p.color, boxShadow: `0 4px 16px ${p.color}35` }
                     : undefined
                 }
               >
@@ -210,113 +313,18 @@ function ProductModal({
           <button
             type="button"
             onClick={onClose}
-            className="absolute top-3 right-4 rounded-xl border border-[var(--border)] bg-card p-2 text-foreground/50 transition-colors hover:border-foreground/15 hover:text-foreground sm:static sm:shrink-0"
+            className="absolute top-3 right-4 cursor-pointer rounded-xl border border-[var(--border)] bg-card p-2 text-foreground/50 transition-colors hover:border-foreground/15 hover:text-foreground sm:static sm:shrink-0"
             aria-label="Close"
           >
             <X size={18} />
           </button>
         </div>
 
-        {/* Body — image first on mobile */}
-        <div className="flex min-h-0 flex-1 flex-col overflow-y-auto lg:flex-row" data-lenis-prevent>
-          {/* Screenshot */}
-          <div className="order-1 shrink-0 px-4 py-4 sm:px-5 sm:py-6 md:px-8 md:py-8 lg:order-2 lg:flex lg:min-h-0 lg:flex-1 lg:items-center lg:px-10 lg:py-10">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={product.id}
-                initial={{ opacity: 0, y: 12, scale: 0.98 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -8, scale: 0.98 }}
-                transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                className="w-full"
-              >
-                <ProductShowcaseImage image={product.image} title={product.title} />
-              </motion.div>
-            </AnimatePresence>
-          </div>
-
-          {/* Content */}
-          <div className="relative order-2 flex shrink-0 flex-col justify-center px-4 py-5 sm:px-6 sm:py-8 md:px-10 md:py-10 lg:order-1 lg:w-[42%] lg:border-r lg:border-[var(--border)] lg:py-12">
-            <div
-              className="pointer-events-none absolute inset-0 opacity-[0.07]"
-              style={{ background: `radial-gradient(circle at 0% 0%, ${product.color}, transparent 55%)` }}
-            />
-
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={product.id}
-                initial={{ opacity: 0, x: -12 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 12 }}
-                transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                className="relative"
-              >
-                <div
-                  className="mb-3 inline-flex items-center gap-2 rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] sm:mb-5 sm:px-3 sm:py-1.5 sm:text-[11px] sm:tracking-[0.18em]"
-                  style={{
-                    color: product.color,
-                    borderColor: `${product.color}35`,
-                    backgroundColor: `${product.color}10`,
-                  }}
-                >
-                  <product.icon size={12} className="sm:hidden" />
-                  <product.icon size={13} className="hidden sm:block" />
-                  {product.eyebrow}
-                </div>
-
-                <h2
-                  id="product-modal-title"
-                  className="mb-2.5 text-2xl font-extrabold leading-[1.1] tracking-tight text-foreground sm:mb-4 sm:text-3xl md:text-4xl"
-                >
-                  {product.title}
-                </h2>
-
-                <p className="mb-5 text-sm leading-relaxed text-foreground/55 sm:mb-7 sm:text-base md:text-[17px]">
-                  {product.description}
-                </p>
-
-                {/* Mobile: compact list */}
-                <ul className="mb-2 space-y-2.5 sm:hidden">
-                  {product.features.map((feature) => (
-                    <li key={feature} className="flex items-center gap-2.5 text-sm text-foreground/75">
-                      <Check size={14} className="shrink-0" style={{ color: product.color }} />
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-
-                {/* Desktop: pills */}
-                <div className="mb-8 hidden flex-wrap gap-2 sm:flex">
-                  {product.features.map((feature) => (
-                    <span
-                      key={feature}
-                      className="inline-flex items-center gap-1.5 rounded-xl border border-[var(--border)] bg-card px-3 py-2 text-sm text-foreground/75"
-                    >
-                      <Check size={14} style={{ color: product.color }} />
-                      {feature}
-                    </span>
-                  ))}
-                </div>
-
-                <a
-                  href={product.link}
-                  onClick={onClose}
-                  className="hidden w-full items-center justify-center gap-2.5 rounded-xl px-7 py-3.5 text-sm font-bold text-white transition-transform hover:scale-[1.02] active:scale-[0.98] sm:inline-flex md:text-base"
-                  style={{
-                    backgroundColor: product.color,
-                    boxShadow: `0 8px 28px ${product.color}45`,
-                  }}
-                >
-                  Explore product
-                  <ArrowRight size={18} />
-                </a>
-              </motion.div>
-            </AnimatePresence>
-          </div>
+        <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain" data-lenis-prevent>
+          <ProductModalContent product={product} onClose={onClose} />
         </div>
 
-        {/* Mobile sticky CTA */}
-        <div className="shrink-0 border-t border-[var(--border)] bg-background/95 px-4 py-3 backdrop-blur-sm sm:hidden">
+        <div className="shrink-0 border-t border-[var(--border)] bg-background px-4 py-3 sm:hidden">
           <a
             href={product.link}
             onClick={onClose}
