@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { Navbar } from "@/components/Navbar";
 import { DeferredFooter, DeferredCTA } from "@/components/deferred";
 import { BookCallButton } from "@/components/BookCallButton";
@@ -13,7 +12,6 @@ import {
   loyaltyHero,
   loyaltyValuePillars,
   loyaltyStats,
-  loyaltyPartnerGroups,
   loyaltySolutions,
   loyaltyTechnology,
   loyaltyIndustries,
@@ -122,75 +120,6 @@ export default function LoyaltyProductPage() {
           </div>
         </section>
 
-        {/* Partners */}
-        <LazyProductSection className={productSectionClass} minHeight="520px">
-          <div className="mx-auto max-w-[1280px] px-4 sm:px-6">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="mx-auto mb-10 max-w-3xl text-center sm:mb-16"
-            >
-              <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-primary-red">
-                Partners & customers
-              </p>
-              <h2 className={productSectionHeadingClass}>
-                Trusted by leading brands
-                <br />
-                <span className="gradient-text-red">across the ecosystem</span>
-              </h2>
-            </motion.div>
-
-            <div className="space-y-8">
-              {loyaltyPartnerGroups.map((group, i) => (
-                <motion.div
-                  key={group.title}
-                  initial={{ opacity: 0, y: 24 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.08, duration: 0.6 }}
-                  className="overflow-hidden rounded-3xl border border-[var(--border)] bg-card"
-                >
-                  <div className="flex items-center gap-4 border-b border-[var(--border)] bg-primary-red/[0.04] px-6 py-5 md:px-8">
-                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary-red text-white shadow-[0_4px_20px_rgba(242,13,20,0.35)]">
-                      <group.icon size={20} />
-                    </div>
-                    <h3 className="text-xl font-bold text-foreground md:text-2xl">{group.title}</h3>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-3 p-5 sm:grid-cols-3 md:grid-cols-4 md:gap-4 md:p-7 lg:grid-cols-4">
-                    {group.partners.map((partner) => (
-                      <div
-                        key={partner.logo}
-                        className={`group flex items-center justify-center rounded-2xl border border-[var(--border)] bg-foreground/[0.02] px-4 py-5 transition-all duration-300 hover:border-primary-red/30 hover:bg-primary-red/[0.04] ${group.cellClass ?? "min-h-[5.5rem] sm:min-h-[6rem]"}`}
-                      >
-                        <Image
-                          src={partner.logo}
-                          alt=""
-                          aria-hidden
-                          width={200}
-                          height={80}
-                          sizes="(max-width: 640px) 120px, 200px"
-                          className={`${partner.logoClass} opacity-50 transition-opacity duration-300 group-hover:opacity-100 dark:hidden`}
-                        />
-                        <Image
-                          src={partner.logoDark}
-                          alt=""
-                          aria-hidden
-                          width={200}
-                          height={80}
-                          sizes="(max-width: 640px) 120px, 200px"
-                          className={`${partner.logoClass} hidden opacity-50 transition-opacity duration-300 group-hover:opacity-100 dark:block`}
-                        />
-                      </div>
-                    ))}
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </LazyProductSection>
-
         {/* Solutions */}
         <LazyProductSection className={`border-t border-[var(--border)] bg-card/15 ${productSectionClass}`} minHeight="640px">
           <div className="mx-auto max-w-[1280px] px-4 sm:px-6">
@@ -207,8 +136,7 @@ export default function LoyaltyProductPage() {
                 For businesses of all sizes
               </h2>
               <p className="text-base leading-relaxed text-foreground/55 md:text-lg">
-                Three powerful modules: Offer Connect, Game Point, and GiftOS, designed to launch fast, engage
-                customers, and grow transaction volume.
+                Three powerful modules designed to launch fast, engage customers, and grow transaction volume.
               </p>
             </motion.div>
 
@@ -226,10 +154,7 @@ export default function LoyaltyProductPage() {
                     <solution.icon size={28} />
                   </div>
                   <div>
-                    <p className="mb-1 text-xs font-semibold uppercase tracking-[0.18em] text-primary-red">
-                      {solution.tagline}
-                    </p>
-                    <h3 className="mb-3 text-2xl font-bold text-foreground md:text-3xl">{solution.title}</h3>
+                    <h3 className="mb-3 text-2xl font-bold text-foreground md:text-3xl">{solution.tagline}</h3>
                     <p className="mb-6 max-w-3xl text-base leading-relaxed text-foreground/60">{solution.description}</p>
                     <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                       {solution.benefits.map((benefit) => (

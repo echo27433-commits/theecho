@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ThemeToggle } from "./ThemeToggle";
@@ -15,12 +16,17 @@ import { BookCallButton } from "@/components/BookCallButton";
 const navLinks = [
   { name: "Home", href: "/" },
   { name: "About Us", href: "/about" },
-  { name: "Product", href: "/product" },
+  { name: "Products", href: "/product" },
   { name: "Enterprise Ready", href: "/enterprise-ready" },
   { name: "Use Cases", href: "/use-cases" },
   { name: "Blog", href: "/blog" },
   { name: "Contact", href: "/contact" },
 ];
+
+function isNavLinkActive(pathname: string, href: string): boolean {
+  if (href === "/") return pathname === "/";
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
 
 function Logo({ className = "" }: { className?: string }) {
   return (
@@ -43,6 +49,7 @@ function Logo({ className = "" }: { className?: string }) {
 }
 
 export function Navbar() {
+  const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { openCalendly } = useCalendly();
@@ -130,7 +137,9 @@ export function Navbar() {
               className="fixed top-[5.75rem] left-4 right-4 z-50 rounded-2xl border border-[var(--border)] bg-background/95 backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.2)] p-5 md:hidden"
             >
               <nav className="flex flex-col gap-1">
-                {navLinks.map((link, i) => (
+                {navLinks.map((link, i) => {
+                  const isActive = isNavLinkActive(pathname, link.href);
+                  return (
                   <motion.a
                     key={link.name}
                     href={link.href}
@@ -138,12 +147,17 @@ export function Navbar() {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: i * 0.05 }}
                     onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center justify-between rounded-xl px-4 py-3 text-base font-medium text-foreground/80 hover:text-foreground hover:bg-foreground/[0.05] transition-all"
+                    className={`flex items-center justify-between rounded-xl px-4 py-3 text-base font-medium transition-all ${
+                      isActive
+                        ? "bg-primary-red/10 text-primary-red font-semibold"
+                        : "text-foreground/80 hover:text-foreground hover:bg-foreground/[0.05]"
+                    }`}
                   >
                     {link.name}
-                    <ArrowRight className="h-4 w-4 text-foreground/30" />
+                    <ArrowRight className={`h-4 w-4 ${isActive ? "text-primary-red/70" : "text-foreground/30"}`} />
                   </motion.a>
-                ))}
+                  );
+                })}
               </nav>
               <div className="mt-5 pt-5 border-t border-[var(--border)] flex justify-center">
                 <BookCallButton onClick={handleBookCall} className="w-full justify-center py-2.5" />
