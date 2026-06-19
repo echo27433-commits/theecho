@@ -143,22 +143,30 @@ export default function LoyaltyProductPage() {
                     <h3 className="text-xl font-bold text-foreground md:text-2xl">{group.title}</h3>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-3 p-5 sm:grid-cols-3 md:grid-cols-4 md:gap-4 md:p-7 lg:grid-cols-5">
-                    {group.partners.map((partner) => {
-                      const isMuted = partner.startsWith("and ");
-                      return (
-                        <div
-                          key={partner}
-                          className={`flex min-h-[4.5rem] items-center justify-center rounded-2xl border px-4 py-4 text-center transition-all duration-300 ${
-                            isMuted
-                              ? "border-dashed border-[var(--border)] bg-transparent text-sm italic text-foreground/40"
-                              : "border-[var(--border)] bg-foreground/[0.02] text-sm font-semibold text-foreground/80 hover:border-primary-red/30 hover:bg-primary-red/[0.04] hover:text-foreground md:text-base"
-                          }`}
-                        >
-                          {partner}
-                        </div>
-                      );
-                    })}
+                  <div className="grid grid-cols-2 gap-3 p-5 sm:grid-cols-3 md:grid-cols-4 md:gap-4 md:p-7 lg:grid-cols-4">
+                    {group.partners.map((partner) => (
+                      <div
+                        key={partner.logo}
+                        className={`group flex items-center justify-center rounded-2xl border border-[var(--border)] bg-foreground/[0.02] px-4 py-5 transition-all duration-300 hover:border-primary-red/30 hover:bg-primary-red/[0.04] ${group.cellClass ?? "min-h-[5.5rem] sm:min-h-[6rem]"}`}
+                      >
+                        <img
+                          src={partner.logo}
+                          alt=""
+                          aria-hidden
+                          loading="lazy"
+                          decoding="async"
+                          className={`${partner.logoClass} opacity-50 transition-opacity duration-300 group-hover:opacity-100 dark:hidden`}
+                        />
+                        <img
+                          src={partner.logoDark}
+                          alt=""
+                          aria-hidden
+                          loading="lazy"
+                          decoding="async"
+                          className={`${partner.logoClass} hidden opacity-50 transition-opacity duration-300 group-hover:opacity-100 dark:block`}
+                        />
+                      </div>
+                    ))}
                   </div>
                 </motion.div>
               ))}

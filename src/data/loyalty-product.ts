@@ -55,44 +55,94 @@ export const loyaltyStats = [
   { value: "Trusted", label: "Banks & enterprises" },
 ];
 
-export const loyaltyPartnerGroups = [
+export type LoyaltyPartnerLogo = {
+  logo: string;
+  logoDark: string;
+  logoClass: string;
+};
+
+export type LoyaltyPartnerGroup = {
+  icon: ElementType;
+  title: string;
+  cellClass?: string;
+  partners: LoyaltyPartnerLogo[];
+};
+
+export const loyaltyPartnerGroups: LoyaltyPartnerGroup[] = [
   {
     icon: Landmark,
     title: "Banks",
-    partners: ["ADCB", "Visa", "Mastercard", "and others"],
-  },
-  {
-    icon: Building2,
-    title: "Loyalty Programs",
-    partners: ["Shukran", "QB", "Nomad", "Qashio", "and others"],
+    cellClass: "min-h-[4.75rem] sm:min-h-[5.25rem]",
+    partners: [
+      {
+        logo: "/loyal/adbc-black.png",
+        logoDark: "/loyal/adbc-white.png",
+        logoClass: "h-8 w-auto max-w-[82%] object-contain sm:h-9",
+      },
+      {
+        logo: "/loyal/Visa-black.png",
+        logoDark: "/loyal/Visa-white.png",
+        logoClass: "h-7 w-auto max-w-[78%] object-contain sm:h-8",
+      },
+      {
+        logo: "/loyal/Master-Card%20-black.png",
+        logoDark: "/loyal/Master-Card%20-white.png",
+        logoClass: "h-8 w-auto max-w-[72%] object-contain sm:h-9",
+      },
+    ],
   },
   {
     icon: Plane,
     title: "Airlines",
+    cellClass: "min-h-[6.5rem] sm:min-h-[7.5rem]",
     partners: [
-      "Emirates",
-      "Air Arabia",
-      "Air India",
-      "Air Astana",
-      "Ethiopian",
-      "Flynas",
-      "Saudia",
-      "and others",
+      {
+        logo: "/loyal/emirates-black.png",
+        logoDark: "/loyal/emirates-whit.png",
+        logoClass: "h-11 w-auto max-w-full scale-110 object-contain sm:h-12",
+      },
+      {
+        logo: "/loyal/Air%20Arabia-black.png",
+        logoDark: "/loyal/Air%20Arabia-white.png",
+        logoClass: "h-12 w-auto max-w-full scale-125 object-contain sm:h-14 sm:scale-[1.35]",
+      },
+      {
+        logo: "/loyal/airindia-balck.png",
+        logoDark: "/loyal/airindia-white.png",
+        logoClass: "h-14 w-auto max-w-full scale-[1.35] object-contain sm:h-[4.25rem] sm:scale-[1.55]",
+      },
+      {
+        logo: "/loyal/Air%20Astana%20-black.png",
+        logoDark: "/loyal/Air%20Astana%20-white.png",
+        logoClass: "h-14 w-auto max-w-full scale-[1.35] object-contain sm:h-[4.25rem] sm:scale-[1.55]",
+      },
     ],
   },
   {
     icon: Store,
     title: "Merchants & Retailers",
+    cellClass: "min-h-[7rem] sm:min-h-[8rem]",
     partners: [
-      "Carrefour",
-      "Domino's",
-      "Joyalukkas",
-      "MedX Pharmacy",
-      "Petzone",
-      "Masafi",
-      "FNP",
-      "Unifit",
-      "and many more",
+      {
+        logo: "/loyal/Carrefour%20Logo%20-black.png",
+        logoDark: "/loyal/Carrefour%20Logo%20-white.png",
+        logoClass: "h-16 w-auto max-w-[78%] scale-110 object-contain sm:h-[4.75rem] sm:scale-125",
+      },
+      {
+        logo: "/loyal/dominos-black.png",
+        logoDark: "/loyal/dominos-white.png",
+        logoClass: "h-16 w-auto max-w-full scale-[1.35] object-contain sm:h-[4.5rem] sm:scale-[1.6]",
+      },
+      {
+        logo: "/loyal/Joyalukkas-black.png",
+        logoDark: "/loyal/Joyalukkas-white.png",
+        logoClass: "h-[3.75rem] w-auto max-w-full scale-[1.35] object-contain sm:h-[4.25rem] sm:scale-[1.55]",
+      },
+      {
+        logo: "/loyal/medex-black.png",
+        logoDark: "/loyal/medex-white.png",
+        logoClass: "h-16 w-auto max-w-full scale-[1.35] object-contain sm:h-[4.5rem] sm:scale-[1.6]",
+      },
     ],
   },
 ];
