@@ -110,40 +110,21 @@ export function ProductModalProvider({ children }: { children: React.ReactNode }
   );
 }
 
-function BrowserFrame({ image, title, accent }: { image: string; title: string; accent: string }) {
+function ProductShowcaseImage({ image, title }: { image: string; title: string }) {
   return (
-    <div className="relative w-full">
+    <div className="relative w-full px-1 sm:px-2">
       <div
-        className="pointer-events-none absolute -inset-4 hidden rounded-[28px] opacity-40 blur-2xl sm:block"
-        style={{ background: `radial-gradient(ellipse at 50% 60%, ${accent}55, transparent 70%)` }}
+        className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[80%] w-[92%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary-red/15 blur-[72px] sm:blur-[96px]"
+        aria-hidden
       />
-      <div className="relative overflow-hidden rounded-xl border border-[var(--border)] bg-card shadow-[0_24px_80px_rgba(0,0,0,0.18)] sm:rounded-2xl">
-        <div className="hidden items-center gap-2 border-b border-[var(--border)] bg-foreground/[0.03] px-4 py-3 sm:flex">
-          <div className="flex gap-1.5">
-            <span className="h-2.5 w-2.5 rounded-full bg-foreground/15" />
-            <span className="h-2.5 w-2.5 rounded-full bg-foreground/15" />
-            <span className="h-2.5 w-2.5 rounded-full bg-foreground/15" />
-          </div>
-          <div className="mx-auto flex h-7 max-w-[220px] flex-1 items-center justify-center rounded-lg bg-foreground/[0.04] px-3">
-            <span className="truncate text-[11px] text-foreground/35">
-              echo.app / {title.toLowerCase().replace(/\s+/g, "-")}
-            </span>
-          </div>
-          <div className="w-[52px]" />
-        </div>
-        <div className="relative aspect-[16/9] max-h-[168px] bg-foreground/[0.02] sm:aspect-[16/10] sm:max-h-none">
-          <Image
-            src={image}
-            alt={title}
-            fill
-            sizes="(max-width: 640px) 100vw, 480px"
-            className="object-cover object-top"
-          />
-          <div
-            className="pointer-events-none absolute inset-x-0 bottom-0 h-10 sm:h-16"
-            style={{ background: `linear-gradient(to top, ${accent}12, transparent)` }}
-          />
-        </div>
+      <div className="relative mx-auto aspect-[4/3] w-full min-h-[200px] sm:min-h-[280px] lg:aspect-[16/10] lg:min-h-[320px]">
+        <Image
+          src={image}
+          alt={title}
+          fill
+          sizes="(max-width: 640px) 100vw, 480px"
+          className="object-contain object-center drop-shadow-[0_24px_64px_rgba(242,13,20,0.14)]"
+        />
       </div>
     </div>
   );
@@ -239,7 +220,7 @@ function ProductModal({
         {/* Body — image first on mobile */}
         <div className="flex min-h-0 flex-1 flex-col overflow-y-auto lg:flex-row" data-lenis-prevent>
           {/* Screenshot */}
-          <div className="order-1 shrink-0 bg-foreground/[0.02] px-4 py-4 sm:px-5 sm:py-6 md:px-8 md:py-8 lg:order-2 lg:flex lg:min-h-0 lg:flex-1 lg:items-center lg:px-10 lg:py-10">
+          <div className="order-1 shrink-0 px-4 py-4 sm:px-5 sm:py-6 md:px-8 md:py-8 lg:order-2 lg:flex lg:min-h-0 lg:flex-1 lg:items-center lg:px-10 lg:py-10">
             <AnimatePresence mode="wait">
               <motion.div
                 key={product.id}
@@ -249,7 +230,7 @@ function ProductModal({
                 transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
                 className="w-full"
               >
-                <BrowserFrame image={product.image} title={product.title} accent={product.color} />
+                <ProductShowcaseImage image={product.image} title={product.title} />
               </motion.div>
             </AnimatePresence>
           </div>

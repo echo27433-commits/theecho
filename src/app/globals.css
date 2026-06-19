@@ -575,18 +575,20 @@ html:not(.dark) .calendly-popup-content {
   color-scheme: light !important;
 }
 
-/* Keep circle styling but draw a visible X (default icon is white and disappears on light popup) */
+/* Close button — match Book a Call (solid red, white icon) */
 .calendly-overlay .calendly-popup-close {
   top: 1rem !important;
   right: 1rem !important;
-  width: 2.25rem !important;
-  height: 2.25rem !important;
+  width: 2.5rem !important;
+  height: 2.5rem !important;
   border-radius: 9999px !important;
-  background-color: rgba(242, 13, 20, 0.1) !important;
+  background-color: #f20d14 !important;
   background-image: none !important;
-  border: 1px solid rgba(242, 13, 20, 0.25) !important;
+  border: none !important;
+  box-shadow: 0 4px 24px rgba(242, 13, 20, 0.45) !important;
   z-index: 10000 !important;
-  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+  cursor: pointer !important;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
 }
 
 .calendly-overlay .calendly-popup-close::before,
@@ -595,9 +597,9 @@ html:not(.dark) .calendly-popup-content {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 12px;
+  width: 14px;
   height: 2px;
-  background-color: #f20d14;
+  background-color: #ffffff;
   border-radius: 1px;
   pointer-events: none;
 }
@@ -611,7 +613,7 @@ html:not(.dark) .calendly-popup-content {
 }
 
 .calendly-overlay .calendly-popup-close:hover {
-  background-color: rgba(242, 13, 20, 0.18) !important;
-  border-color: rgba(242, 13, 20, 0.45) !important;
-  transform: scale(1.05);
+  background-color: #f20d14 !important;
+  box-shadow: 0 6px 32px rgba(242, 13, 20, 0.6) !important;
+  transform: scale(1.05) translateY(-1px);
 }
