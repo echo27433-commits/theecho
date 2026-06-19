@@ -372,7 +372,7 @@ function HeroProductHub({ onSelectProduct }: { onSelectProduct: (productId: stri
 
   return (
     <div ref={containerRef} className="relative w-full min-w-0">
-      {!isMobile && <HubConnectorLines lines={connectorLines} activeIndex={activeIndex} />}
+      <HubConnectorLines lines={connectorLines} activeIndex={activeIndex} />
 
       <div className="relative flex min-w-0 items-center gap-2 max-sm:gap-2 sm:gap-4 md:gap-5 lg:gap-6 xl:gap-8">
         {/* Central hub — bot mascot */}
