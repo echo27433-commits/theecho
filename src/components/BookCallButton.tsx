@@ -37,7 +37,7 @@ export function BookCallButton({
   return (
     <button
       onClick={onClick}
-      className={`group relative inline-flex w-fit shrink-0 items-center rounded-full font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 btn-shine overflow-hidden ${variants[variant]} ${s.button} ${className}`}
+      className={`group relative inline-flex w-fit shrink-0 cursor-pointer items-center rounded-full font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 btn-shine overflow-hidden ${variants[variant]} ${s.button} ${className}`}
     >
       <Calendar className={`${s.icon} shrink-0 opacity-90`} />
       <span>Book a Call</span>

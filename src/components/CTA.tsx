@@ -9,7 +9,7 @@ export function CTA() {
   const { openCalendly } = useCalendly();
 
   return (
-    <section className="relative overflow-hidden py-24">
+    <section className="relative overflow-hidden py-14">
       <div className="mx-auto max-w-[1280px] px-6">
         <motion.div
           initial={{ opacity: 0, y: 32 }}
@@ -26,7 +26,7 @@ export function CTA() {
             <div className="pointer-events-none absolute top-1/2 left-1/2 hidden h-[300px] w-[600px] -translate-x-1/2 -translate-y-1/2 animate-pulse rounded-full bg-primary-red/10 blur-[80px] dark:block" />
           </div>
 
-          <div className="relative flex flex-col items-center px-8 py-20 text-center">
+          <div className="relative flex flex-col items-center px-8 py-14 text-center">
             <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary-red/20 bg-primary-red/10 px-3 py-1.5 text-xs font-semibold text-primary-red">
               <Sparkles size={11} />
               Let&apos;s build together

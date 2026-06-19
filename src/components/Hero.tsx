@@ -189,7 +189,7 @@ function ProductHubCard({
       initial={{ opacity: 0, x: 12 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.45, delay: Math.min(delay, 0.35), ease: [0.16, 1, 0.3, 1] }}
-      className={`group relative z-10 flex w-full min-w-[10.5rem] items-center gap-3 rounded-2xl border p-3 text-left transition-all duration-300 max-sm:min-w-0 max-sm:gap-2 max-sm:rounded-xl max-sm:p-2.5 sm:gap-4 sm:rounded-2xl sm:p-4 md:gap-5 md:p-5 lg:rounded-3xl lg:p-5 xl:p-6 ${
+      className={`group relative z-10 flex w-full min-w-[10.5rem] cursor-pointer items-center gap-3 rounded-2xl border p-3 text-left transition-all duration-300 max-sm:min-w-0 max-sm:gap-2 max-sm:rounded-xl max-sm:p-2.5 sm:gap-4 sm:rounded-2xl sm:p-4 md:gap-5 md:p-5 lg:rounded-3xl lg:p-5 xl:p-6 ${
         isActive
           ? "overflow-hidden font-semibold text-white btn-shine hover:-translate-y-0.5 [box-shadow:0_4px_24px_var(--btn-glow)] hover:[box-shadow:0_6px_32px_var(--btn-glow-hover)]"
           : "opacity-70 backdrop-blur-sm hover:opacity-90"
@@ -376,10 +376,10 @@ function HeroProductHub({ onSelectProduct }: { onSelectProduct: (productId: stri
 
       <div className="relative flex min-w-0 items-center gap-2 max-sm:gap-2 sm:gap-4 md:gap-5 lg:gap-6 xl:gap-8">
         {/* Central hub — bot mascot */}
-        <div className="relative z-40 flex w-[150px] shrink-0 flex-col items-center overflow-visible max-sm:w-[150px] sm:w-[200px] md:w-[220px] lg:w-[240px] xl:w-[280px] 2xl:w-[300px]">
+        <div className="relative z-40 flex w-[150px] shrink-0 flex-col items-center overflow-visible max-sm:w-[150px] sm:w-[180px] md:w-[200px] lg:w-[220px] xl:w-[260px] 2xl:w-[280px]">
           <div
             ref={hubRef}
-            className="relative isolate flex h-[150px] w-[150px] items-center justify-center overflow-visible max-sm:h-[150px] max-sm:w-[150px] sm:h-[200px] sm:w-[200px] md:h-[220px] md:w-[220px] lg:h-[240px] lg:w-[240px] xl:h-[280px] xl:w-[280px] 2xl:h-[300px] 2xl:w-[300px]"
+            className="relative isolate flex h-[150px] w-[150px] items-center justify-center overflow-visible max-sm:h-[150px] max-sm:w-[150px] sm:h-[180px] sm:w-[180px] md:h-[200px] md:w-[200px] lg:h-[220px] lg:w-[220px] xl:h-[260px] xl:w-[260px] 2xl:h-[280px] 2xl:w-[280px]"
           >
             <div
               className="pointer-events-none absolute bottom-[14%] left-1/2 z-0 h-[42%] w-[82%] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(242,13,20,0.28)_0%,rgba(242,13,20,0.1)_42%,transparent_72%)] max-sm:bottom-[18%] max-sm:h-[38%] max-sm:w-[88%]"
@@ -395,7 +395,7 @@ function HeroProductHub({ onSelectProduct }: { onSelectProduct: (productId: stri
               alt="Echo AI Assistant"
               width={480}
               height={480}
-              sizes="(max-width: 640px) 150px, (max-width: 1024px) 220px, 300px"
+              sizes="(max-width: 640px) 150px, (max-width: 1024px) 200px, 280px"
               quality={70}
               className="relative z-[1] h-full w-full object-contain drop-shadow-[0_16px_48px_rgba(242,13,20,0.25)]"
               priority
@@ -454,7 +454,7 @@ export function Hero() {
 
   return (
     <>
-      <section className="relative flex min-h-0 items-center overflow-x-hidden pt-24 pb-10 max-sm:pb-8 sm:min-h-screen sm:pb-16 xl:min-h-screen">
+      <section className="relative flex min-h-0 items-center overflow-x-hidden pt-24 pb-6 max-sm:pb-6 sm:min-h-0 sm:pb-10 xl:min-h-0">
         <div className="pointer-events-none absolute top-[-20%] right-[-10%] -z-10 h-[700px] w-[700px] rounded-full bg-primary-red/8 blur-[140px] max-sm:h-[420px] max-sm:w-[420px] max-sm:blur-[80px] max-sm:animate-none dark:bg-primary-red/12 animate-blob" />
         <div
           className="pointer-events-none absolute bottom-[-10%] left-[-10%] -z-10 hidden h-[600px] w-[600px] rounded-full bg-purple-500/5 blur-[120px] sm:block dark:bg-purple-500/10"
@@ -469,7 +469,7 @@ export function Hero() {
         <div className="radial-spotlight pointer-events-none absolute top-0 right-0 left-0 -z-10 h-[600px]" />
         <div className="noise-overlay pointer-events-none absolute inset-0 -z-10 max-sm:hidden" />
 
-        <div className="mx-auto grid w-full max-w-[1280px] grid-cols-1 items-center gap-10 px-4 py-12 sm:px-6 sm:py-16 xl:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)] xl:gap-10 xl:py-20 2xl:max-w-[1440px] 2xl:grid-cols-[minmax(0,1fr)_minmax(0,1.35fr)] 2xl:gap-14">
+        <div className="mx-auto grid w-full max-w-[1280px] grid-cols-1 items-center gap-10 px-4 py-8 sm:px-6 sm:py-10 xl:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)] xl:gap-10 xl:py-12 2xl:max-w-[1440px] 2xl:grid-cols-[minmax(0,1fr)_minmax(0,1.35fr)] 2xl:gap-14">
           <div className="order-1 max-w-xl xl:order-none">
             <motion.div
               initial={{ opacity: 0, y: 16 }}

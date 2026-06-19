@@ -1,5 +1,5 @@
 import type { ElementType } from "react";
-import { Shield, Layers, Server, Scale } from "lucide-react";
+import { Shield, Layers, Server, Scale, Globe, Code2, FileCheck } from "lucide-react";
 
 export const enterpriseIntro = {
   badge: "Enterprise Ready",
@@ -10,6 +10,53 @@ export const enterpriseIntro = {
     "Echo is designed for organizations that need enterprise grade performance across customer engagement, loyalty, messaging, and AI powered conversations. From data security and platform reliability to third-party integrations and global scalability, every component is built to support business growth without compromising trust.",
   ],
 };
+
+export const enterpriseMission = {
+  eyebrow: "Why Echo Enterprise",
+  lead:
+    "Echo is designed for organizations that need enterprise grade performance across customer engagement, loyalty, messaging, and AI powered conversations.",
+  supporting:
+    "From data security and platform reliability to third-party integrations and global scalability, every component is built to support business growth without compromising trust.",
+  focusAreas: [
+    { icon: Layers, title: "Engagement & loyalty", description: "Unified journeys across every channel" },
+    { icon: Shield, title: "Security & reliability", description: "Enterprise-grade protection and uptime" },
+    { icon: Code2, title: "Integrations & scale", description: "Connect your stack and grow globally" },
+    { icon: Scale, title: "Trust at every layer", description: "Governance without slowing growth" },
+  ],
+};
+
+export const enterpriseTrustPillars: {
+  icon: ElementType;
+  title: string;
+  description: string;
+}[] = [
+  {
+    icon: Shield,
+    title: "Secure by design",
+    description: "Encrypted data transit, role-based access, and continuous audit trails.",
+  },
+  {
+    icon: Globe,
+    title: "Multi-region",
+    description: "Deploy and scale across MENA, EU, and APAC with confidence.",
+  },
+  {
+    icon: FileCheck,
+    title: "Audit ready",
+    description: "Governance workflows, activity logs, and permission controls.",
+  },
+  {
+    icon: Code2,
+    title: "API-first",
+    description: "Plug into CRM, commerce, and analytics with bi-directional sync.",
+  },
+];
+
+export const enterpriseHeroSignals = [
+  { label: "Platform availability", value: "99.9%" },
+  { label: "Global regions", value: "MENA · EU · APAC" },
+  { label: "Systems status", value: "All operational" },
+];
 
 export const enterpriseHighlights = [
   { value: "99.9%", label: "Platform availability" },
@@ -94,6 +141,12 @@ export const integrationLogos: IntegrationLogo[] = [
   { logo: "/brands/sap_logo.png", logoDark: "/brands/sap_logo_dark.png" },
   { logo: "/brands/oracale_logo.png", logoDark: "/brands/oracale_logo_dark.png" },
 ];
+
+export const integrationsMore = {
+  count: "Many",
+  label: "More integrations",
+  sublabel: "Platforms, payments & custom APIs",
+};
 
 export const enterpriseIntegrations = {
   eyebrow: "Unified Integrations Ecosystem",

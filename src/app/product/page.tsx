@@ -129,37 +129,14 @@ export default function ProductsPage() {
                 <div className="mx-auto grid max-w-[1280px] grid-cols-1 items-center gap-12 px-6 lg:grid-cols-2 lg:gap-20">
                   {/* Image column */}
                   <div className={`relative ${isReversed ? "lg:order-2" : "lg:order-1"}`}>
-                    <div
-                      className="pointer-events-none absolute -inset-4 hidden rounded-[28px] opacity-40 blur-2xl sm:block"
-                      style={{ background: `radial-gradient(ellipse at 50% 60%, ${product.color}55, transparent 70%)` }}
-                    />
-                    <div className="relative overflow-hidden rounded-2xl border border-[var(--border)] bg-card shadow-[0_24px_80px_rgba(0,0,0,0.18)]">
-                      <div className="hidden items-center gap-2 border-b border-[var(--border)] bg-foreground/[0.03] px-4 py-3 sm:flex">
-                        <div className="flex gap-1.5">
-                          <span className="h-2.5 w-2.5 rounded-full bg-foreground/15" />
-                          <span className="h-2.5 w-2.5 rounded-full bg-foreground/15" />
-                          <span className="h-2.5 w-2.5 rounded-full bg-foreground/15" />
-                        </div>
-                        <div className="mx-auto flex h-7 max-w-[220px] flex-1 items-center justify-center rounded-lg bg-foreground/[0.04] px-3">
-                          <span className="truncate text-[11px] text-foreground/35">
-                            echo.app / {product.id}
-                          </span>
-                        </div>
-                        <div className="w-[52px]" />
-                      </div>
-                      <div className="relative aspect-[16/10] bg-foreground/[0.02]">
-                        <Image
-                          src={product.image}
-                          alt={product.title}
-                          fill
-                          sizes="(max-width: 1024px) 100vw, 560px"
-                          className="object-cover object-top"
-                        />
-                        <div
-                          className="pointer-events-none absolute inset-x-0 bottom-0 h-12"
-                          style={{ background: `linear-gradient(to top, ${product.color}18, transparent)` }}
-                        />
-                      </div>
+                    <div className="relative mx-auto aspect-[4/3] w-full max-w-[560px] lg:max-w-none lg:aspect-[16/10]">
+                      <Image
+                        src={product.image}
+                        alt={product.title}
+                        fill
+                        sizes="(max-width: 1024px) 100vw, 560px"
+                        className="object-contain object-center"
+                      />
                     </div>
                   </div>
 

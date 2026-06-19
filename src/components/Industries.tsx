@@ -34,7 +34,7 @@ export function Industries() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative py-28 bg-[#06070B] dark:bg-[#06070B] overflow-hidden">
+    <section ref={sectionRef} className="relative py-16 bg-[#06070B] dark:bg-[#06070B] overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 dot-grid opacity-25 pointer-events-none" />
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/5 to-transparent" />
@@ -46,7 +46,7 @@ export function Industries() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        className="max-w-[1280px] mx-auto px-6 relative mb-16"
+        className="max-w-[1280px] mx-auto px-6 relative mb-10"
       >
         <div className="text-center">
           <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-gray-500 mb-4">

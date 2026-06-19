@@ -1,7 +1,6 @@
 "use client";
 
 import { createContext, useContext, useCallback, ReactNode } from "react";
-import { useTheme } from "next-themes";
 
 const CALENDLY_BASE = "https://calendly.com/karankrunch210/30min";
 const CALENDLY_SCRIPT = "https://assets.calendly.com/assets/external/widget.js";
@@ -15,19 +14,14 @@ declare global {
   }
 }
 
-function getCalendlyUrl(isDark: boolean) {
+function getCalendlyUrl() {
   const params = new URLSearchParams({
     primary_color: "f20d14",
     hide_gdpr_banner: "1",
+    background_color: "ffffff",
+    text_color: "0f0f10",
+    embed_type: "PopupWidget",
   });
-
-  if (isDark) {
-    params.set("background_color", "0e1018");
-    params.set("text_color", "f4f4f5");
-  } else {
-    params.set("background_color", "ffffff");
-    params.set("text_color", "0f0f10");
-  }
 
   return `${CALENDLY_BASE}?${params.toString()}`;
 }
@@ -81,21 +75,17 @@ function loadCalendlyScript(): Promise<void> {
 const CalendlyContext = createContext<CalendlyContextType | undefined>(undefined);
 
 export function CalendlyProvider({ children }: { children: ReactNode }) {
-  const { resolvedTheme } = useTheme();
-
   const openCalendly = useCallback(() => {
     ensureCalendlyCss();
 
-    const isDark =
-      resolvedTheme === "dark" || document.documentElement.classList.contains("dark");
-    const url = getCalendlyUrl(isDark);
+    const url = getCalendlyUrl();
 
     void loadCalendlyScript()
       .then(() => window.Calendly?.initPopupWidget({ url }))
       .catch(() => {
         window.open(url, "_blank", "noopener,noreferrer");
       });
-  }, [resolvedTheme]);
+  }, []);
 
   return <CalendlyContext.Provider value={{ openCalendly }}>{children}</CalendlyContext.Provider>;
 }

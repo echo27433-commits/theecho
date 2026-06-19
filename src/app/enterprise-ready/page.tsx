@@ -2,31 +2,21 @@
 
 import { Navbar } from "@/components/Navbar";
 import { DeferredFooter, DeferredCTA } from "@/components/deferred";
-import { BookCallButton } from "@/components/BookCallButton";
-import { EnterpriseHeroVisual } from "@/components/enterprise/EnterpriseHeroVisual";
+import { EnterpriseHero } from "@/components/enterprise/EnterpriseHero";
+import { EnterpriseMission } from "@/components/enterprise/EnterpriseMission";
 import { EnterpriseCapabilities } from "@/components/enterprise/EnterpriseCapabilities";
 import { EnterpriseIntegrations } from "@/components/enterprise/EnterpriseIntegrations";
 import { motion } from "framer-motion";
-import Link from "next/link";
-import { ArrowRight, Building2, CheckCircle2, Sparkles } from "lucide-react";
+import { CheckCircle2 } from "lucide-react";
 import { useCalendly } from "@/context/CalendlyContext";
 import {
-  enterpriseIntro,
-  enterpriseHighlights,
   enterpriseAvailability,
   enterpriseCompliance,
 } from "@/data/enterprise-ready";
 
-const ENTERPRISE_COLOR = "#f20d14";
-
 const fadeUp = {
   hidden: { opacity: 0, y: 28 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.75, ease: [0.16, 1, 0.3, 1] as const } },
-};
-
-const stagger = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
 };
 
 export default function EnterpriseReadyPage() {
@@ -36,111 +26,9 @@ export default function EnterpriseReadyPage() {
     <>
       <Navbar />
       <main className="flex min-h-screen w-full flex-col overflow-hidden bg-background font-sans text-foreground">
-        {/* Hero */}
-        <section className="relative flex min-h-[90vh] flex-col justify-center overflow-hidden pb-12 pt-[132px] lg:min-h-[92vh] lg:pb-16 lg:pt-[140px]">
-          <div className="pointer-events-none absolute inset-0 dot-grid-light opacity-25 dark:dot-grid" />
-          <div
-            className="pointer-events-none absolute top-[8%] left-1/2 h-[600px] w-[1000px] -translate-x-1/2 rounded-full blur-[180px]"
-            style={{ background: `${ENTERPRISE_COLOR}12` }}
-          />
-          <div className="pointer-events-none absolute bottom-0 right-0 h-[360px] w-[360px] translate-x-1/4 rounded-full bg-emerald-500/5 blur-[120px]" />
+        <EnterpriseHero onBookCall={openCalendly} />
 
-          <div className="relative z-10 mx-auto w-full max-w-[1280px] px-6">
-            <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16 xl:gap-20">
-              <motion.div initial="hidden" animate="visible" variants={stagger}>
-                <motion.div
-                  variants={fadeUp}
-                  className="mb-6 inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-xs font-semibold"
-                  style={{
-                    borderColor: `${ENTERPRISE_COLOR}30`,
-                    background: `${ENTERPRISE_COLOR}10`,
-                    color: ENTERPRISE_COLOR,
-                  }}
-                >
-                  <Building2 size={12} />
-                  {enterpriseIntro.badge}
-                </motion.div>
-
-                <motion.h1
-                  variants={fadeUp}
-                  className="mb-5 text-4xl font-extrabold leading-[1.06] tracking-tight sm:text-5xl md:text-6xl lg:text-[3.5rem]"
-                >
-                  {enterpriseIntro.title}
-                  <br />
-                  <span className="gradient-text-red">{enterpriseIntro.titleAccent}</span>
-                </motion.h1>
-
-                <motion.p variants={fadeUp} className="mb-6 max-w-xl text-base leading-relaxed text-foreground/60 md:text-lg">
-                  {enterpriseIntro.paragraphs[0]}
-                </motion.p>
-
-                <motion.div variants={fadeUp} className="mb-8 flex flex-wrap gap-2">
-                  {["Secure by design", "Multi-region", "Audit ready", "API-first"].map((tag) => (
-                    <span
-                      key={tag}
-                      className="rounded-full border border-[var(--border)] bg-card px-3.5 py-1.5 text-xs font-semibold text-foreground/65"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </motion.div>
-
-                <motion.div variants={fadeUp} className="flex flex-wrap items-center gap-4">
-                  <BookCallButton onClick={openCalendly} size="lg" />
-                  <Link
-                    href="/use-cases"
-                    className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] px-6 py-3 text-sm font-semibold text-foreground/70 transition-colors hover:bg-foreground/5 hover:text-foreground"
-                  >
-                    See customer stories <ArrowRight size={16} />
-                  </Link>
-                </motion.div>
-              </motion.div>
-
-              <EnterpriseHeroVisual />
-            </div>
-
-            {/* Stats row */}
-            <motion.div
-              initial={{ opacity: 0, y: 32 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-              className="mt-14 grid grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-4 lg:mt-20"
-            >
-              {enterpriseHighlights.map((item) => (
-                <div
-                  key={item.label}
-                  className="group relative overflow-hidden rounded-2xl border border-[var(--border)] bg-card px-5 py-6 transition-colors hover:border-primary-red/30 md:px-6 md:py-7"
-                >
-                  <div className="pointer-events-none absolute -right-4 -top-4 h-20 w-20 rounded-full bg-primary-red/10 blur-2xl opacity-60 transition-opacity group-hover:opacity-100" />
-                  <p className="relative text-3xl font-extrabold tracking-tight text-primary-red md:text-4xl">{item.value}</p>
-                  <p className="relative mt-2 text-sm font-medium leading-snug text-foreground/55">{item.label}</p>
-                </div>
-              ))}
-            </motion.div>
-          </div>
-        </section>
-
-        {/* Mission statement */}
-        <section className="border-y border-[var(--border)] bg-card/20 py-16 lg:py-20">
-          <div className="mx-auto max-w-[1280px] px-6">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="relative overflow-hidden rounded-3xl border border-[var(--border)] bg-card p-8 md:p-12"
-            >
-              <div className="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full bg-primary-red/8 blur-3xl" />
-              <div className="relative grid grid-cols-1 items-center gap-8 lg:grid-cols-[auto_1fr] lg:gap-12">
-                <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-primary-red/10 text-primary-red">
-                  <Sparkles size={28} />
-                </div>
-                <p className="text-lg leading-relaxed text-foreground/65 md:text-xl md:leading-relaxed">
-                  {enterpriseIntro.paragraphs[1]}
-                </p>
-              </div>
-            </motion.div>
-          </div>
-        </section>
+        <EnterpriseMission />
 
         <EnterpriseCapabilities />
 

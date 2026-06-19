@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Code2, Plug, RefreshCw } from "lucide-react";
-import { enterpriseIntegrations, integrationLogos } from "@/data/enterprise-ready";
+import { enterpriseIntegrations, integrationLogos, integrationsMore } from "@/data/enterprise-ready";
 
 const capabilityIcons = [Plug, Code2, RefreshCw];
 
@@ -119,6 +119,14 @@ export function EnterpriseIntegrations() {
                       />
                     </motion.div>
                   ))}
+                </div>
+
+                <div className="border-t border-[var(--border)] bg-gradient-to-r from-primary-red/[0.04] via-primary-red/[0.08] to-primary-red/[0.04] px-6 py-5 text-center sm:py-6">
+                  <p className="text-2xl font-extrabold tracking-tight text-primary-red sm:text-3xl">
+                    {integrationsMore.count}{" "}
+                    <span className="text-foreground/80">{integrationsMore.label.toLowerCase()}</span>
+                  </p>
+                  <p className="mt-1.5 text-xs text-foreground/45 sm:text-sm">{integrationsMore.sublabel}</p>
                 </div>
               </div>
             </div>

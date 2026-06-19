@@ -45,7 +45,7 @@ const solutions = [
 
 export function Solutions() {
   return (
-    <section id="products" className="relative py-28 bg-background overflow-hidden">
+    <section id="products" className="relative py-16 bg-background overflow-hidden">
       {/* Background accent */}
       <div className="absolute inset-0 dot-grid-light dark:dot-grid opacity-60 pointer-events-none" />
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-primary-red/3 dark:bg-primary-red/5 blur-[120px] pointer-events-none rounded-full" />
@@ -58,7 +58,7 @@ export function Solutions() {
         className="max-w-[1280px] mx-auto px-6 relative"
       >
         {/* Header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-10">
           <div className="inline-flex items-center gap-2 bg-primary-red/10 border border-primary-red/20 text-primary-red text-xs font-semibold px-3 py-1.5 rounded-full mb-5">
             <Sparkles size={11} />
             Our Platform

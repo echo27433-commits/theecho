@@ -71,7 +71,7 @@ export function Stats() {
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section className="relative bg-[#06070B] text-white py-20 overflow-hidden">
+    <section className="relative bg-[#06070B] text-white py-14 overflow-hidden">
       {/* Background decorations */}
       <div className="absolute inset-0 dot-grid opacity-30 pointer-events-none" />
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary-red/40 to-transparent" />

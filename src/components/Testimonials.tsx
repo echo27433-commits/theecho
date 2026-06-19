@@ -65,7 +65,7 @@ export function Testimonials() {
   };
 
   return (
-    <section className="relative py-28 bg-background overflow-hidden border-t border-[var(--border)]">
+    <section className="relative py-16 bg-background overflow-hidden border-t border-[var(--border)]">
       <div className="absolute inset-0 dot-grid-light dark:dot-grid opacity-40 pointer-events-none" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-primary-red/3 dark:bg-primary-red/5 blur-[100px] rounded-full pointer-events-none" />
 
@@ -75,7 +75,7 @@ export function Testimonials() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className="text-center mb-16"
+          className="text-center mb-10"
         >
           <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-primary-red mb-4">
             Social Proof

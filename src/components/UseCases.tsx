@@ -9,7 +9,7 @@ import { ClientLogoBand } from "@/components/ClientLogoBand";
 
 export function UseCases() {
   return (
-    <section id="use-cases" className="relative py-28 bg-background overflow-hidden">
+    <section id="use-cases" className="relative py-16 bg-background overflow-hidden">
       <div className="absolute inset-0 dot-grid-light dark:dot-grid opacity-50 pointer-events-none" />
 
       <motion.div 
@@ -19,7 +19,7 @@ export function UseCases() {
         transition={{ duration: 0.6, ease: "easeOut" }}
         className="max-w-[1280px] mx-auto px-6 relative"
       >
-        <div className="text-center mb-16">
+        <div className="text-center mb-10">
           <div className="inline-flex items-center gap-2 bg-primary-red/10 border border-primary-red/20 text-primary-red text-xs font-semibold px-3 py-1.5 rounded-full mb-5">
             <Sparkles size={11} />
             Customer Success
