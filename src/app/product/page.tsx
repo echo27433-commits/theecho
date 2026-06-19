@@ -106,7 +106,7 @@ export default function ProductsPage() {
         {/* Products — full-width sections, no cards */}
         <section className="pb-8">
           <div className="mx-auto max-w-[1280px] px-6">
-            <div className="mb-16 text-center">
+            <div className="mb-10 text-center">
               <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-primary-red">Platform Modules</p>
               <h2 className="text-3xl font-bold text-foreground md:text-4xl">Three pillars. One connected platform.</h2>
             </div>
@@ -124,18 +124,22 @@ export default function ProductsPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-60px" }}
                 transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-                className="border-t border-[var(--border)] py-20 lg:py-28"
+                className="border-t border-[var(--border)] py-12 lg:py-16"
               >
-                <div className="mx-auto grid max-w-[1280px] grid-cols-1 items-center gap-12 px-6 lg:grid-cols-2 lg:gap-20">
+                <div className="mx-auto grid max-w-[1280px] grid-cols-1 items-center gap-8 px-6 lg:grid-cols-2 lg:gap-12">
                   {/* Image column */}
-                  <div className={`relative ${isReversed ? "lg:order-2" : "lg:order-1"}`}>
-                    <div className="relative mx-auto aspect-[4/3] w-full max-w-[560px] lg:max-w-none lg:aspect-[16/10]">
+                  <div className={`relative px-1 sm:px-2 ${isReversed ? "lg:order-2" : "lg:order-1"}`}>
+                    <div
+                      className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[80%] w-[92%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary-red/15 blur-[72px] sm:bg-primary-red/18 sm:blur-[96px] lg:blur-[120px]"
+                      aria-hidden
+                    />
+                    <div className="relative mx-auto aspect-[4/3] w-full min-h-[300px] sm:min-h-[380px] lg:aspect-[16/10] lg:min-h-[460px] xl:min-h-[540px]">
                       <Image
                         src={product.image}
                         alt={product.title}
                         fill
-                        sizes="(max-width: 1024px) 100vw, 560px"
-                        className="object-contain object-center"
+                        sizes="(max-width: 1024px) 100vw, 720px"
+                        className="object-contain object-center drop-shadow-[0_24px_64px_rgba(242,13,20,0.14)]"
                       />
                     </div>
                   </div>
