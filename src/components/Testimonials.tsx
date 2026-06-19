@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -125,15 +126,21 @@ export function Testimonials() {
 
                   <div className="relative flex flex-col items-center gap-3">
                     <div className="inline-flex rounded-xl border border-[var(--border)] bg-background px-6 py-4 shadow-[0_4px_24px_rgba(0,0,0,0.06)] dark:bg-[#12131a] dark:shadow-[0_4px_24px_rgba(0,0,0,0.2)]">
-                      <div className="flex h-12 w-[200px] items-center justify-center overflow-hidden">
-                        <img
+                      <div className="relative flex h-12 w-[200px] items-center justify-center overflow-hidden">
+                        <Image
                           src={testimonials[active].logo}
                           alt={`${testimonials[active].company} logo`}
+                          width={200}
+                          height={48}
+                          sizes="200px"
                           className="h-[48px] w-auto max-w-none origin-center scale-[1.35] object-contain dark:hidden"
                         />
-                        <img
+                        <Image
                           src={testimonials[active].logoDark}
                           alt={`${testimonials[active].company} logo`}
+                          width={200}
+                          height={48}
+                          sizes="200px"
                           className="hidden h-[48px] w-auto max-w-none origin-center scale-[1.35] object-contain dark:block"
                         />
                       </div>

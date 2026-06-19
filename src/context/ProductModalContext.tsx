@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
 import { lockScroll, unlockScroll } from "@/lib/scroll-lock";
 import { motion, AnimatePresence } from "framer-motion";
@@ -29,7 +30,7 @@ export const productsData: ProductData[] = [
     description:
       "Build lasting relationships with intelligent loyalty programs. Reward customers dynamically based on behavior, purchase history, and engagement.",
     features: ["Dynamic Tiering", "Points & Rewards Engine", "Behavioral Triggers"],
-    image: "/loyal.png",
+    image: "/loyal.webp",
     link: "/product/loyalty",
   },
   {
@@ -42,7 +43,7 @@ export const productsData: ProductData[] = [
     description:
       "Unify all your customer touchpoints into a single, seamless experience. Reach your customers wherever they are, without losing context.",
     features: ["Unified Inbox", "Cross Channel Routing", "Campaign Management"],
-    image: "/omnichnnel.png",
+    image: "/omnichnnel.webp",
     link: "/product/omnichannel",
   },
   {
@@ -55,7 +56,7 @@ export const productsData: ProductData[] = [
     description:
       "Deploy highly intelligent, agentic AI that understands context, intent, and sentiment to resolve queries instantly and proactively.",
     features: ["Agentic Resolution", "Sentiment Analysis", "Seamless Human Handoff"],
-    image: "/ai-converation.png",
+    image: "/ai-converation.webp",
     link: "/product/ai-platform",
   },
 ];
@@ -131,7 +132,13 @@ function BrowserFrame({ image, title, accent }: { image: string; title: string; 
           <div className="w-[52px]" />
         </div>
         <div className="relative aspect-[16/9] max-h-[168px] bg-foreground/[0.02] sm:aspect-[16/10] sm:max-h-none">
-          <img src={image} alt={title} className="h-full w-full object-cover object-top" />
+          <Image
+            src={image}
+            alt={title}
+            fill
+            sizes="(max-width: 640px) 100vw, 480px"
+            className="object-cover object-top"
+          />
           <div
             className="pointer-events-none absolute inset-x-0 bottom-0 h-10 sm:h-16"
             style={{ background: `linear-gradient(to top, ${accent}12, transparent)` }}

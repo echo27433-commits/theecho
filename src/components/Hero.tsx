@@ -116,7 +116,7 @@ function BotGuideBubble({ activeProduct }: { activeProduct: (typeof productsData
         <div className="rounded-2xl border border-foreground/8 bg-background/90 px-3.5 py-3 shadow-[0_8px_32px_rgba(0,0,0,0.12)] backdrop-blur-md max-sm:px-3 max-sm:py-2.5 dark:border-white/10 dark:bg-background/85 dark:shadow-[0_8px_32px_rgba(0,0,0,0.4)]">
             <div className="mb-2 flex items-center gap-2">
               <div className="relative h-6 w-6 shrink-0 overflow-hidden rounded-full">
-                <img src="/bot.png" alt="" width={24} height={24} className="h-full w-full scale-125 object-contain" />
+                <Image src="/bot.webp" alt="" width={24} height={24} className="h-full w-full scale-125 object-contain" />
               </div>
               <span className="text-[10px] font-semibold tracking-[0.12em] text-foreground/45 uppercase">Echo Assistant</span>
             </div>
@@ -390,7 +390,7 @@ function HeroProductHub({ onSelectProduct }: { onSelectProduct: (productId: stri
             />
 
             <Image
-              src="/bot.png"
+              src="/bot.webp"
               alt="Echo AI Assistant"
               width={480}
               height={480}

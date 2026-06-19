@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { Navbar } from "@/components/Navbar";
 import { DeferredFooter, DeferredCTA } from "@/components/deferred";
 import { BookCallButton } from "@/components/BookCallButton";
@@ -113,12 +114,13 @@ export default function AIPlatformProductPage() {
                     </div>
                   </div>
                   <div className="relative aspect-[16/10] bg-foreground/[0.02]">
-                    <img
-                      src="/ai-converation.png"
+                    <Image
+                      src="/ai-converation.webp"
                       alt="Echo AI Conversational Platform"
-                      loading="eager"
-                      decoding="async"
-                      className="h-full w-full object-cover object-top"
+                      fill
+                      priority
+                      sizes="(max-width: 1024px) 100vw, 480px"
+                      className="object-cover object-top"
                     />
                     <div
                       className="pointer-events-none absolute inset-x-0 bottom-0 h-16"

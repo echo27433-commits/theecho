@@ -5,6 +5,7 @@ import { DeferredFooter, DeferredCTA } from "@/components/deferred";
 import { BookCallButton } from "@/components/BookCallButton";
 import { CaseStudyButton } from "@/components/CaseStudyButton";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, CheckCircle2, Sparkles } from "lucide-react";
 import { useCalendly } from "@/context/CalendlyContext";
@@ -147,10 +148,12 @@ export default function ProductsPage() {
                         <div className="w-[52px]" />
                       </div>
                       <div className="relative aspect-[16/10] bg-foreground/[0.02]">
-                        <img
+                        <Image
                           src={product.image}
                           alt={product.title}
-                          className="h-full w-full object-cover object-top"
+                          fill
+                          sizes="(max-width: 1024px) 100vw, 560px"
+                          className="object-cover object-top"
                         />
                         <div
                           className="pointer-events-none absolute inset-x-0 bottom-0 h-12"

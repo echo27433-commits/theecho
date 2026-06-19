@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { Code2, Plug, RefreshCw } from "lucide-react";
 import { enterpriseIntegrations, integrationLogos } from "@/data/enterprise-ready";
@@ -98,20 +99,22 @@ export function EnterpriseIntegrations() {
                       transition={{ delay: 0.12 + i * 0.04, duration: 0.5 }}
                       className="group flex min-h-[140px] items-center justify-center px-4 py-8 transition-colors duration-300 hover:bg-primary-red/[0.03] sm:min-h-[180px] sm:px-5 sm:py-10 lg:min-h-[200px]"
                     >
-                      <img
+                      <Image
                         src={item.logo}
                         alt=""
                         aria-hidden
-                        loading="lazy"
-                        decoding="async"
+                        width={160}
+                        height={128}
+                        sizes="(max-width: 640px) 80px, 128px"
                         className="h-20 w-auto max-w-full scale-110 object-contain opacity-45 transition-opacity duration-300 group-hover:opacity-90 dark:hidden sm:h-24 sm:scale-125 lg:h-28 xl:h-32"
                       />
-                      <img
+                      <Image
                         src={item.logoDark}
                         alt=""
                         aria-hidden
-                        loading="lazy"
-                        decoding="async"
+                        width={160}
+                        height={128}
+                        sizes="(max-width: 640px) 80px, 128px"
                         className="hidden h-20 w-auto max-w-full scale-110 object-contain opacity-45 transition-opacity duration-300 group-hover:opacity-90 dark:block sm:h-24 sm:scale-125 lg:h-28 xl:h-32"
                       />
                     </motion.div>

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { Navbar } from "@/components/Navbar";
 import { DeferredFooter, DeferredCTA } from "@/components/deferred";
 import { BookCallButton } from "@/components/BookCallButton";
@@ -163,20 +164,22 @@ export default function LoyaltyProductPage() {
                         key={partner.logo}
                         className={`group flex items-center justify-center rounded-2xl border border-[var(--border)] bg-foreground/[0.02] px-4 py-5 transition-all duration-300 hover:border-primary-red/30 hover:bg-primary-red/[0.04] ${group.cellClass ?? "min-h-[5.5rem] sm:min-h-[6rem]"}`}
                       >
-                        <img
+                        <Image
                           src={partner.logo}
                           alt=""
                           aria-hidden
-                          loading="lazy"
-                          decoding="async"
+                          width={200}
+                          height={80}
+                          sizes="(max-width: 640px) 120px, 200px"
                           className={`${partner.logoClass} opacity-50 transition-opacity duration-300 group-hover:opacity-100 dark:hidden`}
                         />
-                        <img
+                        <Image
                           src={partner.logoDark}
                           alt=""
                           aria-hidden
-                          loading="lazy"
-                          decoding="async"
+                          width={200}
+                          height={80}
+                          sizes="(max-width: 640px) 120px, 200px"
                           className={`${partner.logoClass} hidden opacity-50 transition-opacity duration-300 group-hover:opacity-100 dark:block`}
                         />
                       </div>
