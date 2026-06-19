@@ -189,7 +189,7 @@ function ProductHubCard({
       initial={{ opacity: 0, x: 12 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.45, delay: Math.min(delay, 0.35), ease: [0.16, 1, 0.3, 1] }}
-      className={`group relative z-10 flex w-full items-center gap-4 rounded-2xl border p-4 text-left transition-all duration-300 max-sm:gap-2 max-sm:rounded-xl max-sm:p-2.5 sm:gap-5 sm:rounded-3xl sm:p-5 md:p-6 ${
+      className={`group relative z-10 flex w-full min-w-[10.5rem] items-center gap-3 rounded-2xl border p-3 text-left transition-all duration-300 max-sm:min-w-0 max-sm:gap-2 max-sm:rounded-xl max-sm:p-2.5 sm:gap-4 sm:rounded-2xl sm:p-4 md:gap-5 md:p-5 lg:rounded-3xl lg:p-5 xl:p-6 ${
         isActive
           ? "overflow-hidden font-semibold text-white btn-shine hover:-translate-y-0.5 [box-shadow:0_4px_24px_var(--btn-glow)] hover:[box-shadow:0_6px_32px_var(--btn-glow-hover)]"
           : "opacity-70 backdrop-blur-sm hover:opacity-90"
@@ -205,7 +205,7 @@ function ProductHubCard({
     >
       <div
         data-hub-icon
-        className={`relative z-[15] flex h-12 w-12 shrink-0 items-center justify-center rounded-full max-sm:h-9 max-sm:w-9 sm:h-14 sm:w-14 ${
+        className={`relative z-[15] flex h-10 w-10 shrink-0 items-center justify-center rounded-full max-sm:h-9 max-sm:w-9 sm:h-12 sm:w-12 lg:h-14 lg:w-14 ${
           isActive ? "bg-white/20" : ""
         }`}
         style={
@@ -217,15 +217,15 @@ function ProductHubCard({
               }
         }
       >
-        <Icon className="h-[22px] w-[22px] text-white max-sm:h-[18px] max-sm:w-[18px]" />
+        <Icon className="h-[18px] w-[18px] text-white max-sm:h-[18px] max-sm:w-[18px] sm:h-5 sm:w-5 lg:h-[22px] lg:w-[22px]" />
       </div>
 
       <div className="min-w-0 flex-1 text-left">
-        <p className={`text-base leading-snug max-sm:text-xs sm:text-lg ${isActive ? "font-semibold text-white" : "font-bold text-foreground"}`}>
+        <p className={`text-sm leading-snug max-sm:text-xs sm:text-base lg:text-lg ${isActive ? "font-semibold text-white" : "font-bold text-foreground"}`}>
           {product.title}
         </p>
         <p
-          className={`mt-1 line-clamp-2 text-xs leading-relaxed max-sm:mt-0.5 max-sm:text-[10px] sm:text-sm ${
+          className={`mt-0.5 line-clamp-2 text-[10px] leading-relaxed max-sm:mt-0.5 max-sm:text-[10px] sm:text-xs lg:text-sm ${
             isActive ? "text-white/75" : "text-foreground/50"
           }`}
         >
@@ -236,7 +236,7 @@ function ProductHubCard({
       <motion.span
         animate={!reducedMotion && isActive ? { x: [0, 3, 0] } : { x: 0 }}
         transition={!reducedMotion && isActive ? { duration: 1.6, repeat: Infinity, ease: "easeInOut" } : { duration: 0.3 }}
-        className={`relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full transition-all duration-300 group-hover:translate-x-0.5 max-sm:h-8 max-sm:w-8 sm:h-11 sm:w-11 ${
+        className={`relative flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition-all duration-300 group-hover:translate-x-0.5 max-sm:h-8 max-sm:w-8 sm:h-10 sm:w-10 lg:h-11 lg:w-11 ${
           isActive ? "bg-white/20 group-hover:bg-white/30" : "border"
         }`}
         style={
@@ -371,15 +371,15 @@ function HeroProductHub({ onSelectProduct }: { onSelectProduct: (productId: stri
   }, [scheduleConnectorUpdate, activeIndex]);
 
   return (
-    <div ref={containerRef} className="relative mx-auto w-full max-w-[800px] max-sm:min-w-0 lg:max-w-[900px]">
-      <HubConnectorLines lines={connectorLines} activeIndex={activeIndex} />
+    <div ref={containerRef} className="relative w-full min-w-0">
+      {!isMobile && <HubConnectorLines lines={connectorLines} activeIndex={activeIndex} />}
 
-      <div className="relative flex items-center max-sm:min-w-0">
+      <div className="relative flex min-w-0 items-center gap-2 max-sm:gap-2 sm:gap-4 md:gap-5 lg:gap-6 xl:gap-8">
         {/* Central hub — bot mascot */}
-        <div className="relative z-40 flex shrink-0 flex-col items-center overflow-visible max-sm:w-[150px] sm:w-[330px] lg:w-[380px]">
+        <div className="relative z-40 flex w-[150px] shrink-0 flex-col items-center overflow-visible max-sm:w-[150px] sm:w-[200px] md:w-[220px] lg:w-[240px] xl:w-[280px] 2xl:w-[300px]">
           <div
             ref={hubRef}
-            className="relative isolate flex h-[330px] w-[330px] items-center justify-center overflow-visible max-sm:h-[150px] max-sm:w-[150px] sm:h-[330px] sm:w-[330px] lg:h-[380px] lg:w-[380px]"
+            className="relative isolate flex h-[150px] w-[150px] items-center justify-center overflow-visible max-sm:h-[150px] max-sm:w-[150px] sm:h-[200px] sm:w-[200px] md:h-[220px] md:w-[220px] lg:h-[240px] lg:w-[240px] xl:h-[280px] xl:w-[280px] 2xl:h-[300px] 2xl:w-[300px]"
           >
             <div
               className="pointer-events-none absolute bottom-[14%] left-1/2 z-0 h-[42%] w-[82%] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(242,13,20,0.28)_0%,rgba(242,13,20,0.1)_42%,transparent_72%)] max-sm:bottom-[18%] max-sm:h-[38%] max-sm:w-[88%]"
@@ -395,7 +395,7 @@ function HeroProductHub({ onSelectProduct }: { onSelectProduct: (productId: stri
               alt="Echo AI Assistant"
               width={480}
               height={480}
-              sizes="(max-width: 640px) 150px, (max-width: 1024px) 330px, 380px"
+              sizes="(max-width: 640px) 150px, (max-width: 1024px) 220px, 300px"
               quality={70}
               className="relative z-[1] h-full w-full object-contain drop-shadow-[0_16px_48px_rgba(242,13,20,0.25)]"
               priority
@@ -419,11 +419,10 @@ function HeroProductHub({ onSelectProduct }: { onSelectProduct: (productId: stri
           </div>
         </div>
 
-        {/* Space between hub and cards */}
-        <div className="w-16 shrink-0 max-sm:w-2 sm:w-16 md:w-20 lg:w-24" aria-hidden />
+        <div className="w-2 shrink-0 max-sm:w-2 sm:w-4 md:w-5 lg:w-6" aria-hidden />
 
         {/* Product cards */}
-        <div className="relative z-10 flex flex-1 flex-col gap-5 max-sm:min-w-0 max-sm:gap-2.5 sm:gap-6 md:gap-7">
+        <div className="relative z-10 flex min-w-0 flex-1 flex-col gap-2.5 max-sm:gap-2.5 sm:gap-4 md:gap-5 lg:gap-6">
           {productsData.map((product, i) => (
             <div
               key={product.id}
@@ -455,7 +454,7 @@ export function Hero() {
 
   return (
     <>
-      <section className="relative flex min-h-screen items-center overflow-x-hidden pt-24 max-sm:min-h-0 max-sm:pb-8 lg:overflow-hidden">
+      <section className="relative flex min-h-0 items-center overflow-x-hidden pt-24 pb-10 max-sm:pb-8 sm:min-h-screen sm:pb-16 xl:min-h-screen">
         <div className="pointer-events-none absolute top-[-20%] right-[-10%] -z-10 h-[700px] w-[700px] rounded-full bg-primary-red/8 blur-[140px] max-sm:h-[420px] max-sm:w-[420px] max-sm:blur-[80px] max-sm:animate-none dark:bg-primary-red/12 animate-blob" />
         <div
           className="pointer-events-none absolute bottom-[-10%] left-[-10%] -z-10 hidden h-[600px] w-[600px] rounded-full bg-purple-500/5 blur-[120px] sm:block dark:bg-purple-500/10"
@@ -470,8 +469,8 @@ export function Hero() {
         <div className="radial-spotlight pointer-events-none absolute top-0 right-0 left-0 -z-10 h-[600px]" />
         <div className="noise-overlay pointer-events-none absolute inset-0 -z-10 max-sm:hidden" />
 
-        <div className="mx-auto grid w-full max-w-[1280px] grid-cols-1 items-center gap-12 px-4 py-20 sm:px-6 lg:grid-cols-2 lg:gap-12 xl:gap-16">
-          <div className="order-1 max-w-xl lg:order-none">
+        <div className="mx-auto grid w-full max-w-[1280px] grid-cols-1 items-center gap-10 px-4 py-12 sm:px-6 sm:py-16 xl:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)] xl:gap-10 xl:py-20 2xl:max-w-[1440px] 2xl:grid-cols-[minmax(0,1fr)_minmax(0,1.35fr)] 2xl:gap-14">
+          <div className="order-1 max-w-xl xl:order-none">
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
@@ -510,13 +509,13 @@ export function Hero() {
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.26, ease: [0.16, 1, 0.3, 1] }}
-              className="hidden flex-col items-start gap-4 lg:flex"
+              className="hidden flex-col items-start gap-4 xl:flex"
             >
               <BookCallButton onClick={openCalendly} size="lg" />
             </motion.div>
           </div>
 
-          <div className="relative order-2 flex w-full items-center justify-center overflow-visible max-sm:min-w-0 lg:order-none">
+          <div className="relative order-2 flex w-full min-w-0 items-center justify-center overflow-visible xl:order-none xl:justify-end 2xl:justify-center">
             <HeroProductHub onSelectProduct={openModal} />
           </div>
 
@@ -524,7 +523,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.26, ease: [0.16, 1, 0.3, 1] }}
-            className="order-3 flex w-full max-w-xl flex-col items-start gap-4 lg:hidden"
+            className="order-3 flex w-full max-w-xl flex-col items-start gap-4 xl:hidden"
           >
             <BookCallButton onClick={openCalendly} size="lg" />
           </motion.div>
