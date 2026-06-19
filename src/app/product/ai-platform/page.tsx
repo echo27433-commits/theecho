@@ -6,6 +6,7 @@ import { BookCallButton } from "@/components/BookCallButton";
 import { motion } from "framer-motion";
 import { Bot, CheckCircle2, Bell, XCircle, ArrowRight, MessageSquare, Sparkles, Unplug, Link2 } from "lucide-react";
 import { useCalendly } from "@/context/CalendlyContext";
+import { LazyProductSection } from "@/components/product/LazyProductSection";
 import {
   AI_PLATFORM_COLOR,
   aiPlatformHero,
@@ -18,6 +19,19 @@ import {
   aiPlatformImpact,
   aiPlatformClosing,
 } from "@/data/ai-platform-product";
+import {
+  productContainerClass,
+  productDecorBlurClass,
+  productHeroSectionClass,
+  productHeroSubtitleClass,
+  productHeroTitleClass,
+  productMainClass,
+  productSectionClass,
+  productSectionHeadingClass,
+  productStatCardClass,
+  productStatGridClass,
+  productStatValueClass,
+} from "@/lib/product-page";
 
 export default function AIPlatformProductPage() {
   const { openCalendly } = useCalendly();
@@ -25,18 +39,18 @@ export default function AIPlatformProductPage() {
   return (
     <>
       <Navbar />
-      <main className="flex min-h-screen w-full flex-col overflow-hidden bg-background font-sans text-foreground">
+      <main className={productMainClass}>
         {/* Hero */}
-        <section className="relative flex min-h-[88vh] flex-col justify-center overflow-hidden pb-12 pt-[132px] lg:min-h-[90vh] lg:pb-16 lg:pt-[140px]">
+        <section className={productHeroSectionClass}>
           <div className="pointer-events-none absolute inset-0 dot-grid-light opacity-25 dark:dot-grid" />
           <div
-            className="pointer-events-none absolute top-[10%] left-1/2 h-[560px] w-[900px] -translate-x-1/2 rounded-full blur-[160px]"
+            className={`${productDecorBlurClass} top-[10%] left-1/2 h-[560px] w-[900px] -translate-x-1/2 rounded-full blur-[160px]`}
             style={{ background: `${AI_PLATFORM_COLOR}14` }}
           />
-          <div className="pointer-events-none absolute bottom-0 right-0 h-[320px] w-[320px] translate-x-1/4 rounded-full bg-violet-500/5 blur-[100px]" />
+          <div className={`${productDecorBlurClass} bottom-0 right-0 h-[320px] w-[320px] translate-x-1/4 rounded-full bg-violet-500/5 blur-[100px]`} />
 
-          <div className="relative z-10 mx-auto w-full max-w-[1280px] px-6">
-            <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
+          <div className={productContainerClass}>
+            <div className="grid grid-cols-1 items-center gap-8 sm:gap-10 lg:grid-cols-2 lg:gap-16">
               <motion.div
                 initial={{ opacity: 0, y: 28 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -53,21 +67,21 @@ export default function AIPlatformProductPage() {
                   <Bot size={14} /> {aiPlatformHero.badge}
                 </div>
 
-                <h1 className="mb-5 text-4xl font-extrabold leading-[1.06] tracking-tight text-foreground sm:text-5xl md:text-6xl">
+                <h1 className={productHeroTitleClass}>
                   {aiPlatformHero.title}
                   <br />
                   <span className="gradient-text-purple">{aiPlatformHero.titleAccent}</span>
                 </h1>
 
-                <p className="mb-8 max-w-xl text-base leading-relaxed text-foreground/60 md:text-lg">
+                <p className={`${productHeroSubtitleClass} mx-0 max-w-xl`}>
                   {aiPlatformHero.subtitle}
                 </p>
 
-                <div className="mb-10 flex flex-wrap gap-2">
+                <div className="mb-8 flex flex-wrap gap-1.5 sm:mb-10 sm:gap-2">
                   {aiPlatformHero.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="rounded-full border border-[var(--border)] bg-card px-3.5 py-1.5 text-xs font-semibold text-foreground/65"
+                      className="rounded-full border border-[var(--border)] bg-card px-2.5 py-1 text-[11px] font-semibold text-foreground/65 sm:px-3.5 sm:py-1.5 sm:text-xs"
                     >
                       {tag}
                     </span>
@@ -81,13 +95,13 @@ export default function AIPlatformProductPage() {
                 initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
-                className="relative"
+                className="relative mx-auto w-full max-w-lg lg:max-w-none"
               >
                 <div
-                  className="pointer-events-none absolute -inset-4 rounded-[28px] opacity-50 blur-2xl"
+                  className={`${productDecorBlurClass} -inset-4 rounded-[28px] opacity-50 blur-2xl`}
                   style={{ background: `radial-gradient(ellipse at 50% 60%, ${AI_PLATFORM_COLOR}30, transparent 70%)` }}
                 />
-                <div className="relative overflow-hidden rounded-2xl border border-[var(--border)] bg-card shadow-[0_24px_80px_rgba(0,0,0,0.18)]">
+                <div className="relative overflow-hidden rounded-2xl border border-[var(--border)] bg-card shadow-[0_16px_48px_rgba(0,0,0,0.12)] sm:shadow-[0_24px_80px_rgba(0,0,0,0.18)]">
                   <div className="flex items-center gap-2 border-b border-[var(--border)] bg-foreground/[0.03] px-4 py-3">
                     <div className="flex gap-1.5">
                       <span className="h-2.5 w-2.5 rounded-full bg-foreground/15" />
@@ -102,6 +116,8 @@ export default function AIPlatformProductPage() {
                     <img
                       src="/ai-converation.png"
                       alt="Echo AI Conversational Platform"
+                      loading="eager"
+                      decoding="async"
                       className="h-full w-full object-cover object-top"
                     />
                     <div
@@ -117,19 +133,19 @@ export default function AIPlatformProductPage() {
               initial={{ opacity: 0, y: 32 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-              className="mt-14 grid grid-cols-2 gap-3 sm:gap-4 lg:mt-20 lg:grid-cols-4"
+              className={`mt-10 ${productStatGridClass} sm:mt-14 lg:mt-20`}
             >
               {aiPlatformStats.map((stat) => (
                 <div
                   key={stat.label}
-                  className="group relative overflow-hidden rounded-2xl border border-[var(--border)] bg-card px-5 py-6 transition-colors hover:border-[#A855F740] md:px-6 md:py-7"
+                  className={`${productStatCardClass} hover:border-[#A855F740]`}
                 >
                   <div
-                    className="pointer-events-none absolute -right-4 -top-4 h-20 w-20 rounded-full blur-2xl opacity-60 transition-opacity group-hover:opacity-100"
+                    className="pointer-events-none absolute -right-4 -top-4 h-20 w-20 rounded-full blur-2xl opacity-60 transition-opacity group-hover:opacity-100 max-md:hidden"
                     style={{ background: `${AI_PLATFORM_COLOR}14` }}
                   />
                   <p
-                    className="relative text-3xl font-extrabold tracking-tight md:text-4xl lg:text-[2.75rem]"
+                    className={productStatValueClass}
                     style={{ color: AI_PLATFORM_COLOR }}
                   >
                     {stat.value}
@@ -142,20 +158,20 @@ export default function AIPlatformProductPage() {
         </section>
 
         {/* Agentic AI comparison */}
-        <section className="relative overflow-hidden border-t border-[var(--border)] py-20 lg:py-28">
+        <LazyProductSection className={`relative overflow-hidden border-t border-[var(--border)] ${productSectionClass}`} minHeight="640px">
           <div
-            className="pointer-events-none absolute inset-0 opacity-40"
+            className={`${productDecorBlurClass} inset-0 opacity-40`}
             style={{
               background: `radial-gradient(ellipse 70% 60% at 50% 50%, ${AI_PLATFORM_COLOR}10, transparent)`,
             }}
           />
 
-          <div className="relative mx-auto max-w-[1280px] px-6">
+          <div className="relative mx-auto max-w-[1280px] px-4 sm:px-6">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="mx-auto mb-14 max-w-3xl text-center"
+              className="mx-auto mb-10 max-w-3xl text-center sm:mb-14"
             >
               <p
                 className="mb-3 text-[11px] font-semibold uppercase tracking-[0.22em]"
@@ -163,7 +179,7 @@ export default function AIPlatformProductPage() {
               >
                 {agenticAI.eyebrow}
               </p>
-              <h2 className="mb-4 text-3xl font-extrabold tracking-tight text-foreground md:text-4xl lg:text-5xl">
+              <h2 className={`mb-4 ${productSectionHeadingClass}`}>
                 {agenticAI.title}
               </h2>
               <p className="text-base leading-relaxed text-foreground/55 md:text-lg">{agenticAI.description}</p>
@@ -173,11 +189,11 @@ export default function AIPlatformProductPage() {
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="overflow-hidden rounded-3xl border border-[var(--border)] bg-card shadow-[0_24px_80px_rgba(0,0,0,0.12)]"
+              className="overflow-hidden rounded-3xl border border-[var(--border)] bg-card shadow-[0_12px_40px_rgba(0,0,0,0.08)] sm:shadow-[0_24px_80px_rgba(0,0,0,0.12)]"
             >
               <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto_1.35fr]">
                 {/* Traditional */}
-                <div className="relative border-b border-[var(--border)] bg-foreground/[0.02] p-7 md:p-9 lg:border-b-0 lg:border-r">
+                <div className="relative border-b border-[var(--border)] bg-foreground/[0.02] p-5 sm:p-7 md:p-9 lg:border-b-0 lg:border-r">
                   <div className="pointer-events-none absolute inset-0 bg-[repeating-linear-gradient(-45deg,transparent,transparent_12px,rgba(255,255,255,0.015)_12px,rgba(255,255,255,0.015)_24px)]" />
 
                   <div className="relative">
@@ -224,7 +240,7 @@ export default function AIPlatformProductPage() {
                 </div>
 
                 {/* Agentic AI */}
-                <div className="relative p-7 md:p-9">
+                <div className="relative p-5 sm:p-7 md:p-9">
                   <div
                     className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full blur-3xl"
                     style={{ background: `${AI_PLATFORM_COLOR}18` }}
@@ -287,12 +303,12 @@ export default function AIPlatformProductPage() {
               </div>
             </motion.div>
           </div>
-        </section>
+        </LazyProductSection>
 
         {/* One platform */}
-        <section className="border-t border-[var(--border)] bg-card/15 py-20 lg:py-28">
-          <div className="mx-auto max-w-[1280px] px-6">
-            <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-2 lg:gap-16">
+        <LazyProductSection className={`border-t border-[var(--border)] bg-card/15 ${productSectionClass}`} minHeight="480px">
+          <div className="mx-auto max-w-[1280px] px-4 sm:px-6">
+            <div className="grid grid-cols-1 items-start gap-8 sm:gap-12 lg:grid-cols-2 lg:gap-16">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -304,7 +320,7 @@ export default function AIPlatformProductPage() {
                 >
                   {onePlatform.eyebrow}
                 </p>
-                <h2 className="mb-5 text-3xl font-extrabold tracking-tight text-foreground md:text-4xl lg:text-5xl">
+                <h2 className={`mb-5 ${productSectionHeadingClass}`}>
                   {onePlatform.title}
                 </h2>
                 <p className="text-base leading-relaxed text-foreground/55 md:text-lg">{onePlatform.description}</p>
@@ -327,7 +343,7 @@ export default function AIPlatformProductPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.08 }}
-                className="rounded-3xl border border-[var(--border)] bg-card p-6 md:p-8"
+                className="rounded-3xl border border-[var(--border)] bg-card p-5 sm:p-6 md:p-8"
               >
                 <p className="mb-6 text-sm font-semibold uppercase tracking-[0.18em] text-foreground/45">
                   The modern customer journey
@@ -352,17 +368,17 @@ export default function AIPlatformProductPage() {
               </motion.div>
             </div>
           </div>
-        </section>
+        </LazyProductSection>
 
         {/* Key capabilities */}
-        <section className="relative overflow-hidden border-t border-[var(--border)] py-20 lg:py-28">
+        <LazyProductSection className={`relative overflow-hidden border-t border-[var(--border)] ${productSectionClass}`} minHeight="640px">
           <div
-            className="pointer-events-none absolute -right-32 top-1/4 h-[420px] w-[420px] rounded-full blur-[120px]"
+            className={`${productDecorBlurClass} -right-32 top-1/4 h-[420px] w-[420px] rounded-full blur-[120px]`}
             style={{ background: `${AI_PLATFORM_COLOR}08` }}
           />
 
-          <div className="relative mx-auto max-w-[1280px] px-6">
-            <div className="mb-14 grid grid-cols-1 items-end gap-8 lg:grid-cols-2 lg:gap-16">
+          <div className="relative mx-auto max-w-[1280px] px-4 sm:px-6">
+            <div className="mb-10 grid grid-cols-1 items-end gap-6 sm:mb-14 sm:gap-8 lg:grid-cols-2 lg:gap-16">
               <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
                 <p
                   className="mb-3 text-[11px] font-semibold uppercase tracking-[0.22em]"
@@ -370,7 +386,7 @@ export default function AIPlatformProductPage() {
                 >
                   Key capabilities
                 </p>
-                <h2 className="text-3xl font-extrabold tracking-tight text-foreground md:text-4xl lg:text-[2.75rem] lg:leading-tight">
+                <h2 className="text-2xl font-extrabold tracking-tight text-foreground sm:text-3xl md:text-4xl lg:text-[2.75rem] lg:leading-tight">
                   AI that resolves, not just replies
                 </h2>
               </motion.div>
@@ -396,7 +412,7 @@ export default function AIPlatformProductPage() {
                   transition={{ delay: i * 0.07 }}
                   className="group relative flex flex-col overflow-hidden rounded-3xl border border-[var(--border)] bg-card transition-all duration-300 hover:border-[#A855F740]"
                 >
-                  <div className="relative flex flex-1 flex-col p-6 md:p-7">
+                  <div className="relative flex flex-1 flex-col p-5 sm:p-6 md:p-7">
                     <div className="mb-5 flex items-start justify-between gap-4">
                       <div
                         className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl transition-transform duration-300 group-hover:scale-105"
@@ -448,23 +464,23 @@ export default function AIPlatformProductPage() {
               ))}
             </div>
           </div>
-        </section>
+        </LazyProductSection>
 
         {/* Benefits */}
-        <section className="relative overflow-hidden border-t border-[var(--border)] bg-card/15 py-20 lg:py-28">
+        <LazyProductSection className={`relative overflow-hidden border-t border-[var(--border)] bg-card/15 ${productSectionClass}`} minHeight="720px">
           <div
-            className="pointer-events-none absolute inset-0 opacity-[0.35]"
+            className={`${productDecorBlurClass} inset-0 opacity-[0.35]`}
             style={{
               background: `radial-gradient(ellipse 80% 50% at 50% 100%, ${AI_PLATFORM_COLOR}10, transparent)`,
             }}
           />
 
-          <div className="relative mx-auto max-w-[1280px] px-6">
+          <div className="relative mx-auto max-w-[1280px] px-4 sm:px-6">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="mx-auto mb-14 max-w-3xl text-center"
+              className="mx-auto mb-10 max-w-3xl text-center sm:mb-14"
             >
               <p
                 className="mb-3 text-[11px] font-semibold uppercase tracking-[0.22em]"
@@ -472,7 +488,7 @@ export default function AIPlatformProductPage() {
               >
                 {aiPlatformBenefits.eyebrow}
               </p>
-              <h2 className="text-3xl font-extrabold tracking-tight text-foreground md:text-4xl lg:text-5xl">
+              <h2 className={productSectionHeadingClass}>
                 {aiPlatformBenefits.title}
               </h2>
             </motion.div>
@@ -481,10 +497,10 @@ export default function AIPlatformProductPage() {
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="overflow-hidden rounded-3xl border border-[var(--border)] bg-card shadow-[0_24px_80px_rgba(0,0,0,0.12)]"
+              className="overflow-hidden rounded-3xl border border-[var(--border)] bg-card shadow-[0_12px_40px_rgba(0,0,0,0.08)] sm:shadow-[0_24px_80px_rgba(0,0,0,0.12)]"
             >
               {/* Before — pain points strip */}
-              <div className="relative border-b border-[var(--border)] bg-foreground/[0.02] px-6 py-7 md:px-9 md:py-8">
+              <div className="relative border-b border-[var(--border)] bg-foreground/[0.02] px-4 py-6 sm:px-6 sm:py-7 md:px-9 md:py-8">
                 <div className="pointer-events-none absolute inset-0 bg-[repeating-linear-gradient(-45deg,transparent,transparent_14px,rgba(255,255,255,0.012)_14px,rgba(255,255,255,0.012)_28px)]" />
 
                 <div className="relative mb-5 flex items-center gap-3">
@@ -537,9 +553,9 @@ export default function AIPlatformProductPage() {
               </div>
 
               {/* After — benefits bento */}
-              <div className="relative p-6 md:p-9">
+              <div className="relative p-4 sm:p-6 md:p-9">
                 <div
-                  className="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full blur-3xl"
+                  className={`${productDecorBlurClass} -right-20 -top-20 h-56 w-56 rounded-full blur-3xl`}
                   style={{ background: `${AI_PLATFORM_COLOR}12` }}
                 />
 
@@ -606,16 +622,16 @@ export default function AIPlatformProductPage() {
               </div>
             </motion.div>
           </div>
-        </section>
+        </LazyProductSection>
 
         {/* Industries */}
-        <section className="border-t border-[var(--border)] py-20 lg:py-28">
-          <div className="mx-auto max-w-[1280px] px-6">
+        <LazyProductSection className={`border-t border-[var(--border)] ${productSectionClass}`} minHeight="480px">
+          <div className="mx-auto max-w-[1280px] px-4 sm:px-6">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="mx-auto mb-14 max-w-2xl text-center"
+              className="mx-auto mb-10 max-w-2xl text-center sm:mb-14"
             >
               <p
                 className="mb-3 text-[11px] font-semibold uppercase tracking-[0.22em]"
@@ -623,7 +639,7 @@ export default function AIPlatformProductPage() {
               >
                 Industries
               </p>
-              <h2 className="text-3xl font-extrabold tracking-tight text-foreground md:text-4xl">
+              <h2 className="text-2xl font-extrabold tracking-tight text-foreground sm:text-3xl md:text-4xl">
                 Built for organizations that manage conversations at scale
               </h2>
             </motion.div>
@@ -657,12 +673,12 @@ export default function AIPlatformProductPage() {
               ))}
             </div>
           </div>
-        </section>
+        </LazyProductSection>
 
         {/* Business impact */}
-        <section className="border-t border-[var(--border)] bg-card/15 py-20 lg:py-28">
-          <div className="mx-auto max-w-[1280px] px-6">
-            <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
+        <LazyProductSection className={`border-t border-[var(--border)] bg-card/15 ${productSectionClass}`} minHeight="360px">
+          <div className="mx-auto max-w-[1280px] px-4 sm:px-6">
+            <div className="grid grid-cols-1 items-center gap-8 sm:gap-12 lg:grid-cols-2 lg:gap-16">
               <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
                 <p
                   className="mb-3 text-[11px] font-semibold uppercase tracking-[0.22em]"
@@ -670,7 +686,7 @@ export default function AIPlatformProductPage() {
                 >
                   {aiPlatformImpact.eyebrow}
                 </p>
-                <h2 className="mb-5 text-3xl font-extrabold leading-tight tracking-tight text-foreground md:text-4xl lg:text-5xl">
+                <h2 className={`mb-5 ${productSectionHeadingClass} leading-tight`}>
                   {aiPlatformImpact.title}
                 </h2>
                 <p className="max-w-xl text-base leading-relaxed text-foreground/55 md:text-lg">
@@ -702,12 +718,12 @@ export default function AIPlatformProductPage() {
               </motion.div>
             </div>
           </div>
-        </section>
+        </LazyProductSection>
 
         {/* Closing */}
-        <section className="border-t border-[var(--border)] py-20 lg:py-28">
-          <div className="mx-auto max-w-[1280px] px-6">
-            <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
+        <LazyProductSection className={`border-t border-[var(--border)] ${productSectionClass}`} minHeight="480px">
+          <div className="mx-auto max-w-[1280px] px-4 sm:px-6">
+            <div className="grid grid-cols-1 items-center gap-8 sm:gap-12 lg:grid-cols-2 lg:gap-16">
               <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
                 <p
                   className="mb-3 text-[11px] font-semibold uppercase tracking-[0.22em]"
@@ -715,7 +731,7 @@ export default function AIPlatformProductPage() {
                 >
                   {aiPlatformClosing.eyebrow}
                 </p>
-                <h2 className="mb-5 text-3xl font-extrabold leading-tight tracking-tight text-foreground md:text-4xl lg:text-5xl">
+                <h2 className={`mb-5 ${productSectionHeadingClass} leading-tight`}>
                   {aiPlatformClosing.title}
                   <br />
                   <span className="gradient-text-purple">{aiPlatformClosing.titleAccent}</span>
@@ -730,10 +746,10 @@ export default function AIPlatformProductPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.1 }}
-                className="relative overflow-hidden rounded-3xl border border-[var(--border)] bg-card p-7 md:p-9"
+                className="relative overflow-hidden rounded-3xl border border-[var(--border)] bg-card p-5 sm:p-7 md:p-9"
               >
                 <div
-                  className="pointer-events-none absolute -right-12 -top-12 h-40 w-40 rounded-full blur-3xl"
+                  className={`${productDecorBlurClass} -right-12 -top-12 h-40 w-40 rounded-full blur-3xl`}
                   style={{ background: `${AI_PLATFORM_COLOR}14` }}
                 />
 
@@ -757,7 +773,7 @@ export default function AIPlatformProductPage() {
               </motion.div>
             </div>
           </div>
-        </section>
+        </LazyProductSection>
 
         <DeferredCTA />
       </main>

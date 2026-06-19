@@ -7,6 +7,7 @@ import { LoyaltyIndustriesCarousel } from "@/components/LoyaltyIndustriesCarouse
 import { motion } from "framer-motion";
 import { Trophy, CheckCircle2, Globe2 } from "lucide-react";
 import { useCalendly } from "@/context/CalendlyContext";
+import { LazyProductSection } from "@/components/product/LazyProductSection";
 import {
   loyaltyHero,
   loyaltyValuePillars,
@@ -17,6 +18,19 @@ import {
   loyaltyIndustries,
   loyaltyEcosystem,
 } from "@/data/loyalty-product";
+import {
+  productContainerClass,
+  productDecorBlurClass,
+  productHeroSectionClass,
+  productHeroSubtitleClass,
+  productHeroTitleClass,
+  productMainClass,
+  productSectionClass,
+  productSectionHeadingClass,
+  productStatCardClass,
+  productStatGridClass,
+  productStatValueClass,
+} from "@/lib/product-page";
 
 export default function LoyaltyProductPage() {
   const { openCalendly } = useCalendly();
@@ -24,14 +38,14 @@ export default function LoyaltyProductPage() {
   return (
     <>
       <Navbar />
-      <main className="flex min-h-screen w-full flex-col overflow-hidden bg-background font-sans text-foreground">
+      <main className={productMainClass}>
         {/* Hero */}
-        <section className="relative flex min-h-[88vh] flex-col justify-center overflow-hidden pb-12 pt-[132px] lg:min-h-[90vh] lg:pb-16 lg:pt-[140px]">
+        <section className={productHeroSectionClass}>
           <div className="pointer-events-none absolute inset-0 dot-grid-light opacity-25 dark:dot-grid" />
-          <div className="pointer-events-none absolute top-[10%] left-1/2 h-[560px] w-[900px] -translate-x-1/2 rounded-full bg-primary-red/10 blur-[160px]" />
-          <div className="pointer-events-none absolute bottom-0 right-0 h-[320px] w-[320px] translate-x-1/4 rounded-full bg-orange-500/5 blur-[100px]" />
+          <div className={`${productDecorBlurClass} top-[10%] left-1/2 h-[560px] w-[900px] -translate-x-1/2 rounded-full bg-primary-red/10 blur-[160px]`} />
+          <div className={`${productDecorBlurClass} bottom-0 right-0 h-[320px] w-[320px] translate-x-1/4 rounded-full bg-orange-500/5 blur-[100px]`} />
 
-          <div className="relative z-10 mx-auto w-full max-w-[1280px] px-6">
+          <div className={productContainerClass}>
             <motion.div
               initial={{ opacity: 0, y: 28 }}
               animate={{ opacity: 1, y: 0 }}
@@ -42,13 +56,13 @@ export default function LoyaltyProductPage() {
                 <Trophy size={14} /> {loyaltyHero.badge}
               </div>
 
-              <h1 className="mb-5 text-4xl font-extrabold leading-[1.06] tracking-tight text-foreground sm:text-5xl md:text-6xl lg:text-[4.25rem]">
+              <h1 className={productHeroTitleClass}>
                 {loyaltyHero.title}
                 <br />
                 <span className="gradient-text-red">{loyaltyHero.titleAccent}</span>
               </h1>
 
-              <p className="mx-auto mb-8 max-w-2xl text-base leading-relaxed text-foreground/60 md:text-lg lg:text-xl">
+              <p className={productHeroSubtitleClass}>
                 {loyaltyHero.subtitle}
               </p>
 
@@ -59,17 +73,17 @@ export default function LoyaltyProductPage() {
               initial={{ opacity: 0, y: 32 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-              className="mx-auto mt-14 w-full lg:mt-20"
+              className="mx-auto mt-10 w-full sm:mt-14 lg:mt-20"
             >
               {/* Stats */}
-              <div className="mb-5 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
+              <div className={`mb-5 ${productStatGridClass}`}>
                 {loyaltyStats.map((stat) => (
                   <div
                     key={stat.label}
-                    className="group relative overflow-hidden rounded-2xl border border-[var(--border)] bg-card px-5 py-6 transition-colors hover:border-primary-red/25 md:px-6 md:py-7"
+                    className={`${productStatCardClass} hover:border-primary-red/25`}
                   >
-                    <div className="pointer-events-none absolute -right-4 -top-4 h-20 w-20 rounded-full bg-primary-red/8 blur-2xl transition-opacity group-hover:opacity-100 opacity-60" />
-                    <p className="relative text-3xl font-extrabold tracking-tight text-primary-red md:text-4xl lg:text-[2.75rem]">
+                    <div className="pointer-events-none absolute -right-4 -top-4 h-20 w-20 rounded-full bg-primary-red/8 blur-2xl transition-opacity group-hover:opacity-100 opacity-60 max-md:hidden" />
+                    <p className={`${productStatValueClass} text-primary-red`}>
                       {stat.value}
                     </p>
                     <p className="relative mt-2 text-sm font-medium leading-snug text-foreground/55">{stat.label}</p>
@@ -108,18 +122,18 @@ export default function LoyaltyProductPage() {
         </section>
 
         {/* Partners */}
-        <section className="py-20 lg:py-28">
-          <div className="mx-auto max-w-[1280px] px-6">
+        <LazyProductSection className={productSectionClass} minHeight="520px">
+          <div className="mx-auto max-w-[1280px] px-4 sm:px-6">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="mx-auto mb-16 max-w-3xl text-center"
+              className="mx-auto mb-10 max-w-3xl text-center sm:mb-16"
             >
               <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-primary-red">
                 Partners & customers
               </p>
-              <h2 className="text-3xl font-extrabold tracking-tight text-foreground md:text-4xl lg:text-5xl">
+              <h2 className={productSectionHeadingClass}>
                 Trusted by leading brands
                 <br />
                 <span className="gradient-text-red">across the ecosystem</span>
@@ -172,21 +186,21 @@ export default function LoyaltyProductPage() {
               ))}
             </div>
           </div>
-        </section>
+        </LazyProductSection>
 
         {/* Solutions */}
-        <section className="border-t border-[var(--border)] bg-card/15 py-20 lg:py-28">
-          <div className="mx-auto max-w-[1280px] px-6">
+        <LazyProductSection className={`border-t border-[var(--border)] bg-card/15 ${productSectionClass}`} minHeight="640px">
+          <div className="mx-auto max-w-[1280px] px-4 sm:px-6">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="mb-14 max-w-3xl"
+              className="mb-10 max-w-3xl sm:mb-14"
             >
               <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-primary-red">
                 360° loyalty solutions
               </p>
-              <h2 className="mb-4 text-3xl font-extrabold tracking-tight text-foreground md:text-4xl lg:text-5xl">
+              <h2 className={`mb-4 ${productSectionHeadingClass}`}>
                 For businesses of all sizes
               </h2>
               <p className="text-base leading-relaxed text-foreground/55 md:text-lg">
@@ -203,7 +217,7 @@ export default function LoyaltyProductPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.08 }}
-                  className="grid grid-cols-1 gap-8 rounded-3xl border border-[var(--border)] bg-card p-7 md:grid-cols-[auto_1fr] md:p-9 lg:gap-12"
+                  className="grid grid-cols-1 gap-6 rounded-3xl border border-[var(--border)] bg-card p-5 sm:gap-8 sm:p-7 md:grid-cols-[auto_1fr] md:p-9 lg:gap-12"
                 >
                   <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-primary-red/10 text-primary-red">
                     <solution.icon size={28} />
@@ -227,12 +241,12 @@ export default function LoyaltyProductPage() {
               ))}
             </div>
           </div>
-        </section>
+        </LazyProductSection>
 
         {/* Technology */}
-        <section className="py-20 lg:py-28">
-          <div className="mx-auto max-w-[1280px] px-6">
-            <div className="mb-14 grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-end lg:gap-16">
+        <LazyProductSection className={productSectionClass} minHeight="480px">
+          <div className="mx-auto max-w-[1280px] px-4 sm:px-6">
+            <div className="mb-10 grid grid-cols-1 gap-6 sm:mb-14 sm:gap-8 lg:grid-cols-2 lg:items-end lg:gap-16">
               <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
                 <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-primary-red">Technology</p>
                 <h2 className="text-3xl font-extrabold tracking-tight text-foreground md:text-4xl">
@@ -269,31 +283,31 @@ export default function LoyaltyProductPage() {
               ))}
             </div>
           </div>
-        </section>
+        </LazyProductSection>
 
         {/* Industries */}
-        <section className="border-t border-[var(--border)] bg-card/20 py-20 lg:py-24">
-          <div className="mx-auto max-w-[1280px] px-6">
+        <LazyProductSection className={`border-t border-[var(--border)] bg-card/20 py-14 md:py-20 lg:py-24`} minHeight="280px">
+          <div className="mx-auto max-w-[1280px] px-4 sm:px-6">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="mx-auto mb-12 max-w-2xl text-center"
+              className="mx-auto mb-8 max-w-2xl text-center sm:mb-12"
             >
               <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-primary-red">Industries</p>
-              <h2 className="text-3xl font-extrabold tracking-tight text-foreground md:text-4xl">
+              <h2 className="text-2xl font-extrabold tracking-tight text-foreground sm:text-3xl md:text-4xl">
                 Built for every sector that rewards loyalty
               </h2>
             </motion.div>
 
             <LoyaltyIndustriesCarousel industries={loyaltyIndustries} />
           </div>
-        </section>
+        </LazyProductSection>
 
         {/* Global ecosystem */}
-        <section className="border-t border-[var(--border)] py-20 lg:py-28">
-          <div className="mx-auto max-w-[1280px] px-6">
-            <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
+        <LazyProductSection className={`border-t border-[var(--border)] ${productSectionClass}`} minHeight="520px">
+          <div className="mx-auto max-w-[1280px] px-4 sm:px-6">
+            <div className="grid grid-cols-1 items-center gap-8 sm:gap-12 lg:grid-cols-2 lg:gap-16">
               <motion.div
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -303,7 +317,7 @@ export default function LoyaltyProductPage() {
                 <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-primary-red">
                   {loyaltyEcosystem.eyebrow}
                 </p>
-                <h2 className="mb-5 text-3xl font-extrabold leading-tight tracking-tight text-foreground md:text-4xl lg:text-5xl">
+                <h2 className={`mb-5 ${productSectionHeadingClass} leading-tight`}>
                   {loyaltyEcosystem.title}
                   <br />
                   <span className="gradient-text-red">{loyaltyEcosystem.titleAccent}</span>
@@ -330,10 +344,10 @@ export default function LoyaltyProductPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.7, delay: 0.1 }}
-                className="relative overflow-hidden rounded-3xl border border-[var(--border)] bg-card p-7 md:p-9"
+                className="relative overflow-hidden rounded-3xl border border-[var(--border)] bg-card p-5 sm:p-7 md:p-9"
               >
-                <div className="pointer-events-none absolute -right-12 -top-12 h-40 w-40 rounded-full bg-primary-red/10 blur-3xl" />
-                <div className="pointer-events-none absolute -bottom-10 -left-10 h-32 w-32 rounded-full bg-purple-500/8 blur-2xl" />
+                <div className={`${productDecorBlurClass} -right-12 -top-12 h-40 w-40 rounded-full bg-primary-red/10 blur-3xl`} />
+                <div className={`${productDecorBlurClass} -bottom-10 -left-10 h-32 w-32 rounded-full bg-purple-500/8 blur-2xl`} />
 
                 <div className="relative mb-8 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary-red/10 text-primary-red">
                   <Globe2 size={26} />
@@ -356,7 +370,7 @@ export default function LoyaltyProductPage() {
               </motion.div>
             </div>
           </div>
-        </section>
+        </LazyProductSection>
 
         <DeferredCTA />
       </main>

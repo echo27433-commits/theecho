@@ -6,6 +6,7 @@ import { BookCallButton } from "@/components/BookCallButton";
 import { motion } from "framer-motion";
 import { MessageSquare, CheckCircle2, ArrowDown, Layers, Bell } from "lucide-react";
 import { useCalendly } from "@/context/CalendlyContext";
+import { LazyProductSection } from "@/components/product/LazyProductSection";
 import {
   OMNICHANNEL_COLOR,
   omnichannelHero,
@@ -17,6 +18,19 @@ import {
   omnichannelImpact,
   omnichannelClosing,
 } from "@/data/omnichannel-product";
+import {
+  productContainerClass,
+  productDecorBlurClass,
+  productHeroSectionClass,
+  productHeroSubtitleClass,
+  productHeroTitleClass,
+  productMainClass,
+  productSectionClass,
+  productSectionHeadingClass,
+  productStatCardClass,
+  productStatGridClass,
+  productStatValueClass,
+} from "@/lib/product-page";
 
 export default function OmnichannelProductPage() {
   const { openCalendly } = useCalendly();
@@ -24,17 +38,17 @@ export default function OmnichannelProductPage() {
   return (
     <>
       <Navbar />
-      <main className="flex min-h-screen w-full flex-col overflow-hidden bg-background font-sans text-foreground">
+      <main className={productMainClass}>
         {/* Hero */}
-        <section className="relative flex min-h-[88vh] flex-col justify-center overflow-hidden pb-12 pt-[132px] lg:min-h-[90vh] lg:pb-16 lg:pt-[140px]">
+        <section className={productHeroSectionClass}>
           <div className="pointer-events-none absolute inset-0 dot-grid-light opacity-25 dark:dot-grid" />
           <div
-            className="pointer-events-none absolute top-[10%] left-1/2 h-[560px] w-[900px] -translate-x-1/2 rounded-full blur-[160px]"
+            className={`${productDecorBlurClass} top-[10%] left-1/2 h-[560px] w-[900px] -translate-x-1/2 rounded-full blur-[160px]`}
             style={{ background: `${OMNICHANNEL_COLOR}14` }}
           />
-          <div className="pointer-events-none absolute bottom-0 right-0 h-[320px] w-[320px] translate-x-1/4 rounded-full bg-sky-400/5 blur-[100px]" />
+          <div className={`${productDecorBlurClass} bottom-0 right-0 h-[320px] w-[320px] translate-x-1/4 rounded-full bg-sky-400/5 blur-[100px]`} />
 
-          <div className="relative z-10 mx-auto w-full max-w-[1280px] px-6">
+          <div className={productContainerClass}>
             <motion.div
               initial={{ opacity: 0, y: 28 }}
               animate={{ opacity: 1, y: 0 }}
@@ -52,21 +66,21 @@ export default function OmnichannelProductPage() {
                 <MessageSquare size={14} /> {omnichannelHero.badge}
               </div>
 
-              <h1 className="mb-5 text-4xl font-extrabold leading-[1.06] tracking-tight text-foreground sm:text-5xl md:text-6xl lg:text-[4.25rem]">
+              <h1 className={productHeroTitleClass}>
                 {omnichannelHero.title}
                 <br />
                 <span className="gradient-text-blue">{omnichannelHero.titleAccent}</span>
               </h1>
 
-              <p className="mx-auto mb-8 max-w-2xl text-base leading-relaxed text-foreground/60 md:text-lg lg:text-xl">
+              <p className={productHeroSubtitleClass}>
                 {omnichannelHero.subtitle}
               </p>
 
-              <div className="mb-10 flex flex-wrap items-center justify-center gap-2">
+              <div className="mb-8 flex flex-wrap items-center justify-center gap-1.5 sm:mb-10 sm:gap-2">
                 {omnichannelHero.channels.map((channel) => (
                   <span
                     key={channel}
-                    className="rounded-full border border-[var(--border)] bg-card px-3.5 py-1.5 text-xs font-semibold text-foreground/65"
+                    className="rounded-full border border-[var(--border)] bg-card px-2.5 py-1 text-[11px] font-semibold text-foreground/65 sm:px-3.5 sm:py-1.5 sm:text-xs"
                   >
                     {channel}
                   </span>
@@ -80,20 +94,20 @@ export default function OmnichannelProductPage() {
               initial={{ opacity: 0, y: 32 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-              className="mx-auto mt-14 w-full lg:mt-20"
+              className="mx-auto mt-10 w-full sm:mt-14 lg:mt-20"
             >
-              <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
+              <div className={productStatGridClass}>
                 {omnichannelStats.map((stat) => (
                   <div
                     key={stat.label}
-                    className="group relative overflow-hidden rounded-2xl border border-[var(--border)] bg-card px-5 py-6 transition-colors hover:border-[#3B82F640] md:px-6 md:py-7"
+                    className={`${productStatCardClass} hover:border-[#3B82F640]`}
                   >
                     <div
-                      className="pointer-events-none absolute -right-4 -top-4 h-20 w-20 rounded-full blur-2xl opacity-60 transition-opacity group-hover:opacity-100"
+                      className="pointer-events-none absolute -right-4 -top-4 h-20 w-20 rounded-full blur-2xl opacity-60 transition-opacity group-hover:opacity-100 max-md:hidden"
                       style={{ background: `${OMNICHANNEL_COLOR}14` }}
                     />
                     <p
-                      className="relative text-3xl font-extrabold tracking-tight md:text-4xl lg:text-[2.75rem]"
+                      className={productStatValueClass}
                       style={{ color: OMNICHANNEL_COLOR }}
                     >
                       {stat.value}
@@ -107,9 +121,9 @@ export default function OmnichannelProductPage() {
         </section>
 
         {/* Why omnichannel */}
-        <section className="border-t border-[var(--border)] py-20 lg:py-28">
-          <div className="mx-auto max-w-[1280px] px-6">
-            <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-2 lg:gap-16">
+        <LazyProductSection className={`border-t border-[var(--border)] ${productSectionClass}`} minHeight="480px">
+          <div className="mx-auto max-w-[1280px] px-4 sm:px-6">
+            <div className="grid grid-cols-1 items-start gap-8 sm:gap-12 lg:grid-cols-2 lg:gap-16">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -121,7 +135,7 @@ export default function OmnichannelProductPage() {
                 >
                   {omnichannelProblem.eyebrow}
                 </p>
-                <h2 className="mb-5 text-3xl font-extrabold tracking-tight text-foreground md:text-4xl lg:text-5xl">
+                <h2 className={`mb-5 ${productSectionHeadingClass}`}>
                   {omnichannelProblem.title}
                 </h2>
                 <p className="text-base leading-relaxed text-foreground/55 md:text-lg">{omnichannelProblem.description}</p>
@@ -133,7 +147,7 @@ export default function OmnichannelProductPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.08 }}
-                className="rounded-3xl border border-[var(--border)] bg-card p-6 md:p-8"
+                className="rounded-3xl border border-[var(--border)] bg-card p-5 sm:p-6 md:p-8"
               >
                 <p className="mb-6 text-sm font-semibold uppercase tracking-[0.18em] text-foreground/45">
                   {omnichannelProblem.journeyTitle}
@@ -142,10 +156,10 @@ export default function OmnichannelProductPage() {
                   {omnichannelProblem.journeySteps.map((step, i) => (
                     <li
                       key={step.label}
-                      className="flex items-center gap-4 rounded-2xl border border-[var(--border)] bg-foreground/[0.02] px-4 py-4"
+                      className="flex items-center gap-3 rounded-2xl border border-[var(--border)] bg-foreground/[0.02] px-3 py-3.5 sm:gap-4 sm:px-4 sm:py-4"
                     >
                       <span
-                        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-sm font-bold text-white"
+                        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-xs font-bold text-white sm:h-10 sm:w-10 sm:text-sm"
                         style={{ backgroundColor: OMNICHANNEL_COLOR }}
                       >
                         {String(i + 1).padStart(2, "0")}
@@ -158,17 +172,17 @@ export default function OmnichannelProductPage() {
               </motion.div>
             </div>
           </div>
-        </section>
+        </LazyProductSection>
 
         {/* Key capabilities */}
-        <section className="relative overflow-hidden border-t border-[var(--border)] bg-card/15 py-20 lg:py-28">
+        <LazyProductSection className={`relative overflow-hidden border-t border-[var(--border)] bg-card/15 ${productSectionClass}`} minHeight="720px">
           <div
-            className="pointer-events-none absolute -left-32 top-1/4 h-[420px] w-[420px] rounded-full blur-[120px]"
+            className={`${productDecorBlurClass} -left-32 top-1/4 h-[420px] w-[420px] rounded-full blur-[120px]`}
             style={{ background: `${OMNICHANNEL_COLOR}08` }}
           />
 
-          <div className="relative mx-auto max-w-[1280px] px-6">
-            <div className="mb-14 grid grid-cols-1 items-end gap-8 lg:grid-cols-2 lg:gap-16">
+          <div className="relative mx-auto max-w-[1280px] px-4 sm:px-6">
+            <div className="mb-10 grid grid-cols-1 items-end gap-6 sm:mb-14 sm:gap-8 lg:grid-cols-2 lg:gap-16">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -180,7 +194,7 @@ export default function OmnichannelProductPage() {
                 >
                   Key capabilities
                 </p>
-                <h2 className="text-3xl font-extrabold tracking-tight text-foreground md:text-4xl lg:text-[2.75rem] lg:leading-tight">
+                <h2 className="text-2xl font-extrabold tracking-tight text-foreground sm:text-3xl md:text-4xl lg:text-[2.75rem] lg:leading-tight">
                   Every channel, one intelligent platform
                 </h2>
               </motion.div>
@@ -211,7 +225,7 @@ export default function OmnichannelProductPage() {
                     isLast ? "md:col-span-2 lg:col-span-2" : ""
                   }`}
                 >
-                  <div className="relative flex flex-1 flex-col p-6 md:p-7">
+                  <div className="relative flex flex-1 flex-col p-5 sm:p-6 md:p-7">
                     <div>
                       <div className="mb-5 flex items-start justify-between gap-4">
                         <div
@@ -291,23 +305,23 @@ export default function OmnichannelProductPage() {
               })}
             </div>
           </div>
-        </section>
+        </LazyProductSection>
 
         {/* Benefits */}
-        <section className="relative overflow-hidden border-t border-[var(--border)] py-20 lg:py-28">
+        <LazyProductSection className={`relative overflow-hidden border-t border-[var(--border)] ${productSectionClass}`} minHeight="640px">
           <div
-            className="pointer-events-none absolute inset-0 opacity-[0.35]"
+            className={`${productDecorBlurClass} inset-0 opacity-[0.35]`}
             style={{
               background: `radial-gradient(ellipse 80% 50% at 50% 100%, ${OMNICHANNEL_COLOR}10, transparent)`,
             }}
           />
 
-          <div className="relative mx-auto max-w-[1280px] px-6">
+          <div className="relative mx-auto max-w-[1280px] px-4 sm:px-6">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="mx-auto mb-16 max-w-3xl text-center"
+              className="mx-auto mb-10 max-w-3xl text-center sm:mb-16"
             >
               <p
                 className="mb-3 text-[11px] font-semibold uppercase tracking-[0.22em]"
@@ -315,20 +329,20 @@ export default function OmnichannelProductPage() {
               >
                 {omnichannelBenefits.eyebrow}
               </p>
-              <h2 className="text-3xl font-extrabold tracking-tight text-foreground md:text-4xl lg:text-5xl">
+              <h2 className={productSectionHeadingClass}>
                 {omnichannelBenefits.title}
               </h2>
             </motion.div>
 
-            <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-10">
+            <div className="grid grid-cols-1 gap-6 lg:grid-cols-12 lg:gap-10">
               {/* Fragmented — problem panel */}
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                className="relative overflow-hidden rounded-3xl border border-dashed border-foreground/15 bg-foreground/[0.02] p-7 lg:col-span-4 lg:p-8"
+                className="relative overflow-hidden rounded-3xl border border-dashed border-foreground/15 bg-foreground/[0.02] p-5 sm:p-7 lg:col-span-4 lg:p-8"
               >
-                <div className="pointer-events-none absolute -right-8 -top-8 h-32 w-32 rounded-full bg-foreground/[0.04] blur-2xl" />
+                <div className={`${productDecorBlurClass} -right-8 -top-8 h-32 w-32 rounded-full bg-foreground/[0.04] blur-2xl`} />
 
                 <div className="relative mb-6 flex items-center gap-3">
                   <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-foreground/[0.06] text-foreground/40">
@@ -363,14 +377,14 @@ export default function OmnichannelProductPage() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.08 }}
-                className="relative overflow-hidden rounded-3xl border border-[var(--border)] bg-card p-7 lg:col-span-8 lg:p-8"
+                className="relative overflow-hidden rounded-3xl border border-[var(--border)] bg-card p-5 sm:p-7 lg:col-span-8 lg:p-8"
               >
                 <div
-                  className="pointer-events-none absolute -left-10 -top-10 h-40 w-40 rounded-full blur-3xl"
+                  className={`${productDecorBlurClass} -left-10 -top-10 h-40 w-40 rounded-full blur-3xl`}
                   style={{ background: `${OMNICHANNEL_COLOR}12` }}
                 />
                 <div
-                  className="pointer-events-none absolute -bottom-10 -right-10 h-32 w-32 rounded-full blur-2xl"
+                  className={`${productDecorBlurClass} -bottom-10 -right-10 h-32 w-32 rounded-full blur-2xl`}
                   style={{ background: `${OMNICHANNEL_COLOR}08` }}
                 />
 
@@ -450,16 +464,16 @@ export default function OmnichannelProductPage() {
               </motion.div>
             </div>
           </div>
-        </section>
+        </LazyProductSection>
 
         {/* Industries */}
-        <section className="border-t border-[var(--border)] bg-card/20 py-20 lg:py-28">
-          <div className="mx-auto max-w-[1280px] px-6">
+        <LazyProductSection className={`border-t border-[var(--border)] bg-card/20 ${productSectionClass}`} minHeight="480px">
+          <div className="mx-auto max-w-[1280px] px-4 sm:px-6">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="mx-auto mb-14 max-w-2xl text-center"
+              className="mx-auto mb-10 max-w-2xl text-center sm:mb-14"
             >
               <p
                 className="mb-3 text-[11px] font-semibold uppercase tracking-[0.22em]"
@@ -467,7 +481,7 @@ export default function OmnichannelProductPage() {
               >
                 Industries
               </p>
-              <h2 className="text-3xl font-extrabold tracking-tight text-foreground md:text-4xl">
+              <h2 className="text-2xl font-extrabold tracking-tight text-foreground sm:text-3xl md:text-4xl">
                 Built for organizations that communicate at scale
               </h2>
             </motion.div>
@@ -501,12 +515,12 @@ export default function OmnichannelProductPage() {
               ))}
             </div>
           </div>
-        </section>
+        </LazyProductSection>
 
         {/* Business impact */}
-        <section className="border-t border-[var(--border)] py-20 lg:py-28">
-          <div className="mx-auto max-w-[1280px] px-6">
-            <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
+        <LazyProductSection className={`border-t border-[var(--border)] ${productSectionClass}`} minHeight="360px">
+          <div className="mx-auto max-w-[1280px] px-4 sm:px-6">
+            <div className="grid grid-cols-1 items-center gap-8 sm:gap-12 lg:grid-cols-2 lg:gap-16">
               <motion.div
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -518,7 +532,7 @@ export default function OmnichannelProductPage() {
                 >
                   {omnichannelImpact.eyebrow}
                 </p>
-                <h2 className="mb-5 text-3xl font-extrabold leading-tight tracking-tight text-foreground md:text-4xl lg:text-5xl">
+                <h2 className={`mb-5 ${productSectionHeadingClass} leading-tight`}>
                   {omnichannelImpact.title}
                 </h2>
                 <p className="max-w-xl text-base leading-relaxed text-foreground/55 md:text-lg">
@@ -550,12 +564,12 @@ export default function OmnichannelProductPage() {
               </motion.div>
             </div>
           </div>
-        </section>
+        </LazyProductSection>
 
         {/* Closing */}
-        <section className="border-t border-[var(--border)] bg-card/15 py-20 lg:py-28">
-          <div className="mx-auto max-w-[1280px] px-6">
-            <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
+        <LazyProductSection className={`border-t border-[var(--border)] bg-card/15 ${productSectionClass}`} minHeight="480px">
+          <div className="mx-auto max-w-[1280px] px-4 sm:px-6">
+            <div className="grid grid-cols-1 items-center gap-8 sm:gap-12 lg:grid-cols-2 lg:gap-16">
               <motion.div
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -567,7 +581,7 @@ export default function OmnichannelProductPage() {
                 >
                   {omnichannelClosing.eyebrow}
                 </p>
-                <h2 className="mb-5 text-3xl font-extrabold leading-tight tracking-tight text-foreground md:text-4xl lg:text-5xl">
+                <h2 className={`mb-5 ${productSectionHeadingClass} leading-tight`}>
                   {omnichannelClosing.title}
                   <br />
                   <span className="gradient-text-blue">{omnichannelClosing.titleAccent}</span>
@@ -582,10 +596,10 @@ export default function OmnichannelProductPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.1 }}
-                className="relative overflow-hidden rounded-3xl border border-[var(--border)] bg-card p-7 md:p-9"
+                className="relative overflow-hidden rounded-3xl border border-[var(--border)] bg-card p-5 sm:p-7 md:p-9"
               >
                 <div
-                  className="pointer-events-none absolute -right-12 -top-12 h-40 w-40 rounded-full blur-3xl"
+                  className={`${productDecorBlurClass} -right-12 -top-12 h-40 w-40 rounded-full blur-3xl`}
                   style={{ background: `${OMNICHANNEL_COLOR}14` }}
                 />
 
@@ -609,7 +623,7 @@ export default function OmnichannelProductPage() {
               </motion.div>
             </div>
           </div>
-        </section>
+        </LazyProductSection>
 
         <DeferredCTA />
       </main>
