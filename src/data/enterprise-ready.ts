@@ -1,5 +1,5 @@
 import type { ElementType } from "react";
-import { Shield, Layers, Server, Plug, Scale, Users, ShoppingBag, BarChart3, Wallet } from "lucide-react";
+import { Shield, Layers, Server, Scale } from "lucide-react";
 
 export const enterpriseIntro = {
   badge: "Enterprise Ready",
@@ -79,13 +79,20 @@ export const enterpriseAvailability = {
   description: "Ensuring continuous customer engagement and business operations.",
 };
 
-export const enterpriseBrandLogos = [
-  { name: "MASDAR", logo: "/masdar_logo.png", logoDark: "/masdar_logo_dark.png" },
-  { name: "Europcar", logo: "/europcar_logo.png", logoDark: "/europcar_logo_dark.png" },
-  { name: "BenQ", logo: "/benq_logo.png", logoDark: "/benq_logo_dark.png" },
-  { name: "Grand", logo: "/grand_logo.png", logoDark: "/grand_logo_dark.png" },
-  { name: "Kenz", logo: "/kenz_logo.png", logoDark: "/kenz_logo_dark.png" },
-  { name: "Nesto", logo: "/nesto_logo.png", logoDark: "/nesto_logo_dark.png" },
+export type IntegrationLogo = {
+  logo: string;
+  logoDark: string;
+};
+
+export const integrationLogos: IntegrationLogo[] = [
+  { logo: "/brands/salesforce_logo.png", logoDark: "/brands/salesforce_logo_dark.png" },
+  { logo: "/brands/zoho_crm_logo.png", logoDark: "/brands/zoho_crm_logo_dark.png" },
+  { logo: "/brands/ms_dynamic_logo.png", logoDark: "/brands/ms_dynamic_logo_dark.png" },
+  { logo: "/brands/hubspot_logo.png", logoDark: "/brands/hubspot_logo_dark.png" },
+  { logo: "/brands/shopify_logo.png", logoDark: "/brands/shopify_logo_dark.png" },
+  { logo: "/brands/woocommerce_logo.png", logoDark: "/brands/woocommerce_logo_dark.png" },
+  { logo: "/brands/sap_logo.png", logoDark: "/brands/sap_logo_dark.png" },
+  { logo: "/brands/oracale_logo.png", logoDark: "/brands/oracale_logo_dark.png" },
 ];
 
 export const enterpriseIntegrations = {
@@ -96,46 +103,12 @@ export const enterpriseIntegrations = {
     "Integrate customer engagement workflows directly with CRM, commerce, analytics, payments, and custom systems across your stack. This enables customer data, engagement history, campaign activity, and conversational intelligence to flow seamlessly across your technology stack.",
   whyItMatters:
     "Companies with connected customer data ecosystems are nearly 3X more likely to exceed customer experience goals.",
-  categories: [
-    {
-      name: "CRM",
-      icon: Users,
-      color: "#3B82F6",
-      partners: ["Salesforce", "Zoho CRM", "Microsoft Dynamics", "HubSpot"],
-    },
-    {
-      name: "Commerce",
-      icon: ShoppingBag,
-      color: "#10B981",
-      partners: ["Shopify", "WooCommerce", "SAP", "Oracle"],
-    },
-    {
-      name: "Analytics & Ads",
-      icon: BarChart3,
-      color: "#A855F7",
-      partners: ["Google Analytics", "Meta"],
-    },
-    {
-      name: "Payments & APIs",
-      icon: Wallet,
-      color: "#F59E0B",
-      partners: ["Stripe", "Custom APIs"],
-    },
-  ] as { name: string; icon: ElementType; color: string; partners: string[] }[],
-  partners: [
-    "Salesforce",
-    "Zoho CRM",
-    "Microsoft Dynamics",
-    "HubSpot",
-    "Shopify",
-    "WooCommerce",
-    "SAP",
-    "Oracle",
-    "Google Analytics",
-    "Meta",
-    "Stripe",
-    "Custom APIs",
+  highlights: [
+    { label: "Plug-and-play connectors" },
+    { label: "Custom API support" },
+    { label: "Bi-directional sync" },
   ],
+  stackCategories: ["CRM", "Commerce", "Analytics & Ads", "Payments & APIs"],
 };
 
 export const enterpriseCompliance = {
