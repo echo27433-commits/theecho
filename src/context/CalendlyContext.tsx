@@ -1,10 +1,11 @@
 "use client";
 
 import { createContext, useContext, useCallback, ReactNode } from "react";
-import Script from "next/script";
 import { useTheme } from "next-themes";
 
 const CALENDLY_BASE = "https://calendly.com/karankrunch210/30min";
+const CALENDLY_SCRIPT = "https://assets.calendly.com/assets/external/widget.js";
+const CALENDLY_CSS = "https://assets.calendly.com/assets/external/widget.css";
 
 declare global {
   interface Window {
@@ -35,16 +36,46 @@ type CalendlyContextType = {
   openCalendly: () => void;
 };
 
-function ensureCalendlyAssets() {
-  if (typeof document === "undefined") return;
+let calendlyScriptPromise: Promise<void> | null = null;
 
-  if (!document.querySelector('link[data-calendly-css]')) {
-    const link = document.createElement("link");
-    link.rel = "stylesheet";
-    link.href = "https://assets.calendly.com/assets/external/widget.css";
-    link.setAttribute("data-calendly-css", "true");
-    document.head.appendChild(link);
-  }
+function ensureCalendlyCss() {
+  if (typeof document === "undefined") return;
+  if (document.querySelector('link[data-calendly-css]')) return;
+
+  const link = document.createElement("link");
+  link.rel = "stylesheet";
+  link.href = CALENDLY_CSS;
+  link.setAttribute("data-calendly-css", "true");
+  document.head.appendChild(link);
+}
+
+function loadCalendlyScript(): Promise<void> {
+  if (typeof window === "undefined") return Promise.resolve();
+  if (window.Calendly) return Promise.resolve();
+
+  if (calendlyScriptPromise) return calendlyScriptPromise;
+
+  calendlyScriptPromise = new Promise((resolve, reject) => {
+    const existing = document.querySelector<HTMLScriptElement>('script[data-calendly-script]');
+    if (existing) {
+      existing.addEventListener("load", () => resolve(), { once: true });
+      existing.addEventListener("error", () => reject(new Error("Calendly script failed")), { once: true });
+      return;
+    }
+
+    const script = document.createElement("script");
+    script.src = CALENDLY_SCRIPT;
+    script.async = true;
+    script.setAttribute("data-calendly-script", "true");
+    script.onload = () => resolve();
+    script.onerror = () => {
+      calendlyScriptPromise = null;
+      reject(new Error("Calendly script failed"));
+    };
+    document.body.appendChild(script);
+  });
+
+  return calendlyScriptPromise;
 }
 
 const CalendlyContext = createContext<CalendlyContextType | undefined>(undefined);
@@ -53,38 +84,20 @@ export function CalendlyProvider({ children }: { children: ReactNode }) {
   const { resolvedTheme } = useTheme();
 
   const openCalendly = useCallback(() => {
-    ensureCalendlyAssets();
+    ensureCalendlyCss();
 
     const isDark =
       resolvedTheme === "dark" || document.documentElement.classList.contains("dark");
     const url = getCalendlyUrl(isDark);
 
-    const open = () => window.Calendly?.initPopupWidget({ url });
-
-    if (window.Calendly) {
-      open();
-      return;
-    }
-
-    const interval = window.setInterval(() => {
-      if (window.Calendly) {
-        window.clearInterval(interval);
-        open();
-      }
-    }, 100);
-
-    window.setTimeout(() => window.clearInterval(interval), 10000);
+    void loadCalendlyScript()
+      .then(() => window.Calendly?.initPopupWidget({ url }))
+      .catch(() => {
+        window.open(url, "_blank", "noopener,noreferrer");
+      });
   }, [resolvedTheme]);
 
-  return (
-    <CalendlyContext.Provider value={{ openCalendly }}>
-      <Script
-        src="https://assets.calendly.com/assets/external/widget.js"
-        strategy="lazyOnload"
-      />
-      {children}
-    </CalendlyContext.Provider>
-  );
+  return <CalendlyContext.Provider value={{ openCalendly }}>{children}</CalendlyContext.Provider>;
 }
 
 export function useCalendly() {
