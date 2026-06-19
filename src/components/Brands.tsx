@@ -49,6 +49,7 @@ function BrandLogo({
       width={width}
       height={height}
       sizes={sizes}
+      quality={65}
       className={`${logoClass} object-contain ${variant === "light" ? "dark:hidden" : "hidden dark:block"}`}
     />
   );

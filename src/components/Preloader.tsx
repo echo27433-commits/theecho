@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
+import { ECHO_LOGO } from "@/lib/assets";
 import { lockScroll, unlockScroll } from "@/lib/scroll-lock";
 
 const PRELOADER_KEY = "echo-preloader-seen";
@@ -67,7 +68,7 @@ export function Preloader() {
           className="relative mb-6 h-20 w-20"
         >
           <Image
-            src="/The_Echo_Logo_v2.png"
+            src={ECHO_LOGO}
             alt="Loading Echo..."
             fill
             priority

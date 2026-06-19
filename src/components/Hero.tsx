@@ -8,6 +8,7 @@ import { Bot, Zap, ArrowRight, MessageSquare } from "lucide-react";
 import { useProductModal, productsData } from "@/context/ProductModalContext";
 import { useCalendly } from "@/context/CalendlyContext";
 import { BookCallButton } from "@/components/BookCallButton";
+import { BOT_IMAGE } from "@/lib/assets";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 function hexToRgba(hex: string, alpha: number) {
@@ -116,7 +117,7 @@ function BotGuideBubble({ activeProduct }: { activeProduct: (typeof productsData
         <div className="rounded-2xl border border-foreground/8 bg-background/90 px-3.5 py-3 shadow-[0_8px_32px_rgba(0,0,0,0.12)] backdrop-blur-md max-sm:px-3 max-sm:py-2.5 dark:border-white/10 dark:bg-background/85 dark:shadow-[0_8px_32px_rgba(0,0,0,0.4)]">
             <div className="mb-2 flex items-center gap-2">
               <div className="relative h-6 w-6 shrink-0 overflow-hidden rounded-full">
-                <Image src="/bot.webp" alt="" width={24} height={24} className="h-full w-full scale-125 object-contain" />
+                <Image src={BOT_IMAGE} alt="" width={24} height={24} className="h-full w-full scale-125 object-contain" />
               </div>
               <span className="text-[10px] font-semibold tracking-[0.12em] text-foreground/45 uppercase">Echo Assistant</span>
             </div>
@@ -390,11 +391,12 @@ function HeroProductHub({ onSelectProduct }: { onSelectProduct: (productId: stri
             />
 
             <Image
-              src="/bot.webp"
+              src={BOT_IMAGE}
               alt="Echo AI Assistant"
               width={480}
               height={480}
               sizes="(max-width: 640px) 150px, (max-width: 1024px) 330px, 380px"
+              quality={70}
               className="relative z-[1] h-full w-full object-contain drop-shadow-[0_16px_48px_rgba(242,13,20,0.25)]"
               priority
               fetchPriority="high"

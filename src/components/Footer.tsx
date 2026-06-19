@@ -4,6 +4,8 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import Image from "next/image";
 
+import { ECHO_LOGO } from "@/lib/assets";
+
 const productLinks = [
   { label: "Loyalty", href: "/product/loyalty" },
   { label: "AI Conversational Platform", href: "/product/ai-platform" },
@@ -53,11 +55,11 @@ export function Footer() {
           <div>
             <div className="relative mb-5 group">
               <Image
-                src="/The_Echo_Logo_v2.png"
+                src={ECHO_LOGO}
                 alt="ECHO Logo"
                 width={180}
                 height={66}
-                unoptimized={true}
+                sizes="180px"
                 className="group-hover:scale-105 transition-transform duration-300 object-contain rounded-lg"
               />
             </div>

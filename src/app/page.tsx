@@ -26,7 +26,9 @@ export default function Home() {
       <Navbar />
       <main className="flex min-h-screen w-full flex-col overflow-x-hidden">
         <Hero />
-        <DeferredBrands />
+        <LazyMount minHeight="160px">
+          <DeferredBrands />
+        </LazyMount>
         <LazyMount minHeight="720px">
           <Solutions />
         </LazyMount>

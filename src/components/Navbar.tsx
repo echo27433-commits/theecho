@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ThemeToggle } from "./ThemeToggle";
 import Image from "next/image";
+import { ECHO_LOGO } from "@/lib/assets";
 import { useCalendly } from "@/context/CalendlyContext";
 import { Menu, X, ArrowRight } from "lucide-react";
 import { lockScroll, unlockScroll } from "@/lib/scroll-lock";
@@ -29,11 +30,11 @@ function Logo({ className = "" }: { className?: string }) {
     >
       <div className="relative flex h-[68px] max-w-[320px] items-center overflow-hidden sm:h-[76px] sm:max-w-[340px] md:h-[68px] md:max-w-none">
         <Image
-          src="/The_Echo_Logo_v2.png"
+          src={ECHO_LOGO}
           alt="ECHO Logo"
-          width={440}
-          height={160}
-          unoptimized={true}
+          width={340}
+          height={124}
+          sizes="(max-width: 768px) 200px, 340px"
           className="h-[68px] w-full max-w-[320px] object-contain object-left transition-transform duration-300 group-hover:scale-105 sm:h-[76px] sm:max-w-[340px] md:h-[158px] md:max-w-none md:w-auto"
         />
       </div>
