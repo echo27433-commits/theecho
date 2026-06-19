@@ -1,6 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
+import { lockScroll, unlockScroll } from "@/lib/scroll-lock";
 import { motion, AnimatePresence } from "framer-motion";
 import { Heart, Layers, Bot, ArrowRight, X, Check } from "lucide-react";
 
@@ -84,13 +85,11 @@ export function ProductModalProvider({ children }: { children: React.ReactNode }
 
   useEffect(() => {
     if (selectedProduct) {
-      document.body.style.overflow = "hidden";
+      lockScroll();
     } else {
-      document.body.style.overflow = "";
+      unlockScroll();
     }
-    return () => {
-      document.body.style.overflow = "";
-    };
+    return () => unlockScroll();
   }, [selectedProduct]);
 
   return (

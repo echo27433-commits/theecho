@@ -3,10 +3,10 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { SmoothScrollProvider } from "@/components/SmoothScrollProvider";
 import { CursorGlow } from "@/components/CursorGlow";
+import { ClientWidgets } from "@/components/ClientWidgets";
 import { ProductModalProvider } from "@/context/ProductModalContext";
 import { CalendlyProvider } from "@/context/CalendlyContext";
 import { Preloader } from "@/components/Preloader";
-import { WhatsAppWidget } from "@/components/WhatsAppWidget";
 import { Geist } from "next/font/google";
 import { cn } from "@/lib/utils";
 
@@ -46,7 +46,7 @@ export default function RootLayout({
               <ProductModalProvider>
                 <Preloader />
                 <CursorGlow />
-                <WhatsAppWidget />
+                <ClientWidgets />
                 {children}
               </ProductModalProvider>
             </CalendlyProvider>

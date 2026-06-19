@@ -7,6 +7,7 @@ import { ThemeToggle } from "./ThemeToggle";
 import Image from "next/image";
 import { useCalendly } from "@/context/CalendlyContext";
 import { Menu, X, ArrowRight } from "lucide-react";
+import { lockScroll, unlockScroll } from "@/lib/scroll-lock";
 import { NavHeader } from "@/components/ui/nav-header";
 import { BookCallButton } from "@/components/BookCallButton";
 
@@ -53,13 +54,11 @@ export function Navbar() {
 
   useEffect(() => {
     if (mobileMenuOpen) {
-      document.body.style.overflow = "hidden";
+      lockScroll();
     } else {
-      document.body.style.overflow = "";
+      unlockScroll();
     }
-    return () => {
-      document.body.style.overflow = "";
-    };
+    return () => unlockScroll();
   }, [mobileMenuOpen]);
 
   const handleBookCall = () => {

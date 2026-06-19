@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const testimonials = [
   {
@@ -35,6 +36,7 @@ export function Testimonials() {
   const [active, setActive] = useState(0);
   const [direction, setDirection] = useState(1);
   const intervalRef = useRef<NodeJS.Timeout>(null);
+  const isMobile = useIsMobile();
 
   const go = (dir: 1 | -1) => {
     setDirection(dir);
@@ -48,9 +50,17 @@ export function Testimonials() {
   }, []);
 
   const variants = {
-    enter: (dir: number) => ({ opacity: 0, x: dir > 0 ? 60 : -60, filter: "blur(4px)" }),
-    center: { opacity: 1, x: 0, filter: "blur(0px)" },
-    exit: (dir: number) => ({ opacity: 0, x: dir > 0 ? -60 : 60, filter: "blur(4px)" }),
+    enter: (dir: number) => ({
+      opacity: 0,
+      x: dir > 0 ? (isMobile ? 24 : 60) : isMobile ? -24 : -60,
+      ...(isMobile ? {} : { filter: "blur(4px)" }),
+    }),
+    center: { opacity: 1, x: 0, ...(isMobile ? {} : { filter: "blur(0px)" }) },
+    exit: (dir: number) => ({
+      opacity: 0,
+      x: dir > 0 ? (isMobile ? -24 : -60) : isMobile ? 24 : 60,
+      ...(isMobile ? {} : { filter: "blur(4px)" }),
+    }),
   };
 
   return (

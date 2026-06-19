@@ -26,10 +26,12 @@ const doubled = [...brands, ...brands];
 
 export function Brands() {
   const ref = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
   const inView = useInView(ref, { once: true });
+  const marqueeInView = useInView(sectionRef, { margin: "120px 0px" });
 
   return (
-    <section className="relative py-16 overflow-hidden border-y border-[var(--border)]">
+    <section ref={sectionRef} className="relative py-16 overflow-hidden border-y border-[var(--border)]">
       {/* Subtle gradient edges */}
       <div className="absolute left-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-r from-background to-transparent pointer-events-none" />
       <div className="absolute right-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-l from-background to-transparent pointer-events-none" />
@@ -46,7 +48,11 @@ export function Brands() {
 
       {/* Marquee strip */}
       <div className="flex overflow-hidden py-2">
-        <div className="flex animate-marquee items-center gap-0 shrink-0">
+        <div
+          className={`flex animate-marquee items-center gap-0 shrink-0 ${
+            marqueeInView ? "" : "[animation-play-state:paused]"
+          }`}
+        >
           {doubled.map((brand, i) => (
             <div
               key={i}

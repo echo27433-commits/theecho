@@ -8,6 +8,7 @@ import { Bot, Zap, ArrowRight, MessageSquare } from "lucide-react";
 import { useProductModal, productsData } from "@/context/ProductModalContext";
 import { useCalendly } from "@/context/CalendlyContext";
 import { BookCallButton } from "@/components/BookCallButton";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 function hexToRgba(hex: string, alpha: number) {
   const h = hex.replace("#", "");
@@ -163,11 +164,13 @@ function ProductHubCard({
   onClick,
   isActive,
   delay,
+  reducedMotion,
 }: {
   product: (typeof productsData)[0];
   onClick: () => void;
   isActive: boolean;
   delay: number;
+  reducedMotion?: boolean;
 }) {
   const Icon = HERO_ICONS[product.id] ?? product.icon;
   const copy = HERO_CARD_COPY[product.id] ?? product.description;
@@ -230,8 +233,8 @@ function ProductHubCard({
       </div>
 
       <motion.span
-        animate={isActive ? { x: [0, 3, 0] } : { x: 0 }}
-        transition={isActive ? { duration: 1.6, repeat: Infinity, ease: "easeInOut" } : { duration: 0.3 }}
+        animate={!reducedMotion && isActive ? { x: [0, 3, 0] } : { x: 0 }}
+        transition={!reducedMotion && isActive ? { duration: 1.6, repeat: Infinity, ease: "easeInOut" } : { duration: 0.3 }}
         className={`relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full transition-all duration-300 group-hover:translate-x-0.5 max-sm:h-8 max-sm:w-8 sm:h-11 sm:w-11 ${
           isActive ? "bg-white/20 group-hover:bg-white/30" : "border"
         }`}
@@ -245,7 +248,7 @@ function ProductHubCard({
               }
         }
       >
-        {isActive && (
+        {isActive && !reducedMotion && (
           <motion.span
             className="absolute inset-0 rounded-full border border-white/40"
             animate={{ scale: [1, 1.35], opacity: [0.6, 0] }}
@@ -259,6 +262,7 @@ function ProductHubCard({
 }
 
 function HeroProductHub({ onSelectProduct }: { onSelectProduct: (productId: string) => void }) {
+  const isMobile = useIsMobile();
   const [activeIndex, setActiveIndex] = useState(0);
   const [connectorLines, setConnectorLines] = useState<ConnectorLine[]>([]);
   const [bubbleAnchorY, setBubbleAnchorY] = useState(0);
@@ -342,11 +346,13 @@ function HeroProductHub({ onSelectProduct }: { onSelectProduct: (productId: stri
   }, [updateConnectorLines]);
 
   useEffect(() => {
+    if (isMobile) return;
+
     const timer = setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % productsData.length);
     }, 5000);
     return () => clearInterval(timer);
-  }, []);
+  }, [isMobile]);
 
   useEffect(() => {
     scheduleConnectorUpdate();
@@ -427,6 +433,7 @@ function HeroProductHub({ onSelectProduct }: { onSelectProduct: (productId: stri
                 product={product}
                 isActive={activeIndex === i}
                 delay={0.4 + i * 0.12}
+                reducedMotion={isMobile}
                 onClick={() => {
                   setActiveIndex(i);
                   onSelectProduct(product.id);
@@ -446,10 +453,10 @@ export function Hero() {
 
   return (
     <>
-      <section className="relative flex min-h-screen items-center overflow-x-hidden pt-24 lg:overflow-hidden">
-        <div className="pointer-events-none absolute top-[-20%] right-[-10%] -z-10 h-[700px] w-[700px] animate-blob rounded-full bg-primary-red/8 blur-[140px] max-sm:h-[420px] max-sm:w-[420px] max-sm:blur-[80px] dark:bg-primary-red/12" />
+      <section className="relative flex min-h-screen items-center overflow-x-hidden pt-24 max-sm:min-h-0 max-sm:pb-8 lg:overflow-hidden">
+        <div className="pointer-events-none absolute top-[-20%] right-[-10%] -z-10 h-[700px] w-[700px] rounded-full bg-primary-red/8 blur-[140px] max-sm:h-[420px] max-sm:w-[420px] max-sm:blur-[80px] max-sm:animate-none dark:bg-primary-red/12 animate-blob" />
         <div
-          className="pointer-events-none absolute bottom-[-10%] left-[-10%] -z-10 h-[600px] w-[600px] rounded-full bg-purple-500/5 blur-[120px] max-sm:h-[360px] max-sm:w-[360px] max-sm:blur-[70px] dark:bg-purple-500/10"
+          className="pointer-events-none absolute bottom-[-10%] left-[-10%] -z-10 hidden h-[600px] w-[600px] rounded-full bg-purple-500/5 blur-[120px] sm:block dark:bg-purple-500/10"
           style={{ animation: "blob-move 14s ease-in-out infinite 2s" }}
         />
         <div

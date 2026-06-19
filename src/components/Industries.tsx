@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { ShoppingBag, Coffee, Hotel, HeartPulse, GraduationCap, Plane, Landmark, Film } from "lucide-react";
 
@@ -15,10 +16,25 @@ const industries = [
 ];
 
 export function Industries() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const [marqueePaused, setMarqueePaused] = useState(true);
   const doubled = [...industries, ...industries];
 
+  useEffect(() => {
+    const node = sectionRef.current;
+    if (!node) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setMarqueePaused(!entry.isIntersecting),
+      { rootMargin: "120px 0px" },
+    );
+
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section className="relative py-28 bg-[#06070B] dark:bg-[#06070B] overflow-hidden">
+    <section ref={sectionRef} className="relative py-28 bg-[#06070B] dark:bg-[#06070B] overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 dot-grid opacity-25 pointer-events-none" />
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/5 to-transparent" />
@@ -49,11 +65,15 @@ export function Industries() {
         <div className="absolute top-0 bottom-0 left-0 w-16 md:w-40 bg-gradient-to-r from-[#06070B] to-transparent z-10 pointer-events-none" />
         <div className="absolute top-0 bottom-0 right-0 w-16 md:w-40 bg-gradient-to-l from-[#06070B] to-transparent z-10 pointer-events-none" />
         
-        <div className="flex animate-marquee gap-6 shrink-0 py-4 hover:[animation-play-state:paused]">
+        <div
+          className={`flex animate-marquee gap-6 shrink-0 py-4 hover:[animation-play-state:paused] ${
+            marqueePaused ? "[animation-play-state:paused]" : ""
+          }`}
+        >
           {doubled.map((industry, index) => (
             <div 
               key={`${industry.name}-${index}`}
-              className="relative group w-[200px] md:w-[260px] h-[200px] md:h-[260px] rounded-[2rem] overflow-hidden shrink-0 border border-white/5 bg-[#0a0c10] hover:bg-[#0d1017] transition-all duration-500 cursor-pointer flex flex-col items-center justify-center text-center shadow-[0_8px_30px_rgba(0,0,0,0.4)] hover:-translate-y-2"
+              className="relative group w-[200px] md:w-[260px] h-[200px] md:h-[260px] rounded-[2rem] overflow-hidden shrink-0 border border-white/5 bg-[#0a0c10] hover:bg-[#0d1017] transition-all duration-500 cursor-pointer flex flex-col items-center justify-center text-center shadow-[0_8px_30px_rgba(0,0,0,0.4)] md:hover:-translate-y-2"
             >
               {/* Subtle hover gradient */}
               <div className="absolute inset-0 bg-gradient-to-b from-primary-red/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
