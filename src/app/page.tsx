@@ -17,7 +17,7 @@ const UseCases = dynamic(() => import("@/components/UseCases").then((mod) => mod
   loading: () => <div className="min-h-[640px]" aria-hidden />,
 });
 const Testimonials = dynamic(() => import("@/components/Testimonials").then((mod) => mod.Testimonials), {
-  loading: () => <div className="min-h-[520px]" aria-hidden />,
+  loading: () => <div className="min-h-[380px]" aria-hidden />,
 });
 
 export default function Home() {
@@ -41,7 +41,7 @@ export default function Home() {
         <LazyMount minHeight="640px">
           <UseCases />
         </LazyMount>
-        <LazyMount minHeight="520px">
+        <LazyMount minHeight="380px">
           <Testimonials />
         </LazyMount>
         <DeferredCTA />
