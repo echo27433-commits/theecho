@@ -37,9 +37,11 @@ export function Testimonials() {
   const [active, setActive] = useState(0);
   const [direction, setDirection] = useState(1);
   const intervalRef = useRef<NodeJS.Timeout>(null);
+  const hasSlid = useRef(false);
   const isMobile = useIsMobile();
 
   const go = (dir: 1 | -1) => {
+    hasSlid.current = true;
     setDirection(dir);
     setActive((prev) => (prev + dir + testimonials.length) % testimonials.length);
   };
@@ -50,17 +52,17 @@ export function Testimonials() {
     return () => clearInterval(intervalRef.current!);
   }, []);
 
+  const slideOffset = isMobile ? 24 : 48;
+
   const variants = {
     enter: (dir: number) => ({
       opacity: 0,
-      x: dir > 0 ? (isMobile ? 24 : 60) : isMobile ? -24 : -60,
-      ...(isMobile ? {} : { filter: "blur(4px)" }),
+      x: dir > 0 ? slideOffset : -slideOffset,
     }),
-    center: { opacity: 1, x: 0, ...(isMobile ? {} : { filter: "blur(0px)" }) },
+    center: { opacity: 1, x: 0 },
     exit: (dir: number) => ({
       opacity: 0,
-      x: dir > 0 ? (isMobile ? -24 : -60) : isMobile ? 24 : 60,
-      ...(isMobile ? {} : { filter: "blur(4px)" }),
+      x: dir > 0 ? -slideOffset : slideOffset,
     }),
   };
 
@@ -93,13 +95,13 @@ export function Testimonials() {
                 key={active}
                 custom={direction}
                 variants={variants}
-                initial="enter"
+                initial={hasSlid.current ? "enter" : false}
                 animate="center"
                 exit="exit"
-                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
                 className="w-full"
               >
-                <div className="relative rounded-2xl p-10 bg-card dark:glass-card border border-[var(--border)] text-center overflow-hidden">
+                <div className="relative rounded-2xl p-10 bg-card border border-[var(--border)] text-center overflow-hidden">
                   {/* Background accent */}
                   <div
                     className="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-1 rounded-b-full opacity-60"
@@ -166,7 +168,11 @@ export function Testimonials() {
               {testimonials.map((_, i) => (
                 <button
                   key={i}
-                  onClick={() => { setDirection(i > active ? 1 : -1); setActive(i); }}
+                  onClick={() => {
+                    hasSlid.current = true;
+                    setDirection(i > active ? 1 : -1);
+                    setActive(i);
+                  }}
                   className="transition-all duration-300 rounded-full"
                   style={{
                     width: i === active ? "24px" : "6px",
